@@ -8,8 +8,11 @@ It performs the following checks on every changed doc file:
 - Compliance with the [PX4 documentation style guide](https://docs.px4.io/main/en/contribute/docs#style-guide)
 - Structural correctness: file placement, `SUMMARY.md` entries, heading structure, images, and cross-links
 - Technical accuracy, checked against sources appropriate to the part of the docs tree the file is in — firmware source, sibling pages, linked vendor material, or the project's own contributing guide
+- Links, using the project's own link checker over the changed files (the same check CI runs), with a suggested fix for each broken link where one can be found, and an optional external-link check
 
-The skill does not edit files or post comments to GitHub.
+It can also run the link check on its own over your checkout: all of `docs/en/` on `main`, or the files changed on another branch.
+
+The skill does not edit files or post comments to GitHub, except that a standalone link check can apply the fixes you accept.
 The output is a tabular report in chat, which you can assess and use for your review, and it can write that report to a markdown file if you ask for one.
 
 Inspired by [mdn-pr-review](https://github.com/mdn/smithy/tree/main/skills/mdn-pr-review), adapted for a docs tree where different parts of the project need different accuracy checks against different sources of truth.
@@ -38,7 +41,8 @@ px4-doc-review/
 │   ├── accuracy-flight-behavior.md   # accuracy lens: flight modes, parameters, config
 │   ├── accuracy-developer.md         # accuracy lens: middleware, modules, APIs, build/CI
 │   ├── accuracy-simulation.md        # accuracy lens: sim_* pages
-│   └── accuracy-contribute.md        # accuracy lens: contribute/getting-started/tutorials
+│   ├── accuracy-contribute.md        # accuracy lens: contribute/getting-started/tutorials
+│   └── link-check.md                 # main agent: link checker, triage, fix research
 ├── preferences.example.md            # boilerplate to copy to ~/.config/px4-doc-review/preferences.md
 └── README.md                         # this file
 ```
@@ -100,6 +104,9 @@ cp ~/.claude/skills/px4-doc-review/preferences.example.md ~/.config/px4-doc-revi
 - **A local clone of `PX4-Autopilot`, recommended**: verifying a claim against firmware source (parameters, module metadata, uORB messages) is far cheaper against a local clone than fetching individual files over the GitHub API.
   The skill checks common locations and falls back to fetching raw file contents from GitHub when no local clone is found — see `references/shared.md`, "Reaching the sources".
 
+- **The docs toolchain in that clone, for the link check**: run `yarn install` in its `docs/` directory once, which installs the `markdown_link_checker_sc` link checker.
+  The skill asks before installing it for you.
+
 ## Using
 
 To trigger the skill, run the following command with the PR number:
@@ -110,6 +117,8 @@ To trigger the skill, run the following command with the PR number:
 
 A bare number is taken as a `PX4/PX4-Autopilot` PR.
 The skill also triggers with natural language, such as "review this PX4 docs PR", "doc review on PX4-Autopilot #24601", or a pasted PR URL.
+
+For a link check of your own checkout, ask for one, such as "link check the PX4 docs" or "find broken links on this branch".
 
 ## Output
 
