@@ -4,6 +4,7 @@ Covers the **developer** category from the routing table in `shared.md`: build/d
 
 These pages describe APIs, build tooling, and source-level architecture for people extending or building PX4, not end users.
 The firmware source and build scripts in the same repo are the ground truth — sources-of-truth items 1 and 2 in `shared.md` apply here more directly than anywhere except flight-behavior.
+Beyond the existence checks below, read the code a changed passage explains, as Validating the docs against the code in `shared.md` describes: a description of how a module, API, or tool works is checked against how the code actually does it.
 
 ## Code and CLI samples
 
