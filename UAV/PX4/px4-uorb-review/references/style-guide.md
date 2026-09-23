@@ -34,7 +34,7 @@ Metadata is one or more bracketed tags, in any order, all optional except units:
 | Units | `[<unit>]` | No `@` prefix. Required unless the field is `bool` or purely enum-valued. Unitless numeric fields use `[-]`. |
 | Enum reference | `[@enum <PREFIX>]` | Marks this field as selected by constants whose names start `<PREFIX>_`. |
 | Valid range | `[@range <lower>, <upper>]` | Either bound may be blank for unbounded, e.g. `[@range 5.3, ]`. |
-| Invalid-value sentinel | `[@invalid <value> <description>]` | Description optional. `<value>` must be one of `NaN`, `0`, `-1`, `UINT8_MAX`, `UINT16_MAX`. |
+| Invalid-value sentinel | `[@invalid <value> <description>]` | Description optional. `<value>` must be one of `NaN`, `0`, `-1`, `UINT8_MAX`, `UINT16_MAX`. The description part is a sentence, and should start with a capital letter unless it starts with a field name or another word that is always lower case, e.g. `[@invalid NaN Stops the engine: output goes to its disarmed value]`. Never flag that capital as a mid-sentence capital. A description that should be capitalised but isn't can be flagged. |
 | Reference frame | `[@frame <value>]` | One of `NED`, `Body`, `FRD`, `ENU`. |
 
 Allowed units (from the parser's own list — treat as authoritative):

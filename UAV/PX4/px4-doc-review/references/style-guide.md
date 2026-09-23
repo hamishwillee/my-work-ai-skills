@@ -41,6 +41,8 @@ Each of the three has exactly one job; using one for another's job is a `style` 
 - Don't hard-wrap lines at a fixed column width.
   Break lines on sentence or paragraph boundaries instead (typically one sentence per line).
   A paragraph reflowed to a fixed width is a `style` finding — flag it as a Prettier/formatting issue, since it also breaks the diff for the next editor.
+- Exception: never apply this rule to source files.
+  Source code has its own line-break conventions, so don't flag line wrapping in any source file (`.cpp` description macros, `module.yaml`, airframe headers, `msg/*.msg` comments, and so on), or in the generated docs pages built from them, and never suggest breaking that text at sentences.
 
 ## Formatting
 
