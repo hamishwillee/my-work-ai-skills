@@ -1,7 +1,7 @@
 ---
 name: px4-doc-review
-description: Editorial review of PX4-Autopilot documentation pull requests (docs/en/ in the PX4/PX4-Autopilot repo). Use when the user asks for a review or doc review on a PX4-Autopilot PR touching docs/en/, or pastes a PX4-Autopilot PR URL or number. Use code-review instead when the PR changes only firmware source, build, or CI machinery with no docs/en/ changes.
-allowed-tools: Bash(gh pr view:*) Bash(gh pr diff:*) Bash(gh pr list:*) Bash(gh api:*) Bash(git -C:*) Bash(grep:*)
+description: Editorial review of PX4-Autopilot documentation pull requests (docs/en/ in the PX4/PX4-Autopilot repo), including a check of their links. Use when the user asks for a review or doc review on a PX4-Autopilot PR touching docs/en/, or pastes a PX4-Autopilot PR URL or number. Also use when the user asks for a link check of the PX4 docs, or for broken links in them to be found or fixed, on main or a local branch. Use code-review instead when the PR changes only firmware source, build, or CI machinery with no docs/en/ changes.
+allowed-tools: Bash(gh pr view:*) Bash(gh pr diff:*) Bash(gh pr list:*) Bash(gh api:*) Bash(git -C:*) Bash(grep:*) Bash(yarn linkcheck:*) Bash(npx markdown_link_checker_sc:*) Bash(tar -x:*)
 ---
 
 # PX4 documentation PR review
@@ -12,8 +12,13 @@ This is prose review, not code review: the deliverable is a report of issues wit
 **Read-only**, here and in every subagent this review spawns.
 Never modify a file in the repository under review, and never run `gh pr comment`, `gh pr review`, or any other write operation.
 The one file you may create is the report itself, only when the reviewer asks for it and only outside the clone.
+Scratch files for the link check (a file list, an extract of the PR's docs) go in a scratch directory outside the clone too.
 Your output is the report; the reviewer posts it to GitHub themselves, after reading it.
 You will offer to open the report in an editor, such as VSCode if this is supported. 
+
+**Standalone link check.**
+When the reviewer asks for a link check of their own checkout rather than a review of a PR, skip the workflow below and follow `references/link-check.md` alone.
+That is the one mode that may edit files, and only to apply the link fixes the reviewer accepts.
 
 ## Workflow
 
@@ -27,6 +32,7 @@ The files in this skill directory:
 - `references/style-guide.md`: the PX4 documentation style guide, extracted and rewritten as checkable rules
 - `references/grammar-style.md`, `references/structural.md`: the two universal lenses
 - `references/accuracy-hardware.md`, `references/accuracy-flight-behavior.md`, `references/accuracy-developer.md`, `references/accuracy-simulation.md`, `references/accuracy-contribute.md`: one lens per doc category
+- `references/link-check.md`: running the project's link checker, triaging what it reports, and researching fixes; read by you, not by a lens
 - `preferences.example.md`: boilerplate for a reviewer's own preference file
 
 Read `references/shared.md` yourself before reporting: merging findings and counting the triage table both depend on the severity definitions and the routing table.
@@ -114,6 +120,10 @@ Pass it as written rather than as your own summary of it: the agent's rules come
 `${CLAUDE_SKILL_DIR}` is this skill's own directory, and Claude Code substitutes it for you.
 On a harness that leaves it unsubstituted, replace it yourself with the absolute path of the directory this file was loaded from.
 Never pass a relative path: the working directory during a review is the `PX4-Autopilot` clone, not the skill directory, so a relative read fails and the lens then runs with no rules at all.
+
+**Link check.**
+While the lenses run, run the link check yourself over the PR's changed `docs/en/**/*.md` files at the head SHA, as `references/link-check.md` describes, and research a fix for each finding it keeps.
+Its findings merge into the report as structural findings.
 
 **Work silently.**
 Say nothing between dispatching and the report itself: no plan, no "dispatching the lenses", no per-lens status, no "waiting on results", no count of what has come back.
@@ -214,15 +224,17 @@ Other requirements:
 
 **What goes below the tables.**
 No closing remarks; the summary opens the review and the tables carry it.
-These seven are permitted, in this order, each only when it applies:
+These nine are permitted, in this order, each only when it applies:
 
 1. Suggestion blocks too long for the Suggestion column, each keyed to its file and line
-2. Pre-existing issues on lines this PR didn't change (the Verify section of `references/shared.md`)
-3. Where the sources disagree (the Sources of truth section of `references/shared.md`)
-4. A cross-vehicle-type or cross-simulator inconsistency noted by an accuracy lens as a question for the reviewer, rather than a finding on the changed lines themselves
-5. A single note if a changed folder wasn't in the routing table (the Category routing section of `references/shared.md`)
-6. A single note if the PR description was empty (the Scope step)
-7. A single note if the review ran in one context rather than one subagent per lens (the Dispatch step)
+2. Pre-existing issues on lines this PR didn't change (the Verify section of `references/shared.md`), including pre-existing link-check findings
+3. Link-check notes: external errors with no fix to suggest, and permanent redirects to a 404 or generic page (the Triage section of `references/link-check.md`)
+4. Where the sources disagree (the Sources of truth section of `references/shared.md`)
+5. A cross-vehicle-type or cross-simulator inconsistency noted by an accuracy lens as a question for the reviewer, rather than a finding on the changed lines themselves
+6. A single note if a changed folder wasn't in the routing table (the Category routing section of `references/shared.md`)
+7. A single note if the PR description was empty (the Scope step)
+8. A single note if the review ran in one context rather than one subagent per lens (the Dispatch step)
+9. A one-line offer to run the link check with external links on, over the changed files
 
 To cite a line as a GitHub link, use the head SHA in full, not abbreviated, and a range with one line of context on each side:
 `https://github.com/PX4/PX4-Autopilot/blob/<full-sha>/docs/en/.../index.md#L12-L16`
