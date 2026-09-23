@@ -18,7 +18,7 @@ You will offer to open the report in an editor, such as VSCode if this is suppor
 
 **Standalone link check.**
 When the reviewer asks for a link check of their own checkout rather than a review of a PR, skip the workflow below and follow `references/link-check.md` alone.
-That is the one mode that may edit files, and only to apply the link fixes the reviewer accepts.
+That is the one mode that may edit files, and only to apply the link fixes and link-checker ignore entries the reviewer accepts.
 
 ## Workflow
 

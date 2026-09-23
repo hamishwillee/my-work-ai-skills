@@ -12,7 +12,7 @@ It performs the following checks on every changed doc file:
 
 It can also run the link check on its own over your checkout: all of `docs/en/` on `main`, or the files changed on another branch.
 
-The skill does not edit files or post comments to GitHub, except that a standalone link check can apply the fixes you accept.
+The skill does not edit files or post comments to GitHub, except that a standalone link check can apply the fixes you accept, and add link-checker ignore entries for links you confirm.
 The output is a tabular report in chat, which you can assess and use for your review, and it can write that report to a markdown file if you ask for one.
 
 Inspired by [mdn-pr-review](https://github.com/mdn/smithy/tree/main/skills/mdn-pr-review), adapted for a docs tree where different parts of the project need different accuracy checks against different sources of truth.
