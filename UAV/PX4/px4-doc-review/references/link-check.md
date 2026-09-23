@@ -58,7 +58,8 @@ cd <clone>/docs && npx markdown_link_checker_sc -r .. -d docs -e en -i assets -u
 
 **Ignore list.**
 The checker already drops errors listed in `docs/_link_checker_sc/ignore_errors.json`.
-Don't re-raise them, and don't add to the list: `--add-ignore-url` and `--interactive` write to the repo.
+Don't re-raise them.
+Only a standalone check adds to the list, and only as Adding ignore entries below describes; never in a PR review, and never with `--interactive`.
 
 ## Triage
 
@@ -138,7 +139,39 @@ If the reviewer accepts, report its findings as their own captioned section, **E
 **Standalone.**
 There's no PR to triage, so open with the count of findings by severity and the number of pages carrying them, then one table per page in the report's per-file format.
 Below the tables, offer to apply the suggested fixes, and offer the external-link run if it hasn't run yet.
+Once the fixes are settled, offer to add ignore entries for the external errors that remain (see Adding ignore entries below).
 
 The skill's read-only rule covers PR review.
 In standalone mode the checkout is the reviewer's own, so you may apply the fixes they accept, and only those.
 Edit files under `docs/en/` only, fix generated pages in their source, and never touch a file under `docs/<lang>/`.
+The one file outside `docs/en/` you may edit is `docs/_link_checker_sc/ignore_errors.json`, as below.
+
+## Adding ignore entries
+
+Standalone mode only, and only for external errors that have no fix.
+Offer it in one line, asking how long the entries should last (the checker's default is 3 months).
+If the reviewer says no, stop there.
+
+Sort the remaining errors into two groups, since only one of them can be confirmed by opening the link:
+
+- **Likely to work in a browser**: the site blocks automated requests, as with a 402, 403, 429, or a 202 with an empty body.
+  Present these one at a time, each as a clickable markdown link with the page and line it's on and the status the checker got, and ask the reviewer to open it and say whether it works.
+  Wait for the answer before presenting the next link.
+  Add an entry only for a link the reviewer confirms works; one that doesn't work goes back to the reviewer as a dead link, to research a fix as for a 404.
+- **Can't be confirmed by opening it**: for example, an expired or invalid TLS certificate, which fails in a browser too, or a 404 waiting on a vendor's reply.
+  List these together, each with its reason, and add them all if the reviewer agrees.
+
+Add each entry with the checker's own option, run from `docs/`, using the URL exactly as the page spells it (with or without a trailing slash):
+
+```sh
+npx markdown_link_checker_sc -r .. -d docs -e en --add-ignore-url "<url>" --add-ignore-reason "<reason>" --ignore-expiry-months <n>
+```
+
+The reason is what the next person to read the list will act on, so make it accurate:
+
+- A confirmed link: the status and that it works in a browser, such as "402/403 returned to automated requests; confirmed working in a browser".
+- A certificate: the expiry date, read from `openssl s_client -servername <host> -connect <host>:443 </dev/null | openssl x509 -noout -enddate`, and "recheck before expiry"; never "works in a browser".
+- A 404 awaiting a reply: who was asked and where, such as a PR number.
+
+The option rewrites the file without its final newline, so restore it afterwards (`echo >> docs/_link_checker_sc/ignore_errors.json`) to keep the diff to the new entries.
+Then rerun the external check with `-f` on the affected pages to confirm the entries suppress their errors.

@@ -18,7 +18,24 @@ You will offer to open the report in an editor, such as VSCode if this is suppor
 
 **Standalone link check.**
 When the reviewer asks for a link check of their own checkout rather than a review of a PR, skip the workflow below and follow `references/link-check.md` alone.
-That is the one mode that may edit files, and only to apply the link fixes the reviewer accepts.
+That is the one mode that may edit files, and only to apply the link fixes and link-checker ignore entries the reviewer accepts.
+
+**Commits and pull requests.**
+When the reviewer asks you to commit those changes or open a pull request for them, every commit message and the PR title must use the PX4 conventional-commit format, which [Commits and Commit Messages](https://docs.px4.io/main/en/contribute/code#commits-and-commit-messages) and `CONTRIBUTING.md` require for all commits and PR titles:
+
+```
+type(scope): short description of the change
+```
+
+- **type** is `docs` for a change to documentation only, which covers `docs/en/` and `docs/_link_checker_sc/`.
+  A fix made in a generated page's source takes the type and scope of that source instead, such as `docs(param)` for a parameter description or `docs(msg)` for a uORB message comment.
+- **scope** is the docs area affected: the folder under `docs/en/`, such as `docs(dev_setup)` or `docs(gps)`, or `docs(boards)` for pages under `flight_controller/`.
+  Omit the scope, as `docs: ...`, when a change spans several areas, as a sweep of link fixes usually does.
+- **description** is imperative and at least 5 characters, such as `fix broken CUAV doc links`.
+- The PR title covers every commit in it, since PRs are squash-merged and the title becomes the commit on `main`.
+- A commit containing AI-assisted content ends with the `Assisted-by: NAME:MODEL` trailer that [AI Assistants](https://docs.px4.io/main/en/contribute/ai_assistants#disclosure-required) requires, and no `Co-Authored-By` naming an AI.
+
+When the clone provides `commit` and `pr` skills (PX4-Autopilot does, under `.claude/skills/`), use them: they apply the same format and handle branching, sign-off and the PR body.
 
 ## Workflow
 
