@@ -56,6 +56,13 @@ When the PR changes `msg/*.msg` or `msg/versioned/*.msg`, or their generated `do
 Run the `px4-uorb-review` skill on the same PR for those files instead, since it holds the uORB documentation standard and runs the message doc generator.
 Include its findings in this report as their own captioned section, **uORB message review**, after the detailed per-file review, and leave the `.msg` files and `msg_docs` pages out of this skill's triage and per-file tables.
 
+**Flight-controller boards also go to `px4-board-doc-review`.**
+When the PR adds or changes a board directory (`boards/<vendor>/<board>/`, one containing a `default.px4board`), or adds or changes a board's page under `docs/en/flight_controller/` (any page there except `autopilot_*.md`, `index.md`, `pixhawk_series.md` and `silicon_errata.md`), run the `px4-board-doc-review` skill on the same PR as well, passing it the PR number, head and base SHAs, and changed-file list.
+It checks the page against the board's source files, its sibling pages, and the board support guide; this skill's lenses still review the page's prose as normal.
+Include what it returns as its own captioned section, **Board documentation review**, after the detailed per-file review and before any uORB section: its board summary lines, its submission checklist, then its findings as per-file tables in this skill's format.
+Where one of its findings and one of this skill's describe the same problem on the same line, keep it in the Board documentation review section only, with the higher severity.
+Its findings stay out of this skill's triage and per-file tables; add one line to the triage summary giving its bug count, so the opening count isn't read as the whole PR's.
+
 If no file under `docs/en/` changed, say so and stop: this skill has nothing to review.
 
 **Reviewer preferences.**
