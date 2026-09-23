@@ -48,6 +48,13 @@ When it's partial, list what the issue asked for that the PR doesn't do.
 Take the PR's full changed-file list, but only `docs/en/**` files are reviewed.
 A file under `docs/<other-lang>/` is flagged once by the structural lens as a bug (see `references/structural.md`) rather than reviewed as prose.
 A non-doc file changed in the same PR (`src/`, `boards/`, `msg/`, ...) is never reviewed itself, but its diff is a sources-of-truth input — read it before dispatching, since it's the highest-precedence evidence for whatever the docs change describes.
+The exception is generated docs (module, parameter, airframe and uORB message references; see Generated docs in `references/shared.md`).
+For those, ignore the generated page's diff and review the prose in its source instead, passing the source files to the lens agents as files to review.
+
+**uORB messages go to `px4-uorb-review`.**
+When the PR changes `msg/*.msg` or `msg/versioned/*.msg`, or their generated `docs/en/msg_docs/` pages, don't review them with this skill's lenses.
+Run the `px4-uorb-review` skill on the same PR for those files instead, since it holds the uORB documentation standard and runs the message doc generator.
+Include its findings in this report as their own captioned section, **uORB message review**, after the detailed per-file review, and leave the `.msg` files and `msg_docs` pages out of this skill's triage and per-file tables.
 
 If no file under `docs/en/` changed, say so and stop: this skill has nothing to review.
 

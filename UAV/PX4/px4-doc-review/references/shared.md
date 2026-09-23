@@ -13,7 +13,25 @@ The one file you may create is the report itself, and only the main agent does t
 
 PX4 documentation lives at `docs/en/` inside the `PX4/PX4-Autopilot` monorepo, alongside the firmware source.
 Only files under `docs/en/` are reviewed.
-A PR that also touches `src/`, `boards/`, `msg/`, or similar is still in scope for its `docs/en/` files, and the non-doc changes in that same PR are a **source of truth** (see below), not something to review in their own right — never raise a finding on a `.cpp`, `.yaml`, or other non-doc file.
+A PR that also touches `src/`, `boards/`, `msg/`, or similar is still in scope for its `docs/en/` files, and the non-doc changes in that same PR are a **source of truth** (see below), not something to review in their own right — never raise a finding on a `.cpp`, `.yaml`, or other non-doc file, except as described under Generated docs below.
+
+### Generated docs
+
+Some pages under `docs/en/` are generated from source by `Tools/ci/metadata_sync.sh`, so any change to them must be made in that source:
+
+| Generated page | Source |
+| --- | --- |
+| `docs/en/modules/modules_*.md` | `PRINT_MODULE_DESCRIPTION` and `PRINT_MODULE_USAGE_*` macros in the module's source |
+| `docs/en/advanced_config/parameter_reference.md` | Parameter definitions: `module.yaml` and `PARAM_DEFINE_*` in `src/**` |
+| `docs/en/airframes/airframe_reference.md` | Airframe file headers in `ROMFS/px4fmu_common/init.d*/airframes/` |
+| `docs/en/msg_docs/<Message>.md` and `docs/en/msg_docs/index.md` | `msg/*.msg` and `msg/versioned/*.msg`, reviewed by the `px4-uorb-review` skill rather than these lenses |
+| `docs/en/middleware/dds_topics.md` | `src/modules/uxrce_dds_client/dds_topics.yaml` |
+
+The other pages in those folders (`modules/hello_sky.md`, `modules/module_template.md`, `modules/index.md`, and so on) are hand-written and reviewed normally.
+
+When a PR changes a generated page, or changes the source it's generated from, review the prose in the source (description macros, parameter and airframe metadata, message comments), and anchor findings to the source file and line.
+Ignore the changes to the generated page itself: they aren't required, and if they differ from `main` they are replaced by regeneration after the PR merges.
+Don't raise a finding because a generated page and its source disagree.
 
 Files under `docs/<lang>/` for any `<lang>` other than `en` (`ko`, `zh`, `uk`, ...) are Crowdin-managed translations.
 They should never be hand-edited in a PR against `main`.
