@@ -21,12 +21,12 @@ PX4 does not manufacture this (or any) autopilot.
 Contact the [manufacturer](<manufacturer url>) for hardware support or compliance issues.
 :::
 
-<support-category note: see sibling-comparison.md, "Category-specific content">
-
 The [<Product>](<product url>) is <what it is>, manufactured by <Manufacturer>.
 It is based on the [<reference design>](<standard url>) <if any>, and <what distinguishes it>.
 
 ![<Product>](../../assets/flight_controller/<page-stem>/<image>.jpg)
+
+<support-category note: see sibling-comparison.md, "Category-specific content">
 
 ## Specifications {#specifications}
 
@@ -50,23 +50,31 @@ It is based on the [<reference design>](<standard url>) <if any>, and <what dist
 
 ## PWM Outputs {#pwm_outputs}
 
-## Telemetry Radios (Optional) {#telemetry}
-
 ## Ethernet {#ethernet}                      (if present)
 
 ## SD Card (Optional) {#sd_card}             (if present)
 
 ## Serial Port Mapping {#serial_port_mapping}
 
-## Building Firmware {#building_firmware}
-
-## Debug Port {#debug_port}
-
 ## Assembly {#assembly}
+
+<link to the quick-start guide, when one exists>
+
+### Wiring Diagram {#wiring_diagram}           (if present)
 
 ### Radio Control {#radio_control}
 
 ### GPS & Compass {#gps_compass}
+
+### Telemetry Radios (Optional) {#telemetry}
+
+### CAN {#can}                            (if present)
+
+### OSD {#osd}                            (if present)
+
+## Building Firmware {#building_firmware}
+
+## Debug Port {#debug_port}
 
 ## Further Information {#further_information}
 ````
@@ -81,7 +89,7 @@ It is based on the [<reference design>](<standard url>) <if any>, and <what dist
 | T-P4 | No leftover HTML comments holding guidance, checklists, or raw data (`<!-- ... -->`). A section holding only a `<!-- placeholder ... -->` stub ("Stubs for missing sections" below) isn't a T-P4 finding: it's reported as the missing content it stands in for, at that check's severity. | `style` |
 | T-P5 | Every image is local: `../../assets/flight_controller/<page-stem>/<file>`, the folder named after the page's file stem, the file name lower case with underscores. No image loaded from a URL. | `style`; a URL image is `bug` (external images break and aren't translated) |
 | T-P6 | Every referenced image exists in the PR or the repository. | `bug` |
-| T-P7 | Port and connector names are written as printed on the board, and the same way everywhere on the page: in backticks when naming a port in running text (`TELEM1`), bold when telling the reader what to plug in (**RC IN**). | `style` |
+| T-P7 | Port, connector and solder-pad names are written as printed on the board, and the same way everywhere on the page: in code style (`TELEM1`, `RC IN`, `T4`/`R4`, `M1`–`M4`, `CAN1`), including in tables and when telling the reader what to plug in. A peripheral name (`I2C2`, `CAN1`, `UART4`) is a label only when it is printed on the board as a port or connector name, as it is on many Pixhawk-style boards; check the board photo or pinout. Otherwise it's a peripheral and stays plain. MCU pins (PB8), timers (TIM2) and connector pin positions ("pin 3") are never labels and stay plain. Don't flag a page for using backticks rather than bold for a connector label. | `style` |
 | T-P8 | A block diagram or schematic of the main components (sensors, power supply) is on the page or linked from it (board support guide, step 5). | `bug` |
 | T-P9 | Every `##` and `###` heading has an explicit anchor, following "Anchors" below. | `style` |
 | T-P10 | Adding or changing an anchor on an existing page doesn't break links to it: every link to the old slug (`<page>.md#<old-slug>` elsewhere in `docs/en/`, and `#<old-slug>` on the page itself) is updated in the same PR. | `bug` per link left broken |
@@ -148,7 +156,7 @@ The old slug of a heading with no explicit anchor is its text, lower case, with 
 | T-O1 | One H1, `# <Manufacturer> <Product>`, with the same text as the `SUMMARY.md` entry and the category-page link. | `style` |
 | T-O2 | `<Badge type="tip" text="..." />` directly under the H1, naming the first PX4 release with the board. For a board added on `main`, use the form the newest `main` pages use (`grep -rho '<Badge type="tip" text="[^"]*"' docs/en/flight_controller/`). | `style` |
 | T-O3 | The manufacturer warning, word for word as in the skeleton, linking the manufacturer's own site. | `style`; a link to someone other than the manufacturer is `bug` |
-| T-O4 | The support-category note for the category the board is listed in (`sibling-comparison.md`). | `bug` if it names another category, `style` if missing |
+| T-O4 | The support-category note for the category the board is listed in (`sibling-comparison.md`), placed at the end of the opening section: after the description and hero image, before the first `##` heading (the order used on 35 of the 45 manufacturer-supported pages in September 2026). | `bug` if it names another category, `style` if missing |
 | T-O5 | The description names the manufacturer, links the product page, and names and links the reference design when there is one. | `style` |
 | T-O6 | A hero photo of the board. | `style` |
 
@@ -160,7 +168,7 @@ The old slug of a heading with no explicit anchor is its text, lower case, with 
 | T-S2 | `### Sensors {#sensors}`: **IMU:**, **Barometer:**, **Magnetometer:**, each a comma-separated list of parts linked to their manufacturer pages with the bus in parentheses (`(SPI1)`, `(I2C2)`); **Heater:** when fitted, with how it's controlled. A sensor that differs by hardware revision says which revision. | `bug` if wrong, `style` if missing |
 | T-S3 | `### Interfaces {#interfaces}`, in this order, each the board has: **PWM outputs:** (FMU count, plus IO count); **Serial ports:** (count, then the port labels in backticks); **I2C buses:** (count, which are internal); **SPI buses:** (count, and any external bus with its chip selects and data-ready lines); **CAN buses:** (count enabled, and any pinned out but unused); **Ethernet:** (speed); **USB:**; **RC input:**; **Parameter storage:** (FRAM, EEPROM or flash, with part); **SD card:** (slot type, or none). | `bug` if a count is wrong, `style` if missing |
 | T-S4 | `### Electrical data {#electrical_data}`: **Input voltage:**, **Current draw:** (with the heater's share when there's a heater), **Power monitoring:** (number of inputs, analog or digital, and which monitor is on by default). | `bug` if wrong, `style` if missing |
-| T-S5 | `### Mechanical data {#mechanical_data}`: **Dimensions:**, **Weight:**, and **Form factor:** when the board follows a standard (for example [Pixhawk Autopilot Bus](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-010%20Pixhawk%20Autopilot%20Bus%20Standard.pdf)), linked. Operating temperature when the manufacturer gives it. | `style` if missing |
+| T-S5 | `### Mechanical data {#mechanical_data}`: **Dimensions:**, **Weight:**, and **Form factor:** when the board follows a standard (for example [Pixhawk Autopilot Bus](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-010%20Pixhawk%20Autopilot%20Bus%20Standard.pdf)), linked. **Mounting hole spacing:** when the manufacturer gives it (FPV stack boards: `30.5 × 30.5 mm`, `20 × 20 mm`), with the screw size if given (`30.5 × 30.5 mm, M4`); use this label, not "Mounting:", so the hole pattern isn't read as a second, conflicting board size. Operating temperature when the manufacturer gives it. | `style` if missing |
 | T-S6 | **Form**: each item is one list entry, `- **Label:** value`, with the colon inside the bold and labels in sentence case as above. Units carry a space (`480 MHz`, `2 MB`). Sub-headings are sentence case (`Electrical data`, not `Electrical Data`). | `style` |
 
 A board page can add an item the list doesn't have (**OSD:**, **Airspeed:**); it goes in the sub-section it belongs to, in the same form.
@@ -250,6 +258,8 @@ Model, for a PAB module with an optional PX4IO:
 
 ### Telemetry Radios (Optional) {#telemetry}
 
+Under Assembly, as `###`. Many existing pages have it as a `##` section before Serial Port Mapping; don't report that placement on an existing page.
+
 | ID | Check | Severity |
 | --- | --- | --- |
 | T-T1 | Links [telemetry radios](../telemetry/index.md), names the `TELEM` ports as labelled, and says `TELEM1` needs no further configuration. | `style` |
@@ -277,7 +287,7 @@ Model, for a PAB module with an optional PX4IO:
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| T-F1 | The tip: "Most users will not need to build this firmware! It is pre-built and automatically installed by _QGroundControl_ when appropriate hardware is connected." | `style` |
+| T-F1 | The tip: "Most users will not need to build this firmware! It is pre-built and automatically installed by _QGroundControl_ when appropriate hardware is connected." When the badge is `main (PX4 vX.Y)` (a board not yet in a release), the tip starts "From PX4 vX.Y, most users will not need to build this firmware!", using the same version as the badge, so it stays true without an edit after the release. Either form is fine once the board is in a release. | `style` |
 | T-F2 | "To [build PX4](../dev_setup/building_px4.md) for this target:" followed by a ` ```sh ` block with `make <vendor>_<board>_default`, and the other targets for any variant `.px4board` files. | `bug` if the target doesn't exist, `style` if missing |
 
 ### Debug Port {#debug_port}
@@ -294,25 +304,25 @@ Model, for a PAB module with an optional PX4IO:
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| T-A1 | Links the board's quick-start or wiring guide when one exists (`docs/en/assembly/quick_start_*.md`). | `minor` |
-| T-A2 | Contains `### Radio Control {#radio_control}` and `### GPS & Compass {#gps_compass}`. GPS & Compass may defer to a quick-start guide; Radio Control may not. | per sub-section |
+| T-A1 | Opens with a link to the board's quick-start or wiring guide when one exists (`docs/en/assembly/quick_start_*.md`). The board's wiring diagram(s) go in the first sub-section, `### Wiring Diagram {#wiring_diagram}` (`Wiring Diagrams` for several), not in a separate `##` section. Existing pages use `## Assembly/Setup` after Where to Buy holding only this overview; that's the same section without sub-sections yet, so don't report its heading or position on an existing page. | `minor` |
+| T-A2 | Contains `### Radio Control {#radio_control}` and `### GPS & Compass {#gps_compass}`, then `### Telemetry Radios (Optional) {#telemetry}`, `### CAN {#can}` when the board has a CAN bus (the pads or connector as printed, a link to [DroneCAN](../dronecan/index.md), and whether DroneCAN is enabled by default, linking [UAVCAN_ENABLE](../advanced_config/parameter_reference.md#UAVCAN_ENABLE)), and, when the board has an OSD (`CONFIG_DRIVERS_OSD*`), `### OSD {#osd}` saying how to connect the VTX or camera and which port and parameter it uses. Other connect-a-peripheral sections a board needs (RSSI, a camera or VTX power switch) also go here as `###`. GPS & Compass may defer to a quick-start guide; Radio Control may not. | per sub-section |
 
 ### Radio Control {#radio_control}
 
 Every board page needs this section, because how RC reaches the firmware depends on the board's wiring and can't be worked out from the design name.
-The heading is exactly `### Radio Control {#radio_control}`, under Assembly; `RC Input`, `RC`, `RC/SBUS`, `RC Setup`, a `##` level, or a place outside Assembly are `style` (T-P1).
+The heading is exactly `### Radio Control {#radio_control}`, under Assembly; `RC Input`, `RC`, `RC/SBUS` or `RC Setup` are `style` (T-P1). Existing pages have `## Radio Control` (and `## GPS & Compass`) at the top level, as ARK V6X-RT does; report the level or position only on a new page.
 [ARK V6X-RT](https://docs.px4.io/main/en/flight_controller/ark_v6xrt.html#radio_control) is a good model for the content (not its `##` heading).
 
 | ID | Check | Severity |
 | --- | --- | --- |
 | T-RC0 | The section exists. | `bug` |
 | T-RC1 | Says RC is needed only for manual control, and links [selecting a transmitter/receiver](../getting_started/rc_transmitter_receiver.md). | `style` |
-| T-RC2 | **Connection**: the RC port as labelled (bold), its connector type, and whether it goes to the **FMU**, the **PX4IO**, or **both**. When it depends on the carrier or baseboard (a Pixhawk Autopilot Bus module, a board sold with several baseboards), each case separately. | `bug` if missing or wrong |
+| T-RC2 | **Connection**: the RC port as labelled (in code style, as T-P7), its connector type, and whether it goes to the **FMU**, the **PX4IO**, or **both**. When it depends on the carrier or baseboard (a Pixhawk Autopilot Bus module, a board sold with several baseboards), each case separately. | `bug` if missing or wrong |
 | T-RC3 | **Wiring limits**: any protocol the wiring rules out, and why. For example: the IO can't decode CRSF or GHST, so those receivers go on an FMU serial port; a single-wire or RX-only port can't carry CRSF/GHST telemetry; with no PPM capture pin there's no PPM on the FMU. | `bug` if a reader would wire a receiver that won't work, otherwise `style` |
 | T-RC4 | **Built in**: the protocols built in on each path. For the IO, link the [`px4io` protocol list](../modules/modules_driver.md#px4io) rather than repeating it. | `bug` if wrong, `style` if missing |
 | T-RC5 | **Enabled by default**: which protocols work with no configuration on each path, or that none does on the FMU. | `bug` if wrong or missing where the FMU needs configuration |
 | T-RC6 | **Enabling others**: the parameters that map a protocol to a port (`RC_CRSF_PRT_CFG`, `RC_DSM_PRT_CFG`, `RC_GHST_PRT_CFG`, `RC_SBUS_PRT_CFG`, or `RC_PORT_CONFIG` for `rc_input`), linked to `../advanced_config/parameter_reference.md#<NAME>`, and that only one protocol can be active on a port. | `style` |
-| T-RC7 | A PWM receiver (one wire per channel) needs a [PPM encoder](../getting_started/rc_transmitter_receiver.md#pwm-receivers); say so if the board has no PWM RC input. | `minor` |
+| T-RC7 | A PWM receiver (one wire per channel) needs a [PPM encoder](../getting_started/rc_transmitter_receiver.md#connecting-receivers); say so if the board has no PWM RC input. | `minor` |
 
 T-RC4 to T-RC6 can be one list per path, as the ARK V6X-RT page does.
 
