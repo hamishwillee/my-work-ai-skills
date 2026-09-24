@@ -14,7 +14,10 @@ The firmware source in the same repo is the ground truth — lean on sources-of-
 
 ## Mode and feature behaviour
 
-- A claim about what a flight mode does by default, what triggers a mode switch, or what a failsafe does: checked against the relevant module's source or `PRINT_MODULE_*` description text when the claim is specific enough to verify that way (an exact trigger condition, an exact sequence of actions) — a vague behavioural description ("stabilises the vehicle") doesn't need a source citation, but a precise one ("switches to Land after 3 failed GPS fixes") does.
+- A claim about what a flight mode does by default, what triggers a mode switch, or what a failsafe does: checked against the code that implements it (the mode's class in `navigator` or `flight_mode_manager`, the failsafe logic in `commander`), read as Validating the docs against the code in `shared.md` describes, and against the module's `PRINT_MODULE_*` description text.
+  A precise claim ("switches to Land after 3 failed GPS fixes") needs that code as its evidence.
+  A general one ("stabilises the vehicle") can't be wrong in detail, so raise it only when the code shows a case it leaves out that changes what the reader should expect, such as a condition under which the mode behaves differently.
+- The parameters a behaviour depends on: when the code reads a parameter that changes the described behaviour and the page doesn't mention it, that's `style`, or `bug` when the page's description is wrong for a non-default setting a reader is likely to use.
 - A code/CLI snippet showing a command, flag, or config file syntax: checked that the command still exists and takes that syntax, the same way the developer lens checks code samples.
 
 ## Cross-vehicle-type consistency

@@ -3,7 +3,7 @@
 Covers the **simulation** category from the routing table in `shared.md`: the simulator-specific setup pages (`sim_gazebo_gz`, `sim_gazebo_classic`, `sim_jmavsim`, `sim_airsim`, `sim_flightgear`, `sim_jsbsim`, `sim_rotorpy`, `sim_sih`, `sim_xplane`, `sim_hawkeye`) and the shared `simulation` overview page.
 
 These pages straddle PX4's own build/launch tooling and each external simulator's own tooling.
-Treat the PX4 side with the same rigour as the developer lens; treat claims about the external simulator's own behaviour more cautiously, since this skill doesn't have that simulator's source to check against.
+Treat the PX4 side with the same rigour as the developer lens, including Validating the docs against the code in `shared.md` for PX4's own simulation code (`Tools/simulation/`, `src/modules/simulation/`); treat claims about the external simulator's own behaviour more cautiously, since this skill doesn't have that simulator's source to check against.
 
 ## PX4-side launch commands
 

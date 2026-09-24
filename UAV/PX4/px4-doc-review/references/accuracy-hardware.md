@@ -11,6 +11,17 @@ Get the sources of truth in `shared.md` open before starting — items 2 (firmwa
   A wiring instruction that would misconnect hardware if followed is `bug` — this is the category where a wrong claim has physical consequences.
 - A pinout table or diagram added or changed: check pin count and labelling against the board's other documented pinouts (a board with an existing pinout table elsewhere in the repo) rather than trusting the new table in isolation.
 
+## Driver and startup claims
+
+A page for a sensor, peripheral, or other supported part makes claims that PX4's own code settles, so check them there, as Validating the docs against the code in `shared.md` describes, rather than against the vendor's material:
+
+- The supported interfaces and the default bus address, against the driver under `src/drivers/` (its `*_main.cpp` and its `PRINT_MODULE_USAGE_*` options).
+- How the driver is enabled, such as which `SENS_EN_*` or serial `*_CFG` parameter starts it, against the driver's `module.yaml` or parameter file and the startup lines in `ROMFS/px4fmu_common/init.d/rc.sensors` or the board's `init/rc.board_sensors`.
+- Whether the driver is built for the boards the page implies, against `CONFIG_DRIVERS_*` in the relevant `boards/<vendor>/<board>/*.px4board` files.
+
+A claim these contradict is `bug`: a reader who follows it ends up with a part that doesn't start.
+Flight-controller board pages are checked against their own board directory by the `px4-board-doc-review` skill (see Scope in `SKILL.md`); this section covers the parts that connect to them.
+
 ## Physical specifications
 
 - Voltage, current, weight, dimension, and similar numeric physical specs: checked against a linked datasheet/vendor page when the page cites one.

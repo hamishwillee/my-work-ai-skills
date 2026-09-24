@@ -58,7 +58,40 @@ Where two genuinely contradict each other, report the contradiction instead of p
 - **Firmware source**: prefer a local clone of `PX4-Autopilot` if the reviewer has one (check `~/github/PX4/PX4-Autopilot` and sibling common locations first, otherwise ask the reviewer or fall back to fetching raw file contents from GitHub at the PR's base SHA via `gh api repos/PX4/PX4-Autopilot/contents/<path>?ref=<base-sha>` or `raw.githubusercontent.com`).
   Never assume a clone's checked-out branch matches the PR's base — check out or fetch the base SHA rather than trusting whatever the clone currently has checked out, since a stale local branch produces false negatives.
 - **Vendor/manufacturer material**: `WebFetch` the URL the page itself links.
+- **Code a PR changes**: read it at the PR's head SHA, not the base, since the head is what the docs will describe once the PR merges.
 - Grammar/spelling and the style guide need no external source beyond `references/style-guide.md` — they aren't verified against the firmware source.
+
+### Validating the docs against the code
+
+This applies to every accuracy lens except contribute, whose pages describe the project's processes rather than its code.
+A changed doc passage about firmware, tooling or a board is validated against the code it describes, not only against other doc pages.
+That holds whether or not the PR itself changes code.
+
+**Find the code the passage documents.**
+Use the names the passage itself uses: a parameter, module, driver, command, uORB topic, board, or script.
+Search for them on the base branch (`grep -rn` over `src/`, `msg/`, `boards/`, `ROMFS/` and `Tools/`), which locates the module or driver directory, its parameter definitions (`module.yaml` or `*_params.c`), its `Kconfig`, and its startup lines in `ROMFS/`.
+A docs-only PR still gets this: it is the only way to check a claim the author wrote from memory.
+
+**Read around the documented area, not just the line a claim names.**
+Read the code that implements the described behaviour: the function or state machine the passage explains, the full parameter definitions of the module (so an enum's documented options can be compared with all of its values), and the conditions under which the behaviour happens.
+This is what catches a passage that is accurate as far as it goes but leaves out a case, option, or condition that would change what a reader does.
+`git -C <clone> log --oneline -10 -- <path>` on that code shows recent changes the passage may predate.
+Keep the reading bounded to what the changed passage covers; this is validation of the docs, not a review of the code.
+
+**When the PR changes code, check both directions.**
+
+- The changed docs against the changed code: every claim about it matches the code at the head SHA (sources-of-truth item 1).
+- The changed code against the docs: a user-visible effect of the code change, such as a new or renamed parameter, command option, uORB field, default, or behaviour, that the PR's changed pages should describe and don't.
+  Report it on the page and section where it belongs.
+  An omission that leaves the reader with a wrong picture of the behaviour is `bug`; a missing mention of something new that doesn't make any existing claim wrong is `style`.
+- Other pages the change makes stale: search `docs/en/` for the old name or value of anything the code change renames, removes, or changes the default of.
+  A stale reference on a page the PR doesn't touch is listed below the report's tables, with its file and line, rather than in the per-file tables, since it's not on a changed line.
+
+Skip generated pages here too (see Generated docs above): regeneration updates them.
+
+**Cite the code.**
+Evidence for a finding from this section names the file and line at the SHA you read, as the Verification section below requires.
+When the code is too involved to settle a claim with confidence, say what you read and raise the claim as a question for the reviewer rather than as a `bug`.
 
 ## Category routing
 

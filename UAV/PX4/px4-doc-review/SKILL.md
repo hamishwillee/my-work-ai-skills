@@ -125,7 +125,7 @@ Pass it as written rather than as your own summary of it: the agent's rules come
 > Repository PX4/PX4-Autopilot, PR [number], head SHA [sha], base SHA [sha].
 > Your assignment is [every changed docs/en/ file in the PR / this batch / this category's batch]: [file paths].
 > Review only the files listed above — nothing else changed in this PR is yours to check.
-> [If the PR also changes non-doc files, list them here as context: these are a source of truth per shared.md, not files to review.]
+> [If the PR also changes non-doc files, list them here as context: these are a source of truth per shared.md, not files to review, and its Validating the docs against the code section says how to check the docs against them in both directions.]
 >
 > Work the diff systematically.
 > Your lens is done only when every rule your file names has been applied to every changed line you hold.
@@ -241,17 +241,18 @@ Other requirements:
 
 **What goes below the tables.**
 No closing remarks; the summary opens the review and the tables carry it.
-These nine are permitted, in this order, each only when it applies:
+These ten are permitted, in this order, each only when it applies:
 
 1. Suggestion blocks too long for the Suggestion column, each keyed to its file and line
 2. Pre-existing issues on lines this PR didn't change (the Verify section of `references/shared.md`), including pre-existing link-check findings
-3. Link-check notes: external errors with no fix to suggest, and permanent redirects to a 404 or generic page (the Triage section of `references/link-check.md`)
-4. Where the sources disagree (the Sources of truth section of `references/shared.md`)
-5. A cross-vehicle-type or cross-simulator inconsistency noted by an accuracy lens as a question for the reviewer, rather than a finding on the changed lines themselves
-6. A single note if a changed folder wasn't in the routing table (the Category routing section of `references/shared.md`)
-7. A single note if the PR description was empty (the Scope step)
-8. A single note if the review ran in one context rather than one subagent per lens (the Dispatch step)
-9. A one-line offer to run the link check with external links on, over the changed files
+3. Pages this PR doesn't change that its code change makes stale, each with its file and line (Validating the docs against the code in `references/shared.md`)
+4. Link-check notes: external errors with no fix to suggest, and permanent redirects to a 404 or generic page (the Triage section of `references/link-check.md`)
+5. Where the sources disagree (the Sources of truth section of `references/shared.md`)
+6. A cross-vehicle-type or cross-simulator inconsistency noted by an accuracy lens as a question for the reviewer, rather than a finding on the changed lines themselves
+7. A single note if a changed folder wasn't in the routing table (the Category routing section of `references/shared.md`)
+8. A single note if the PR description was empty (the Scope step)
+9. A single note if the review ran in one context rather than one subagent per lens (the Dispatch step)
+10. A one-line offer to run the link check with external links on, over the changed files
 
 To cite a line as a GitHub link, use the head SHA in full, not abbreviated, and a range with one line of context on each side:
 `https://github.com/PX4/PX4-Autopilot/blob/<full-sha>/docs/en/.../index.md#L12-L16`
