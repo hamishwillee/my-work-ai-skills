@@ -227,7 +227,7 @@ Severity is defined in `references/shared.md`, and the lens agents assign it by 
 | ---- | ----- | -------- | ---------- |
 | 24 | `MPC_LAND_SPEED` default given as `0.7 m/s`; source (`src/modules/mc_pos_control/PositionControl.cpp`) defines it as `0.5` | bug | Correct the default to `0.5 m/s` or update the source reference |
 | 41 | "The vehicle will land, using the descent rate to control the approach": `using` attaches to the vehicle, which doesn't use the descent rate | style | "The vehicle lands, controlling its approach with the descent rate." |
-| 58 | Section heading "Landing Behaviour" uses Title Case | style | Change to sentence case: "Landing behaviour" |
+| 58 | Section heading "Landing behaviour" uses sentence case | style | Use First Letter Capitalisation: "Landing Behaviour" |
 
 Other requirements:
 

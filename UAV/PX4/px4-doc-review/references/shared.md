@@ -133,4 +133,4 @@ A finding that fails verification is dropped, not downgraded.
 
 The line between `bug` and `style` sits at what the page tells the reader or asks them to do.
 A wrong parameter default, a wiring diagram that doesn't match the connector, or a command that no longer exists is `bug`.
-A heading in Title Case instead of sentence case, or American spelling outside the exceptions list, is `style`.
+A heading in sentence case instead of First Letter Capitalisation, or American spelling outside the exceptions list, is `style`.

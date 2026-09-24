@@ -26,7 +26,9 @@ Each of the three has exactly one job; using one for another's job is a `style` 
 ## Headings
 
 - Page title is a single first-level heading (`#`); every other heading is `##` or deeper — never a second `#` on the page, and never skip straight from `#` to `####`.
-- Headings and the page title use "First Letter Capitalisation" — capitalise the first letter of the heading, not every word (sentence case, not Title Case).
+- Headings and the page title use "First Letter Capitalisation": capitalise the first letter of each major word (Title Case), as in "Building the PX4 Bootloader" or "Auto-Arming on Boot".
+  Articles, short prepositions and conjunctions stay lowercase unless they start the heading.
+  Literal values in a heading, such as a parameter name or a UI option label, keep their own casing.
   Check consistency against sibling headings on the same page and comparable pages in the same folder when the rule alone is ambiguous.
 - No bold, italics, or code markup inside a heading.
 
