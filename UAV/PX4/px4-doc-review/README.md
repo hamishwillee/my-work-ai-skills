@@ -10,6 +10,8 @@ It performs the following checks on every changed doc file:
 - Technical accuracy, checked against sources appropriate to the part of the docs tree the file is in — firmware source, sibling pages, linked vendor material, or the project's own contributing guide
 - Links, using the project's own link checker over the changed files (the same check CI runs), with a suggested fix for each broken link where one can be found, and an optional external-link check
 
+Some changes in a docs PR are handed to sibling skills, whose reports are included as their own sections: parameter definitions to [`px4-param-review`](../px4-param-review), uORB messages to [`px4-uorb-review`](../px4-uorb-review), and flight-controller boards to [`px4-board-doc-review`](../px4-board-doc-review).
+
 It can also run the link check on its own over your checkout: all of `docs/en/` on `main`, or the files changed on another branch.
 
 The skill does not edit files or post comments to GitHub, except that a standalone link check can apply the fixes you accept, and add link-checker ignore entries for links you confirm.

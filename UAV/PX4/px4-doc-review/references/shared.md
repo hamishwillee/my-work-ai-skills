@@ -22,7 +22,7 @@ Some pages under `docs/en/` are generated from source by `Tools/ci/metadata_sync
 | Generated page | Source |
 | --- | --- |
 | `docs/en/modules/modules_*.md` | `PRINT_MODULE_DESCRIPTION` and `PRINT_MODULE_USAGE_*` macros in the module's source |
-| `docs/en/advanced_config/parameter_reference.md` | Parameter definitions: `module.yaml` and `PARAM_DEFINE_*` in `src/**` |
+| `docs/en/advanced_config/parameter_reference.md` | Parameter definitions: `module.yaml`, `*_params.yaml` and `PARAM_DEFINE_*` in `src/**`, reviewed by the `px4-param-review` skill rather than these lenses |
 | `docs/en/airframes/airframe_reference.md` | Airframe file headers in `ROMFS/px4fmu_common/init.d*/airframes/` |
 | `docs/en/msg_docs/<Message>.md` and `docs/en/msg_docs/index.md` | `msg/*.msg` and `msg/versioned/*.msg`, reviewed by the `px4-uorb-review` skill rather than these lenses |
 | `docs/en/middleware/dds_topics.md` | `src/modules/uxrce_dds_client/dds_topics.yaml` |
