@@ -83,7 +83,7 @@ It is based on the [<reference design>](<standard url>) <if any>, and <what dist
 
 | ID | Check | Severity if failed |
 | --- | --- | --- |
-| T-P1 | Headings are exactly as in the skeleton, including the explicit anchor. A heading with the right meaning but different words, level, or anchor is reported with the exact heading as the suggestion. | `style` |
+| T-P1 | Headings are exactly as in the skeleton, including the explicit anchor. A heading with the right meaning but different words, level, or anchor is reported with the exact heading as the suggestion. When the suggestion changes a heading's level, check the headings that follow it: promoting a `###` to `##` re-parents every `###` after it (up to the next `##`) under the promoted section, so the suggestion says where each of those goes, usually moved above the promoted section to stay with its old parent. | `style` |
 | T-P2 | Sections are in skeleton order. Report the first out-of-order section only, not every section after it. | `minor` |
 | T-P3 | No `TODO`, `TBD`, or placeholder text (`<Product>`, `xxx`) anywhere on the rendered page. | `bug` |
 | T-P4 | No leftover HTML comments holding guidance, checklists, or raw data (`<!-- ... -->`). A section holding only a `<!-- placeholder ... -->` stub ("Stubs for missing sections" below) isn't a T-P4 finding: it's reported as the missing content it stands in for, at that check's severity. | `style` |
@@ -91,7 +91,7 @@ It is based on the [<reference design>](<standard url>) <if any>, and <what dist
 | T-P6 | Every referenced image exists in the PR or the repository. | `bug` |
 | T-P7 | Port, connector and solder-pad names are written as printed on the board, and the same way everywhere on the page: in code style (`TELEM1`, `RC IN`, `T4`/`R4`, `M1`–`M4`, `CAN1`), including in tables and when telling the reader what to plug in. A peripheral name (`I2C2`, `CAN1`, `UART4`) is a label only when it is printed on the board as a port or connector name, as it is on many Pixhawk-style boards; check the board photo or pinout. Otherwise it's a peripheral and stays plain. MCU pins (PB8), timers (TIM2) and connector pin positions ("pin 3") are never labels and stay plain. Don't flag a page for using backticks rather than bold for a connector label. | `style` |
 | T-P8 | A block diagram or schematic of the main components (sensors, power supply) is on the page or linked from it (board support guide, step 5). | `bug` |
-| T-P9 | Every `##` and `###` heading has an explicit anchor, following "Anchors" below. | `style` |
+| T-P9 | Every skeleton heading on the page has its explicit anchor, as "Anchors" below gives it. A heading that isn't in the skeleton needs no anchor, so don't report one for lacking it. | `style` |
 | T-P10 | Adding or changing an anchor on an existing page doesn't break links to it: every link to the old slug (`<page>.md#<old-slug>` elsewhere in `docs/en/`, and `#<old-slug>` on the page itself) is updated in the same PR. | `bug` per link left broken |
 
 ### Stubs for missing sections
@@ -134,11 +134,15 @@ Re-check them occasionally: pages get rewritten.
 
 ### Anchors
 
-Every heading below the H1 carries an explicit anchor, so links survive rewording and translation.
+Skeleton headings carry an explicit anchor, so links to the sections every board page shares survive rewording and translation.
 
 - **Skeleton headings** use the anchor shown in the skeleton, exactly.
   Several are established short forms that differ from the heading text (`{#store}`, `{#telemetry}`, `{#gps_compass}`) and must not be "corrected".
-- **Any other heading** (an extra section such as `## Peripherals` or `### GPS2 Port`) takes an anchor made from its text: lower case, words joined by underscores, `&` and punctuation dropped, parenthetical qualifiers such as `(Optional)` dropped.
+- **Any other heading** (an extra section such as `## Peripherals` or `### GPS2 Port`, or a per-connector pinout heading) doesn't need an anchor, and a missing one is not a finding.
+  An anchor the author does give it is made from its text: lower case, words joined by underscores, `&` and punctuation dropped, parenthetical qualifiers such as `(Optional)` dropped.
+- **Separate anchor tags**: an `<a id="..."></a>` on its own line just before a heading, on any heading, skeleton or not, is `style`.
+  The suggestion moves the id into the heading as `{#...}`, keeping the same id so links to it still work (`<a id="bootloader"></a>` + `## PX4 Bootloader Update` → `## PX4 Bootloader Update {#bootloader}`).
+  An `<a id>` that isn't attached to a heading (one marking a table or a paragraph) stays.
   For example `## Peripherals {#peripherals}`, `### GPS2 Port {#gps2_port}`, `### Power & Safety {#power_safety}`.
 - **Unique on the page**: two headings with the same anchor are `bug` (the second can't be linked).
   Repeated sub-headings under different sections (for example `### Pinout` under each baseboard) take a prefix from their parent: `{#v2a_pinout}`, `{#mini_pinout}`.
@@ -173,6 +177,17 @@ The old slug of a heading with no explicit anchor is its text, lower case, with 
 
 A board page can add an item the list doesn't have (**OSD:**, **Airspeed:**); it goes in the sub-section it belongs to, in the same form.
 An item the board doesn't have is left out, except **USB:** and **RC input:**, which say `No` when absent.
+
+**A flat features list in place of Specifications.**
+Pages copied from FPV-style boards often have `## Key Features` or `## Features`: one flat list mixing processor, sensors, connectors and power.
+Report it as one finding on its heading line (T-P1, T-S1–T-S6), not as one finding per missing sub-section.
+Its suggestion is the restructured section, written out in full below the tables in place of a placeholder stub:
+
+- **Keep every fact.** Move each list item into the sub-section it belongs to (`Processor`, `Sensors`, `Interfaces`, `Electrical data`, `Mechanical data`), in the `- **Label:** value` form of T-S6.
+  An item that fits no label (an optional flash chip, a connector type) goes in the closest sub-section as its own entry, not dropped.
+- **Fill the gaps from the board source.** Add what T-S1–T-S4 require and the board files settle: the full part number and its core, flash and RAM (`board-sources.md`, "Processors"), each sensor's bus (`rc.board_sensors`, `spi.cpp`), internal and external I2C/SPI buses (`i2c.cpp`, `spi.cpp`), parameter storage (`CONFIG_BOARD_PARAM_FILE`, `FLASH_BASED_PARAMS`), and power monitoring (`board_config.h` ADC channels, `board_adc` in `rc.board_sensors`).
+- **Cite each addition.** List, under the suggested block, every value that wasn't on the page with the file and line it came from, so the reviewer can check each one without redoing the work.
+- **Ask for the rest.** Values only the manufacturer can supply (current draw, operating temperature) are left out of the block and named as questions for the author, never guessed.
 
 Model, for a PAB module with an optional PX4IO:
 
