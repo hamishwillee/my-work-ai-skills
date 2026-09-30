@@ -77,6 +77,9 @@ Every finding needs evidence you actually checked:
 - **Against comparators**: name at least two comparator pages that agree, with the line in each.
   One comparator on its own is an observation for the notes below the tables, not a finding.
 - **Against published requirements**: quote the requirement and name its page.
+- **Against manufacturer material**: quote the exact text from the page you fetched, with its URL.
+  A `WebFetch` answer is a model's summary of the page, and it can misread a spec table (a JST-GH port reported as JST-SH), so before raising a `bug` on manufacturer evidence alone, fetch the page a second time with a prompt asking only for that one spec, verbatim.
+  If the two fetches disagree, or the board photo or board files contradict the page, raise it as a question for the author below the tables, not as a finding.
 - **Line numbers**: match the head SHA's file.
   A finding about something *missing* anchors to the line where it would go (the heading it belongs under, or line 1 for a page-level gap) and says so.
 
