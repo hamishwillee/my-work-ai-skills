@@ -23,7 +23,7 @@ Work down the page in skeleton order (`page-template.md`), one section per sugge
 A usual run:
 
 1. Version badge
-2. Opening paragraph
+2. Opening paragraph (always with the range; the span across models on a family page)
 3. Hero image and any top-of-page notes
 4. Specifications
 5. Where to Buy
@@ -51,18 +51,20 @@ Each suggestion gives, in this order:
 Then ask for approval and stop.
 Apply the edit only after the reviewer answers, exactly as approved, and confirm it in one line before the next suggestion.
 
-**When the information can't be found** (no purchase link, no pinout in any manufacturer document), say what was searched and ask the reviewer how to proceed for that section rather than inventing content or deciding for them.
-Whatever they choose, add the gap to the questions for the manufacturer.
-
-**Never write a fact you haven't sourced.**
+**If it can't be proven, it isn't asserted** (`shared.md`).
+When the information for a section can't be found (no purchase link, no pinout in any manufacturer document), leave the section or the value out, and say what was searched.
 A section built from guesses is worse than a missing one: this page is what someone wires a sensor from.
+The reviewer can supply a fact from their own knowledge, and then it goes in on their say-so.
+Add the gap to the questions for the manufacturer, unless the product is discontinued.
+
+**Unproven claims already on the page** are proposed for removal in the suggestion for their section, each named as a point to decide, since the reviewer may know them to be true.
 
 ## What turns up along the way
 
 Reading the manual and the driver closely surfaces things that aren't page edits.
 Keep a running list and give it with the suggestion that turned it up, then again in full at the end:
 
-- **Questions for the manufacturer**: what no source settles (NDAA status, which interface variant a store unit ships as, whether a newer model or connection works with the driver).
+- **Questions for the manufacturer** (never for a discontinued product; `shared.md`, "Discontinued products"): what no source settles (NDAA status, which interface variant a store unit ships as, whether a newer model or connection works with the driver).
 - **Driver observations**: where the driver doesn't do what the manufacturer says an integrator must (`source-consistency.md`, "What the manufacturer requires").
   These are never page findings.
 - **Contacts**: who could review the page or answer the questions (`shared.md`, "Finding who to ask").

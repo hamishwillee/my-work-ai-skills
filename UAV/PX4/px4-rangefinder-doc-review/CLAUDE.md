@@ -31,6 +31,8 @@ Exceptions: table rows and YAML frontmatter values stay on one line each (markdo
   Keep the two apart: a lens never edits, and the update mode never applies anything the reviewer hasn't seen.
 - Manufacturer facts and contacts, like the driver facts, are gathered once in Scope.
   The lenses were unable to verify wiring on the first real run because nobody had read the manual; don't let a lens be the first to open it.
+- Nothing unproven goes onto a page, and a discontinued product gets no manufacturer questions (`shared.md`).
+  Both came from the reviewer during the TeraRanger update; don't soften them into "ask the reviewer".
 - Wording of shared steps belongs to sibling-comparison, presence to completeness.
   When both report the same line, tighten that boundary rather than relying on the merge.
 - This skill never reviews prose and never raises a finding on a file under `src/`, `boards/` or `ROMFS/`.

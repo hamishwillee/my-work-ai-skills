@@ -1,7 +1,7 @@
 ---
 name: px4-rangefinder-doc-review
 description: Review of rangefinder (distance sensor) documentation in PX4-Autopilot pull requests — the sensor's page under docs/en/sensor/ or docs/en/dronecan/ checked against a numbered page template, against the driver that runs it (src/drivers/distance_sensor/<driver>/, its parameters, startup lines and Kconfig), against the pages of similar rangefinders (same connection, same manufacturer), and against where it must be listed (SUMMARY.md, sensor/rangefinders.md). Handles single-model pages and family pages that cover several models. Use when a PX4-Autopilot PR adds or changes a driver under src/drivers/distance_sensor/ or a rangefinder page, when px4-doc-review hands off such a PR, when the user asks to review a rangefinder's docs on a local branch, or when the user asks for an existing rangefinder page to be updated, fixed or restructured to the template (suggested and applied one approved change at a time). Use px4-doc-review for the page's prose, px4-param-review for the driver's parameter descriptions, and review-pr or code-review for the driver itself.
-allowed-tools: Bash(gh pr view:*) Bash(gh pr diff:*) Bash(gh pr list:*) Bash(gh api:*) Bash(git -C:*) Bash(grep:*) Bash(diff:*) Bash(ls:*) WebFetch
+allowed-tools: Bash(curl:*) Bash(gh pr view:*) Bash(gh pr diff:*) Bash(gh pr list:*) Bash(gh api:*) Bash(git -C:*) Bash(grep:*) Bash(diff:*) Bash(ls:*) WebFetch
 ---
 
 # PX4 rangefinder documentation review
@@ -92,6 +92,7 @@ The pinout, power, mounting, serial settings and frame format are usually there 
 If the material genuinely can't be read, say so in the facts and below the tables.
 
 **Find who to ask** (`references/shared.md`, "Finding who to ask"), for a new rangefinder or an existing page: the people who could review the page or answer what the sources leave open.
+For a discontinued product, look only for driver and page contributors, not a manufacturer contact (`references/shared.md`, "Discontinued products").
 
 Then **choose the comparator pages** by the rules in `references/sibling-comparison.md` ("Choosing comparator pages"), so all three lenses use the same set.
 
@@ -174,14 +175,15 @@ Below the tables, only these, in this order, each only when it applies:
 
 1. Suggestion blocks too long for the Suggestion column, then the stubs for missing sections, one block per run of adjacent missing sections, in page order
 2. Firmware questions the docs can't settle (a driver range limit narrower than the manufacturer's, a model in the parameter the driver doesn't handle, something the manufacturer requires of an integrator that the driver doesn't do), for the reviewer to raise; point to `review-pr` for the driver review itself
-3. Questions for the manufacturer: what no source settles and only they can answer (NDAA status, which interface variant is sold by default, whether a newer model or connection works with the driver)
+3. Questions for the manufacturer: what no source settles and only they can answer (NDAA status, which interface variant is sold by default, whether a newer model or connection works with the driver). Never for a discontinued product.
 4. Who to ask: the contacts found in Scope, each with the handle, what ties them to this sensor, and how recent that is
 5. Comment drafts, when there are firmware questions or manufacturer questions and someone to send them to (see below)
-6. Where the sources disagree, including comparators that agree with each other against the template
-7. Claims that matter for wiring but couldn't be checked against any source
-8. A module-reference anchor that won't exist until the reference is regenerated after merge
-9. A single note that the page's prose wasn't reviewed, suggesting `px4-doc-review` (standalone runs only)
-10. A single note if the review ran in one context
+6. Unproven claims: what the page already says that no source backs (`references/shared.md`, "If it can't be proven, it isn't asserted"), as candidates for removal
+7. Where the sources disagree, including comparators that agree with each other against the template
+8. Claims that matter for wiring but couldn't be checked against any source
+9. A module-reference anchor that won't exist until the reference is regenerated after merge
+10. A single note that the page's prose wasn't reviewed, suggesting `px4-doc-review` (standalone runs only)
+11. A single note if the review ran in one context
 
 **Comment drafts.**
 A draft is a review comment for the reviewer to post, never one you post.

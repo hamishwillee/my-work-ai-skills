@@ -97,7 +97,7 @@ Check the Firmware Support section, and anything the opening says about availabi
 Input voltage, current, dimensions, weight, pin order and connector type aren't in the driver.
 Check them against the manufacturer facts (`shared.md`), and against the same figures elsewhere on the page.
 A figure the manufacturer facts contradict is `bug`.
-A figure they don't cover is not a finding; if it matters to wiring (a pin order, a supply voltage), note it below the tables as unverified.
+A figure they don't cover is not a finding; return it as an unproven claim for the notes below the tables, along with any other statement on the page that neither the driver nor the manufacturer facts back.
 Where the facts are marked `not read`, every wiring claim on the page is unverified: say that once below the tables rather than once per claim.
 
 ### Variants and links

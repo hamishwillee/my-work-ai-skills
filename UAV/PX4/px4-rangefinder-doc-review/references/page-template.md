@@ -39,7 +39,7 @@ The sentences shown are the standard wording: use them as written, with the brac
 
 <Badge type="tip" text="PX4 v1.xx" />
 
-The [<Manufacturer> <Model>](<product url>) is a <technology> [rangefinder](../sensor/rangefinders.md) with a range of <min>–<max> m and a <rate> Hz update rate.
+The [<Manufacturer> <Model>](<product url>) is a <technology> [rangefinder](../sensor/rangefinders.md) with a range of <min>–<max> m <and a <rate> Hz update rate>.
 It connects to the flight controller using <connection>.
 <What PX4 uses it for, or what sets it apart>.
 
@@ -127,6 +127,8 @@ The driver is built into firmware by the [board configuration](../hardware/porti
 It is not part of the common set of rangefinder drivers (`CONFIG_COMMON_DISTANCE_SENSOR`), so it is only present in the firmware for boards that set that key.
 At the time of writing these are: <boards, each linked to its page>.
 ```
+
+When no board sets the key, leave the last line out and say nothing about which boards have it: "only present in the firmware for boards that set that key" is enough, and a statement that no board does goes stale silently.
 
 ### In common with flight-controller pages
 
@@ -241,7 +243,7 @@ A page that covers two near-identical products with one line of difference (ARK 
 | --- | --- | --- |
 | R-O1 | One H1, `# <Manufacturer> <Model> <Kind>` (`# JRT PTGL-100 Laser Rangefinder`), naming the product the same way as the `SUMMARY.md` entry and the `rangefinders.md` row. | `style` |
 | R-O2 | `<Badge type="tip" text="..." />` directly under the H1, naming the first PX4 release that supports the rangefinder, in the form the flight-controller pages use (`grep -rho '<Badge type="tip" text="[^"]*"' docs/en/flight_controller/`): `main (PX4 vX.Y)` for one not yet in a release. Expected on every new page; on an existing page only when the PR adds it or changes the driver's first release. | `minor` |
-| R-O3 | The first paragraph names the manufacturer and model, links the product page, and gives the technology (laser ToF, infrared ToF, radar, ultrasonic), the range as minimum and maximum, the update rate, and the connection. | `bug` if wrong, `style` if missing |
+| R-O3 | The first paragraph names the manufacturer and model, links the product page, and gives the technology (laser ToF, infrared ToF, radar, ultrasonic), the range as minimum and maximum, and the connection. **Range is always present**: it's the first thing a reader chooses a rangefinder by. On a family page, where it differs by model, the opening gives the span across the models ("ranges from 3 m to 60 m, depending on the model") and the Supported Models table gives each. The update rate is worth giving when a source states it, but isn't required, and its absence is not a finding. | `bug` if wrong, `style` if the range, technology or connection is missing |
 | R-O4 | Says what the data is for, matching what the driver publishes: a rangefinder publishing `distance_sensor` links [Distance Sensors (Rangefinders)](../sensor/rangefinders.md); one publishing `obstacle_distance` says it's for [Collision Prevention](../computer_vision/collision_prevention.md) and doesn't offer it for terrain following or landing. | `bug` if wrong, `style` if missing |
 | R-O5 | A hero photo of the sensor, after the opening paragraph, stored locally (R-P5). Expected on every page. | `style` |
 | R-O6 | When the driver isn't in the common set (`driver-sources.md`, "In firmware"), the info note from the skeleton, linking `#firmware_support`. A page that reads as though the driver is always present when it isn't is the `bug` case: the reader looks for a parameter that isn't there. | `bug` or `style` |
@@ -304,7 +306,7 @@ The values come from the facts worksheet (`driver-sources.md`, "In firmware").
 | R-F1 | The section exists, as `## Firmware Support {#firmware_support}`, between Hardware Setup and PX4 Configuration. | `style` if missing; `bug` if missing and the driver isn't in the common set |
 | R-F3 | **The driver**: named, and linked to its module reference. | `style` |
 | R-F4 | **The keys**: every board configuration key that builds the driver, each in code style with `=y`. That's the driver's own key, `CONFIG_DRIVERS_DISTANCE_SENSOR_<X>`, and also `CONFIG_COMMON_DISTANCE_SENSOR` when the common set selects the driver. The page says what each is: the common set, or this driver alone. | `bug` for a key that's wrong, in an obsolete form (`distance_sensor/cm8jl65`, `drivers/ll40ls`), or a common-set key given for a driver the set doesn't select; `style` for a key left out |
-| R-F5 | **How widely it's built**, following from which key applies: in the common set, "most boards" (the standard sentence); not in it, that only boards setting the driver's own key have it, naming them, each linked to its flight-controller page. | `bug` if it says "most boards" for a driver outside the common set, or the reverse; `bug` for a named board that doesn't build it; `style` if missing |
+| R-F5 | **How widely it's built**, following from which key applies: in the common set, "most boards" (the standard sentence); not in it, that only boards setting the driver's own key have it, naming them, each linked to its flight-controller page. When no board sets it, the page names none and doesn't say so. | `bug` if it says "most boards" for a driver outside the common set, or the reverse; `bug` for a named board that doesn't build it; `style` if missing |
 | R-F6 | **How to check a board**: look for the key(s) in `boards/<vendor>/<board>/default.px4board`, or see whether the enabling parameter is listed in _QGroundControl_. | `style` |
 | R-F7 | **How to add it**: add a key to the board's `default.px4board`, or enable the driver in [boardconfig](../hardware/porting_guide_config.md#px4-menuconfig-setup) under **Drivers > Distance sensors**, then [build and upload](../dev_setup/building_px4.md). | `style` if missing, `bug` if the menu path or key is wrong |
 | R-F8 | **How it's enabled**: says that being in firmware doesn't start the driver, and links PX4 Configuration for the parameter that does. A driver a board starts by itself (a line in its `rc.board_sensors`) says so, naming the board. | `style`; `bug` if it says the driver starts automatically when it doesn't |

@@ -25,7 +25,7 @@ A `no` or `partial` also becomes a finding, at the severity given.
 | **Listed in the rangefinder index** (R-L2, R-L3) | A table row with its link reference, and a summary section, in `docs/en/sensor/rangefinders.md`. A row with no summary, or the reverse, is `partial`. | `bug` for the row, `style` for the summary |
 | **PX4 version badge** (R-O2) | `<Badge>` below the H1 | `minor` |
 | **Hero image** (R-O5) | A photo of the sensor near the top, stored locally | `style` |
-| **What it is** (R-O3) | Opening gives technology, range, update rate and connection | `style` |
+| **What it is** (R-O3) | Opening gives technology, range and connection. Update rate is optional. | `style` |
 | **Where to buy** (R-B1) | A real purchase or product link | `style`; `bug` for a placeholder |
 | **Specifications** (R-S1) | The list, with at least range, interface, input voltage and current draw | `style` |
 | **Pinouts** (R-N1) | On the page or linked from it. When the manufacturer facts hold the pinout, put it in the stub as the suggested table. | `bug` |
@@ -48,6 +48,7 @@ Every other template check (headings, anchors, order, the remaining section chec
 
 A section that holds only a `<!-- placeholder ... -->` stub counts as missing, for the checklist and for findings.
 For every missing skeleton section, return a stub as `page-template.md` ("Stubs for missing sections") describes, keyed to the line it goes after, so the report can offer it.
+Where the worksheet or the manufacturer facts hold the content (a pinout, the firmware keys, mounting limits), write the suggested text out in full instead of a placeholder; a stub never contains a value neither of them proves (`shared.md`, "If it can't be proven, it isn't asserted").
 
 ## Family pages
 

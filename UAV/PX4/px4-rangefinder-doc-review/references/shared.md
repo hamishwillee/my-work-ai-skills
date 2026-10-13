@@ -145,6 +145,33 @@ Every finding needs evidence you actually checked:
 
 A finding that fails verification is dropped, not downgraded.
 
+## If it can't be proven, it isn't asserted
+
+Anything this skill proposes for a page (a suggestion, the text in a stub, an edit in update mode) contains only facts backed by the driver source or by a manufacturer document that was actually read.
+Where neither proves a value, it is left out, and the report says what couldn't be sourced.
+
+- A reseller's page quoting a specification is weaker than the manufacturer's own document; say which it is, so the reviewer can decide.
+- Your own inference or conversion ("either ground pin will do", watts turned into milliamps) is marked as such, never presented as the source's statement.
+- "Still listed" is what a shop page proves, not "in stock".
+- The reviewer can supply a fact from their own knowledge; then it's theirs to assert, and the edit says so in its evidence.
+
+The same test applies to what's already on the page.
+A claim no source backs (a discontinuation month, "adapter required", "faster than sonar") is not a finding, since it may well be true, but it is listed below the tables as **unproven**, and in update mode it is proposed for removal unless the reviewer confirms it.
+
+## Discontinued products
+
+When the rangefinder facts give the status as discontinued:
+
+- **No questions for the manufacturer**, no manufacturer contact, and no comment drafts addressed to one.
+  There is nobody to answer, so what the sources leave open stays open: it isn't asserted, per the rule above.
+  Driver observations and their "FYI only" drafts are unaffected.
+- **Expect the manufacturer's documents to be gone.**
+  Use an archived copy of the manufacturer's own document (Internet Archive), or a copy a distributor still hosts, and say in the manufacturer facts which it is.
+  `WebFetch` can't read `web.archive.org`; fetch the raw file with `curl -L "https://web.archive.org/web/<year>id_/<original url>"` into a scratch directory, and check it downloaded whole before relying on it.
+  The page's Further Information links those copies, labelled as archived or distributor-hosted (R-I2 can't ask for a "current" revision).
+- **Where to Buy** says the manufacturer no longer sells it, and names any reseller that still lists it.
+- **The discontinued form** (`page-template.md`, R-O7) is checked across the page, `SUMMARY.md` and every `rangefinders.md` row: a model marked discontinued in one place and current in another is `bug`.
+
 ## Severity
 
 | Severity | Meaning |
