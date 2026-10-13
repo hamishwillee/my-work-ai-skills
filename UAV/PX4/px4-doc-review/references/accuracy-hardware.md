@@ -21,6 +21,7 @@ A page for a sensor, peripheral, or other supported part makes claims that PX4's
 
 A claim these contradict is `bug`: a reader who follows it ends up with a part that doesn't start.
 Flight-controller board pages are checked against their own board directory by the `px4-board-doc-review` skill (see Scope in `SKILL.md`); this section covers the parts that connect to them.
+Rangefinder pages are checked against their driver, claim by claim, by the `px4-rangefinder-doc-review` skill (see Scope in `SKILL.md`), so on those pages leave the driver and startup claims to it and apply the rest of this lens.
 
 ## Physical specifications
 
