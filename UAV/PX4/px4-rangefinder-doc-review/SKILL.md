@@ -91,6 +91,8 @@ A PDF has to be extracted to text first (`references/shared.md`, "Reaching the s
 The pinout, power, mounting, serial settings and frame format are usually there and nowhere else, and without them the lenses can only report those as unverified.
 If the material genuinely can't be read, say so in the facts and below the tables.
 
+**Look at the page's wiring images** (`references/shared.md`, "Wiring images") and record what each shows and where it comes from, so the lenses can check them against the text.
+
 **Find who to ask** (`references/shared.md`, "Finding who to ask"), for a new rangefinder or an existing page: the people who could review the page or answer what the sources leave open.
 For a discontinued product, look only for driver and page contributors, not a manufacturer contact (`references/shared.md`, "Discontinued products").
 
@@ -117,6 +119,7 @@ Give each the prompt below, with the brackets filled in, as written rather than 
 > Rangefinder facts: [the shared.md rangefinder facts table, filled in].
 > Rangefinder facts worksheet: [the driver-sources.md worksheet, filled in once per driver, with file:line for every value].
 > Manufacturer facts: [the shared.md manufacturer facts table, filled in, with the document and section for every value, or "not read" and why].
+> Wiring images: [each wiring, pinout or connector image on the page: what it shows, which model, and whether it is the page's own, a photo, or a manufacturer's figure (altered or not)].
 > Comparator pages: [each page, and why it was chosen].
 > Files in scope: [rangefinder page, SUMMARY.md, sensor/rangefinders.md, dronecan/index.md or collision_prevention.md if they apply, any other changed docs/en/ page that mentions the rangefinder].
 > Driver files (evidence, never review targets): [paths].

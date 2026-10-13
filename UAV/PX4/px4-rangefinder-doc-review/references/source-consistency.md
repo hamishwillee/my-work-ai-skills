@@ -100,6 +100,11 @@ A figure the manufacturer facts contradict is `bug`.
 A figure they don't cover is not a finding; return it as an unproven claim for the notes below the tables, along with any other statement on the page that neither the driver nor the manufacturer facts back.
 Where the facts are marked `not read`, every wiring claim on the page is unverified: say that once below the tables rather than once per claim.
 
+### Wiring images
+
+Check what each wiring, pinout or connector image shows (`shared.md`, "Wiring images") against the page's tables and text, against the other images on the page, and against the manufacturer facts, claim by claim: pin numbers, wire colours, component values, which pin goes to which port.
+Report a disagreement on the line the image is referenced from.
+
 ### Variants and links
 
 - When the manufacturer facts show the sensor ships as one interface variant or another, the page's setup is checked against the variant it claims to document, and a page that doesn't say which is reported under R-O9.
