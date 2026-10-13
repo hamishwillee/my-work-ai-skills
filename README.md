@@ -14,4 +14,5 @@ Claude Code skills for my work, organized by domain.
 - [`UAV/PX4/px4-uorb-review`](UAV/PX4/px4-uorb-review) — editorial review of uORB message (.msg) documentation in PX4-Autopilot pull requests.
 - [`UAV/PX4/px4-param-review`](UAV/PX4/px4-param-review) — review of PX4-Autopilot parameter descriptions (short/long descriptions and option labels) against the project's description standard, checking rewrites for lost facts.
 - [`UAV/PX4/px4-board-doc-review`](UAV/PX4/px4-board-doc-review) — review of flight-controller board documentation in PX4-Autopilot pull requests, against board source, sibling pages, and the board support guide.
+- [`UAV/PX4/px4-rangefinder-doc-review`](UAV/PX4/px4-rangefinder-doc-review) — review of rangefinder (distance sensor) documentation in PX4-Autopilot pull requests, against driver source, sibling pages, and a page template shared by single-model and family pages.
 - [`UAV/MAVLink/mavlink-command-review`](UAV/MAVLink/mavlink-command-review) — editorial review of mavlink-devguide pages documenting individual MAV_CMD commands or message fields.
