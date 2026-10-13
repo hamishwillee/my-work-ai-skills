@@ -22,6 +22,7 @@ It doesn't review the page's prose (that's [px4-doc-review](../px4-doc-review)),
 You can also run it on its own.
 
 It can also **update** an existing page: after a review, it works down the page in template order, researches each section from the driver and the manufacturer's manual, and proposes one change at a time with its evidence, applying each only when you approve it.
+It can draw replacement wiring diagrams and run a live preview of the page.
 Along the way it collects questions for the manufacturer, people who could review the page, and draft comments for you to post.
 
 ## Skill structure

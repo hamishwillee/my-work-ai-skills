@@ -33,7 +33,7 @@ An optical-flow page for a sensor that also has a rangefinder (`dronecan/ark_flo
 
 - The rangefinder's page.
 - Its listing entries: `docs/en/SUMMARY.md`, `docs/en/sensor/rangefinders.md` (its table row, link reference and summary section), and where they apply `docs/en/dronecan/index.md` and `docs/en/computer_vision/collision_prevention.md`.
-- Images under `docs/assets/hardware/sensors/` referenced by the page (existence and path only; the picture's content isn't reviewed).
+- Images under `docs/assets/hardware/sensors/` referenced by the page: existence and path for all of them, and the content of any wiring, pinout or connector image ("Wiring images", below).
 - Any other `docs/en/` page the PR changes to mention the rangefinder (a flight-controller page, release notes).
 
 ## Rangefinder facts
@@ -144,6 +144,22 @@ Every finding needs evidence you actually checked:
   A finding about something *missing* anchors to the line where it would go (the heading it belongs under, or line 1 for a page-level gap) and says so.
 
 A finding that fails verification is dropped, not downgraded.
+
+## Wiring images
+
+A wiring diagram, pinout figure or annotated photo makes claims just as the text does, and readers follow the picture first.
+The main agent looks at each one in Scope (open the image file) and records, for every lens:
+
+- **What it shows**: which pins go where, component values, which hardware generation or model it depicts.
+- **Where it comes from**: the page's own diagram, a photo, or a manufacturer's figure.
+  A manufacturer's figure that has been altered (a value struck out and another written in) is recorded as altered.
+
+Then:
+
+- An image that disagrees with the page's text, with another image on the page, or with the manufacturer facts is a finding, at the severity the same claim would have in text (`bug` for a wrong pin or component value).
+- An image of a different model or generation from the one the section describes is `bug` when the pin order or wiring differs between them, and `style` otherwise.
+- An altered manufacturer figure is `style`, with the suggestion to replace it with the page's own diagram; presenting it as the manufacturer's is the problem.
+- Photos and decorative images are checked only for existence.
 
 ## If it can't be proven, it isn't asserted
 

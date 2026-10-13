@@ -59,6 +59,33 @@ Add the gap to the questions for the manufacturer, unless the product is discont
 
 **Unproven claims already on the page** are proposed for removal in the suggestion for their section, each named as a point to decide, since the reviewer may know them to be true.
 
+## Diagrams
+
+When a wiring image is wrong, altered, or for another model, propose replacing it with a diagram drawn for this page rather than leaving the page with none.
+
+- **Draw only what the approved text says.**
+  The diagram is a picture of the wiring table: the same pins, the same connections, nothing extra.
+  Draw it after the table for that section is approved, and say that it depicts wiring you haven't tested.
+- **One diagram per connection**, placed in that connection's wiring sub-section above its table.
+- **SVG**, in the page's assets folder, named `<product>_<connection>_wiring.svg`, with a `<title>` and `<desc>` that say in words what is connected to what.
+  Use the same layout and style for every diagram on a page: sensor on the left with its pins numbered and named as in the pinout, the flight controller and any supply on the right, wires in the manufacturer's wire colours, unconnected pins shown as such, and a white background so it reads in both light and dark themes.
+- **Put values on the diagram**, not "see text": a reader looking at a resistor wants its value there.
+  Where the page gives alternatives, give both and let the text explain which is which.
+- **Check it by rendering it.**
+  Convert the SVG to a PNG (`cairosvg` in the scratch virtual environment, or `rsvg-convert`) and look at the result for overlapping labels and for lines that appear to join where they only cross.
+- **Show it before it counts as approved**: open the rendered image for the reviewer, or give the preview URL.
+- **Leave the old image files in place** unless the reviewer says to delete them: translated pages still reference them until the next translation sync.
+
+## Previewing the page
+
+Offer a live preview when the page has diagrams or large tables, or when the reviewer asks to see it.
+
+- Start the docs site from the clone's `docs/` directory in the background: `node_modules/.bin/vitepress dev . --port <port> --host 127.0.0.1` (the `docs:dev` script in `docs/package.json`).
+- Wait for the "Local:" line in its output and take the base path from it: the page is at `<that URL>en/sensor/<page>.html`, and an asset at `<that URL>assets/...`.
+  Confirm the page returns 200 before giving the reviewer the link.
+- If the clone has no `docs/node_modules`, say so and ask before installing; linking another clone's `node_modules` is quicker, and is never committed.
+- The server reloads as edits are applied. Say that it stops when the session ends, and stop it yourself when the work is finished.
+
 ## What turns up along the way
 
 Reading the manual and the driver closely surfaces things that aren't page edits.
@@ -70,7 +97,8 @@ Keep a running list and give it with the suggestion that turned it up, then agai
 - **Contacts**: who could review the page or answer the questions (`shared.md`, "Finding who to ask").
 
 Draft each as a review comment for the reviewer to post, addressed to a named handle and anchored to the specific line of the diff it's about (`SKILL.md`, Report, "Comment drafts").
-Never post one yourself.
+Never post one yourself, and never name anyone in a commit message or PR description: whether to raise something, and with whom, is the reviewer's decision, and they may know that a contributor has left the project.
+The PR description states what changed and nothing else.
 
 ## Finishing
 

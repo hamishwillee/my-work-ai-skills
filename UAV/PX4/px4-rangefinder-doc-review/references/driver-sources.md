@@ -23,6 +23,12 @@ Each value carries the file and line it came from, so a lens can cite it as evid
 Take line numbers from each file on its own (`grep -n` on that file), never from several files printed together.
 A value the files don't settle is written `unknown` with what was searched, never guessed.
 
+**A comment is not proof.**
+Record what the code does, not what a comment says it does.
+This matters most where a driver detects the hardware version and sets limits from it: a comment such as "v1 and v3 don't have the unit id register" is the author's belief about the hardware, and can be wrong.
+Record the condition the code tests ("hardware version register > 0 and unit id > 0 → 35 m"), and, where the manufacturer facts list the sensor's registers or identification, check which branch a given model would really take.
+If the two disagree, the worksheet says the limit for that model is unverified, gives the possible values, and the disagreement goes below the tables as a firmware question.
+
 | Fact | Value | Source (file:line) |
 | --- | --- | --- |
 | Driver directory and command name | | |
@@ -61,6 +67,7 @@ A value the files don't settle is written `unknown` with what was searched, neve
 | **I2C start line** | `ROMFS/px4fmu_common/init.d/rc.sensors` | `if param compare -s SENS_EN_<X> 1` / `param greater -s SENS_EN_<X> 0`, then `<driver> start -X`. `-X` means external buses only. A board can also start a driver itself in `boards/<vendor>/<board>/init/rc.board_sensors`. |
 | **I2C address** | the driver `.hpp`/`_main.cpp` | `cli.i2c_address = <X>_BASEADDR`, `PRINT_MODULE_USAGE_PARAMS_I2C_ADDRESS(0x..)`. Addresses in source are 7-bit. A `set_address` command or an address scan means it can be changed. |
 | **PWM pins** | `rc.sensors`, board `board_config.h` | `ll40ls_pwm` starts after `pwm_input`; the capture pin is fixed per board (`PWMIN` definitions). |
+| **Models detected at run time** | the driver's `probe()` or `init()` | Where there is no model parameter, the driver reads version or identity registers and branches on them. Write down each branch as its tested condition and the limits it sets, and treat the model named in a comment beside it as unconfirmed ("A comment is not proof", above). |
 | **Models** | the model parameter in `parameters.yaml`/`module.yaml`, and the `switch` on it in the driver | Each `values:` entry is a model the driver supports for that connection. The two LightWare drivers have *different* lists and numbering (`SENS_EN_SF1XX` for I2C, `SENS_EN_SF0X` for serial), so check each model against the driver for the connection the page gives it. |
 | **Range** | the driver `.cpp`/`.hpp` | `set_min_distance(...)` / `set_max_distance(...)`, or `report.min_distance`/`max_distance`, per model where there's a `switch`. These are the limits the estimator is given: a reading outside them is treated as out of range. A comment beside them often gives the datasheet figure when the driver narrows it (`// Datasheet: 0.17m`). |
 | **Field of view, type** | the driver `.cpp` | `set_fov(...)` (radians), `set_hfov`/`set_vfov`; `set_rangefinder_type(distance_sensor_s::MAV_DISTANCE_SENSOR_LASER / _ULTRASOUND / _RADAR / _INFRARED)`. No `set_fov` call means the field of view is published as unknown. |

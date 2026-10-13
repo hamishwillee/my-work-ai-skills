@@ -206,7 +206,7 @@ Skeleton headings carry an explicit anchor, so links to the sections every range
   Headings shared with the flight-controller template use its anchors ("In common with flight-controller pages" above).
 - **Any other heading** doesn't need an anchor, and a missing one is not a finding.
   An anchor the author does give it is made from its text: lower case, words joined by underscores, punctuation and parenthetical qualifiers dropped.
-- **Per-connection sub-sections** (R-W6, R-A7) take the parent's anchor as a prefix: `#### Serial {#wiring_serial}`, `### Serial {#px4_configuration_serial}`.
+- **Per-connection sub-sections** (R-W6, R-F9, R-A7) take the parent's anchor as a prefix: `#### Serial {#wiring_serial}`, `### Serial {#firmware_support_serial}`, `### Serial {#px4_configuration_serial}`.
 - **Separate anchor tags**: an `<a id="..."></a>` on its own line just before a heading is `style`.
   The suggestion moves the id into the heading as `{#...}`, keeping the same id so links to it still work.
   An `<a id>` inside a parameter table cell stays.
@@ -310,7 +310,7 @@ The values come from the facts worksheet (`driver-sources.md`, "In firmware").
 | R-F6 | **How to check a board**: look for the key(s) in `boards/<vendor>/<board>/default.px4board`, or see whether the enabling parameter is listed in _QGroundControl_. | `style` |
 | R-F7 | **How to add it**: add a key to the board's `default.px4board`, or enable the driver in [boardconfig](../hardware/porting_guide_config.md#px4-menuconfig-setup) under **Drivers > Distance sensors**, then [build and upload](../dev_setup/building_px4.md). | `style` if missing, `bug` if the menu path or key is wrong |
 | R-F8 | **How it's enabled**: says that being in firmware doesn't start the driver, and links PX4 Configuration for the parameter that does. A driver a board starts by itself (a line in its `rc.board_sensors`) says so, naming the board. | `style`; `bug` if it says the driver starts automatically when it doesn't |
-| R-F9 | A sensor with several drivers (one per connection) lists each driver with its own keys, and says which connection each serves. | `bug` when a reader can't tell which key their connection needs |
+| R-F9 | A sensor with several drivers (one per connection) lists each driver with its own keys, and says which connection each serves. Each connection gets a `###` sub-section named for it (`### I2C {#firmware_support_i2c}`), in the same order as under Wiring and PX4 Configuration, with what the drivers share (how to check a board, how to add a driver, how they are enabled) above the first sub-section. | `bug` when a reader can't tell which key their connection needs |
 | R-F10 | A DroneCAN or MAVLink sensor has no driver of its own in the flight controller. The section says so in a line, and names what the flight controller does need: the DroneCAN driver (`CONFIG_DRIVERS_UAVCAN=y`, in most boards) or MAVLink on the port. The sensor's own firmware is covered in Sensor Configuration (R-C3). | `style` |
 
 ### PX4 Configuration {#px4_configuration}

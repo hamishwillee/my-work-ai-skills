@@ -33,6 +33,8 @@ Exceptions: table rows and YAML frontmatter values stay on one line each (markdo
   The lenses were unable to verify wiring on the first real run because nobody had read the manual; don't let a lens be the first to open it.
 - Nothing unproven goes onto a page, and a discontinued product gets no manufacturer questions (`shared.md`).
   Both came from the reviewer during the TeraRanger update; don't soften them into "ask the reviewer".
+- A driver comment is not proof, and images make claims too (`driver-sources.md`, `shared.md`).
+  Both came from the LIDAR-Lite update: a comment about which hardware a detection branch handles put a wrong range in front of the reviewer, and the page's diagrams turned out to disagree with each other.
 - Wording of shared steps belongs to sibling-comparison, presence to completeness.
   When both report the same line, tighten that boundary rather than relying on the merge.
 - This skill never reviews prose and never raises a finding on a file under `src/`, `boards/` or `ROMFS/`.
