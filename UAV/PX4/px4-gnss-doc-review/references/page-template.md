@@ -203,6 +203,7 @@ Keep them identical when any of the templates changes.
 | G-P12 | Two pages (or two sections) that show the same image use one shared file, not byte-identical copies. | `minor` |
 | G-P13 | Store and product links carry no search or tracking parameters (`ref=`, `crid=`, `qid=`, `utm_*`): use the product's canonical URL (`https://www.amazon.com/dp/<ASIN>`). | `minor` |
 | G-P14 | **File name.** A new RTK receiver page under `docs/en/gps_compass/` is named `rtk_gps_<manufacturer>_<product>.md`, lower case, words joined by underscores, as its siblings are (`rtk_gps_freefly.md`, `rtk_gps_holybro_unicore_um982.md`, `rtk_gps_trimble_mb_two.md`). The suggestion gives the new name and every link to update (`SUMMARY.md`, the `rtk_gps.md` row and any other page linking it). Don't report an existing page: renaming one breaks links from translations and outside sites. | `style` |
+| G-P15 | **File name.** A new non-RTK UART receiver page under `docs/en/gps_compass/` is named `gps_<manufacturer>_<product>.md`, lower case, words joined by underscores, as most of its siblings are (`gps_cuav_neo_3.md`, `gps_holybro_m8n_m9n.md`, `gps_locosys_hawk_a1.md`). The ARK pages (`ark_dan_gps.md`, `ark_sam_gps.md`) predate this and aren't comparators for it. The suggestion gives the new name and every link to update (`SUMMARY.md`, the `index.md` row and any other page linking it). Don't report an existing page. DroneCAN pages under `docs/en/dronecan/` and Septentrio pages (`septentrio_<product>.md`) keep their own patterns. | `style` |
 
 ### Stubs for missing sections
 

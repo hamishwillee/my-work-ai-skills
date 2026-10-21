@@ -2,7 +2,7 @@
 
 Does the PR contain everything a reader needs to buy, mount, connect, configure and test this receiver, and can they find the page?
 
-This lens applies `page-template.md` in full for *presence and form*: every page-wide check (G-P1 to G-P14), the family-page checks' form half, every section check's "missing" case, and the listing checks (G-L1 to G-L7).
+This lens applies `page-template.md` in full for *presence and form*: every page-wide check (G-P1 to G-P15), the family-page checks' form half, every section check's "missing" case, and the listing checks (G-L1 to G-L7).
 Whether present content is *correct* is `source-consistency.md`'s job; where a check has both halves, raise only the missing or malformed half here.
 Cite the check ID in each finding's evidence.
 

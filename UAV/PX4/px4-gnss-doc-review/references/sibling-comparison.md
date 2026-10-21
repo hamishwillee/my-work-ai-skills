@@ -86,7 +86,7 @@ Compare with the other discontinued pages for the form in `page-template.md` (G-
 
 - The product and manufacturer are named the same way in the H1, `SUMMARY.md`, the device table and the page body, and the manufacturer the way the manufacturer and its other pages name it (`GlobalSat`, not `Globalsat`; `u-blox`, not `Ublox` or `UBLOX`).
 - Receiver chips are named as their manufacturer names them (`ZED-F9P`, `UM982`, `mosaic-X5`).
-- A new RTK page's file name follows its siblings' `rtk_gps_<manufacturer>_<product>.md` pattern; that's `completeness.md`'s check (G-P14), so don't report it twice.
+- A new page's file name follows its siblings' pattern, `rtk_gps_<manufacturer>_<product>.md` for RTK and `gps_<manufacturer>_<product>.md` for other UART receivers; that's `completeness.md`'s check (G-P14, G-P15), so don't report it twice.
 
 ### Section set
 

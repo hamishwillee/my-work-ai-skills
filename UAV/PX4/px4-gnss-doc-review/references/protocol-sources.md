@@ -238,8 +238,8 @@ A starting map for choosing comparators; confirm each row at the base SHA before
 | `gps_compass/ark_dan_gps.md` | UART | u-blox | GNSS | page skeleton, Pixhawk pinout table (not its GPS2 claim) |
 | `gps_compass/gps_locosys_hawk_a1.md` | UART | u-blox | GNSS | primary and secondary parameter tables, LEDs (not its I2C pin order) |
 | `gps_compass/gps_smartap.md` | UART | u-blox | GNSS | compact pinout and specifications |
-| `gps_compass/globalsat_bd_100m_gps.md` | UART | NMEA | GNSS | NMEA protocol configuration, features PX4 doesn't use (after PR 28969) |
-| `gps_compass/globalsat_bd_100k_gps.md` | UART | NMEA | RTK | NMEA RTK configuration (after PR 28969) |
+| `gps_compass/gps_globalsat_bd_100m.md` | UART | NMEA | GNSS | NMEA protocol configuration, features PX4 doesn't use (after PR 28969) |
+| `gps_compass/rtk_gps_globalsat_bd_100k.md` | UART | NMEA | RTK | NMEA RTK configuration (after PR 28969) |
 | `gps_compass/rtk_gps_holybro_unicore_um982.md` | UART | NMEA (Unicore) | RTK heading | protocol, baud, heading with `SENS_GNSSn_HDG`, RTK |
 | `gps_compass/rtk_gps_trimble_mb_two.md` | UART | Ashtech/Trimble | RTK (PX4 doesn't use its heading; the page says so) | protocol value, baud, power warning |
 | `gps_compass/rtk_gps_fem_mini2.md` | UART | Femtomes | RTK | (missing its protocol value) |
