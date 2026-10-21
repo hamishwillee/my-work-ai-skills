@@ -202,6 +202,7 @@ Keep them identical when any of the templates changes.
 | G-P11 | Every parameter is named in full and linked to `../advanced_config/parameter_reference.md#<NAME>` where it's first used in each section, and the link text names the same parameter as the anchor. | `style`; a link whose text and anchor name different parameters is `bug` |
 | G-P12 | Two pages (or two sections) that show the same image use one shared file, not byte-identical copies. | `minor` |
 | G-P13 | Store and product links carry no search or tracking parameters (`ref=`, `crid=`, `qid=`, `utm_*`): use the product's canonical URL (`https://www.amazon.com/dp/<ASIN>`). | `minor` |
+| G-P14 | **File name.** A new RTK receiver page under `docs/en/gps_compass/` is named `rtk_gps_<manufacturer>_<product>.md`, lower case, words joined by underscores, as its siblings are (`rtk_gps_freefly.md`, `rtk_gps_holybro_unicore_um982.md`, `rtk_gps_trimble_mb_two.md`). The suggestion gives the new name and every link to update (`SUMMARY.md`, the `rtk_gps.md` row and any other page linking it). Don't report an existing page: renaming one breaks links from translations and outside sites. | `style` |
 
 ### Stubs for missing sections
 
