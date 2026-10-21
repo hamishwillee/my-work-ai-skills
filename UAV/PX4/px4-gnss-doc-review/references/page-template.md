@@ -37,7 +37,7 @@ A section marked *(if present)* is left out when it doesn't apply; everything el
 The sentences shown are the standard wording: use them as written, with the brackets filled in.
 
 ````md
-# <Manufacturer> <Product> <GPS | RTK GPS | GNSS>
+# <Manufacturer> <Product> <GPS | GNSS | RTK GPS | RTK GNSS>
 
 <Badge type="tip" text="PX4 v1.xx" />                     (only when G-O2 asks for one)
 
@@ -274,7 +274,7 @@ To find links to an old slug before accepting a changed anchor (G-P9), search fr
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| G-O1 | One H1, `# <Manufacturer> <Product> <GPS / RTK GPS / GNSS>`, naming the manufacturer as the manufacturer spells it and the product the same way as the `SUMMARY.md` entry and the device-table row. Qualifiers the manufacturer uses (bands, `L1/L5`) are allowed, but sibling pages from one manufacturer use the same pattern. | `style` |
+| G-O1 | One H1, `# <Manufacturer> <Product> <GPS / GNSS / RTK GPS / RTK GNSS>`, naming the manufacturer as the manufacturer spells it and the product the same way as the `SUMMARY.md` entry and the device-table row. Qualifiers the manufacturer uses (bands, `L1/L5`) are allowed, but sibling pages from one manufacturer use the same pattern. | `style` |
 | G-O2 | `<Badge type="tip" text="..." />` directly under the H1, only when the receiver needs firmware support newer than the latest stable release (a new protocol, a new heading or RTK path, a new node board), naming the first release with it: `main (PX4 vX.Y)` for one not yet released, where `vX.Y` is the version `docs/en/releases/main.md` says `main` is heading for. A receiver supported by existing firmware gets no badge. | `minor` if missing, `bug` if it names the wrong release |
 | G-O3 | The first paragraph names the manufacturer and product, links the product page, and gives the bands or receiver, the capability (GNSS, RTK, dual-antenna or moving-base heading), and the connection. Marketing claims ("ideal upgrade", "centimetre-level in seconds") are kept to what the manufacturer facts back. | `bug` if wrong, `style` if the capability or connection is missing |
 | G-O4 | A hero photo of the receiver, after the opening paragraph, stored locally (G-P5). | `style` |
