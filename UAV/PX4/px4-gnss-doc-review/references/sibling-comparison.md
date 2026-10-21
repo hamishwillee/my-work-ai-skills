@@ -36,9 +36,8 @@ For each step the page shares with its connection siblings, compare the wording 
 | --- | --- | --- |
 | Which port | UART | The primary receiver on the 10-pin `GPS1` port of a flight controller that follows the Pixhawk connector standard ("Full GPS + Safety Switch Port") |
 | Protocol, u-blox | UART, UBX | The receiver is detected automatically on `GPS1`; no protocol or baud rate needs setting |
-| Protocol, other | UART, not UBX | Set [GPS_1_PROTOCOL](../advanced_config/parameter_reference.md#GPS_1_PROTOCOL) to the value (`6` for NMEA) and reboot, with the reason (not auto-detected, or not the default) |
+| Protocol, other | UART, not UBX | The protocol named, with "(this is not included in firmware for boards with constrained flash)", then "To enable, set [GPS_1_PROTOCOL](../advanced_config/parameter_reference.md#GPS_1_PROTOCOL) to `<n>` (`<label>`) and reboot the vehicle." |
 | Secondary receiver | UART | Set [GPS_2_CONFIG](../advanced_config/parameter_reference.md#GPS_2_CONFIG) to the port, and the protocol if needed, linking [Secondary GPS Configuration (UART)](../gps_compass/index.md#secondary-gps-configuration-uart) |
-| Constrained flash | UART, not UBX | A note that the protocol isn't included in firmware for boards with constrained flash |
 | RTK | any | A link to [RTK GNSS](../gps_compass/rtk_gps.md) for the ground-station and correction setup |
 | Heading | heading-capable | `SENS_GNSSn_HDG`, the antenna positions and the `EKF2_GPS_CTRL` bit, linking [Configuring GPS as Yaw/Heading Source](../gps_compass/rtk_gps.md#configuring-gps-as-yaw-heading-source) |
 | Enabling DroneCAN | DroneCAN | `UAVCAN_ENABLE`, then the GNSS subscriptions, then `UAVCAN_PUB_RTCM` for RTK, linking [DroneCAN > GPS](../dronecan/index.md#gps) and [RTK GPS](../dronecan/index.md#rtk-gps) |

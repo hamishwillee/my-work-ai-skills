@@ -109,13 +109,11 @@ The receiver uses the u-blox protocol, which PX4 uses by default.
 When it is connected to the `GPS1` port it is detected and configured automatically, and no parameters need to be set.
 ```
 
-**PX4 Configuration, a protocol other than u-blox** (`<n>` and `<label>` from `GPS_1_PROTOCOL`; the "not auto-detected" clause for NMEA only):
+**PX4 Configuration, a protocol other than u-blox** (`<n>` and `<label>` from `GPS_1_PROTOCOL`):
 
 ```md
-PX4 communicates with this receiver using the <protocol> protocol<, which is not auto-detected>.
-Set [GPS_1_PROTOCOL](../advanced_config/parameter_reference.md#GPS_1_PROTOCOL) to `<n>` (`<label>`) and reboot the vehicle.
-
-Note that <protocol> support is not included in firmware for boards with constrained flash.
+PX4 communicates with this receiver using the <protocol> protocol (this is not included in firmware for boards with constrained flash).
+To enable, set [GPS_1_PROTOCOL](../advanced_config/parameter_reference.md#GPS_1_PROTOCOL) to `<n>` (`<label>`) and reboot the vehicle.
 ```
 
 **Secondary receiver:**
@@ -332,7 +330,7 @@ The values come from the facts worksheet (`protocol-sources.md`, "In firmware").
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| G-F1 | **A protocol other than u-blox**: says the protocol isn't included on boards with constrained flash. The one-sentence note from the standard wording, in PX4 Configuration, is enough; a full section names the key (`CONFIG_GPS_<PROTOCOL>=y`), how to check a board (`boards/<vendor>/<board>/default.px4board`), and how to add it and [build the firmware](../dev_setup/building_px4.md). | `style` if missing; `bug` if the page says every board supports it |
+| G-F1 | **A protocol other than u-blox**: says the protocol isn't included on boards with constrained flash. The parenthetical in the standard protocol sentence, in PX4 Configuration, is enough; a full section names the key (`CONFIG_GPS_<PROTOCOL>=y`), how to check a board (`boards/<vendor>/<board>/default.px4board`), and how to add it and [build the firmware](../dev_setup/building_px4.md). | `style` if missing; `bug` if the page says every board supports it |
 | G-F2 | **Septentrio**: the section exists, names `CONFIG_DRIVERS_GNSS_SEPTENTRIO=y`, says it's only in boards that set it (not most), how to check, and how to add it. | `bug` if missing |
 | G-F3 | **DroneCAN**: the flight controller needs `CONFIG_DRIVERS_UAVCAN=y`, which most boards have; a line is enough. | `minor` |
 
