@@ -36,7 +36,7 @@ A `no` or `partial` also becomes a finding, at the severity given.
 | **Protocol and port** (G-A1) | What to set for the protocol and port, or a correct statement that nothing needs setting | `bug` |
 | **Secondary receiver** (G-A3) | How to run it as a second GPS, or a link to the shared section | `style` |
 | **RTK** (G-A4) | `n/a` for a non-RTK receiver; otherwise a link to RTK setup and, for DroneCAN, the correction publication | `bug` for DroneCAN when `UAVCAN_PUB_RTCM` isn't covered; `style` otherwise |
-| **Heading** (G-A5) | `n/a` without heading capability; otherwise the heading-fusion setting and the offset parameter | `bug` |
+| **Heading** (G-A5) | `n/a` unless PX4 uses the receiver's heading; otherwise `SENS_GNSSn_HDG`, the antenna positions and the heading-fusion bit | `bug` |
 | **DroneCAN setup** (G-A6) | `n/a` for UART; otherwise enabling DroneCAN, the subscriptions, and node parameters | `bug` |
 | **Testing** (G-T1) | A way to confirm the receiver is publishing a fix (and RTK fix type, and heading, where they apply) | `style` |
 | **Current manual** (G-I1) | A link to the manufacturer's current manual or datasheet, labelled as such | `style` |

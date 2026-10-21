@@ -28,6 +28,9 @@ Exceptions: table rows and YAML frontmatter values stay on one line each (markdo
   Keep "plug and play" tied to the detection rules in `protocol-sources.md`.
 - Heading is the second.
   The survey found four DroneCAN pages telling readers to enable heading fusion on single-antenna receivers; keep the heading checks tied to what the protocol actually publishes.
+  PX4's heading setup changed in late September 2026 (`SENS_GNSSn_HDG` and antenna positions replaced every heading-offset parameter, and some protocols' heading stopped being used), so keep `protocol-sources.md`, "Heading", current.
+- Read PX4 upstream, never a clone's `origin`.
+  The first version of this skill was written from a fork's month-old `main` and had to be corrected the same day: the parameter and topic names had all changed upstream.
 - The sibling-comparison lens needs two agreeing comparators before a difference is a finding.
   Keep that rule: many GNSS pages are out of date, and copy-paste drift between siblings is common.
 - `existing-page-issues.md` is a work list, not a source: no lens reads it and nothing in it is evidence.

@@ -40,10 +40,10 @@ For each step the page shares with its connection siblings, compare the wording 
 | Secondary receiver | UART | Set [GPS_2_CONFIG](../advanced_config/parameter_reference.md#GPS_2_CONFIG) to the port, and the protocol if needed, linking [Secondary GPS Configuration (UART)](../gps_compass/index.md#secondary-gps-configuration-uart) |
 | Constrained flash | UART, not UBX | A note that the protocol isn't included in firmware for boards with constrained flash |
 | RTK | any | A link to [RTK GNSS](../gps_compass/rtk_gps.md) for the ground-station and correction setup |
-| Heading | heading-capable | The heading-fusion setting and the offset parameter, linking [Configuring GPS as Yaw/Heading Source](../gps_compass/rtk_gps.md#configuring-gps-as-yaw-heading-source) |
+| Heading | heading-capable | `SENS_GNSSn_HDG`, the antenna positions and the `EKF2_GPS_CTRL` bit, linking [Configuring GPS as Yaw/Heading Source](../gps_compass/rtk_gps.md#configuring-gps-as-yaw-heading-source) |
 | Enabling DroneCAN | DroneCAN | `UAVCAN_ENABLE`, then the GNSS subscriptions, then `UAVCAN_PUB_RTCM` for RTK, linking [DroneCAN > GPS](../dronecan/index.md#gps) and [RTK GPS](../dronecan/index.md#rtk-gps) |
 | Mounting | any | Facing forward (the arrow), away from other electronics, linking [Mounting a Compass](../assembly/mount_gps_compass.md) |
-| Position offsets | any | The `SENS_GPS0_OFF*` parameters for the antenna position |
+| Position offsets | any | The `SENS_GNSS0_OFF*` parameters for the antenna position |
 
 This lens owns how a shared step is *worded*; whether the step is *there* is `completeness.md`'s.
 

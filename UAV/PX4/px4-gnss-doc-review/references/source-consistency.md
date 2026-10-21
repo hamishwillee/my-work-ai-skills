@@ -3,7 +3,7 @@
 Does the page say what PX4 does with the receiver?
 
 Most of a GNSS page restates settings that already exist in the source: which protocol value to set, whether PX4 finds the receiver by itself, which port it runs on, whether heading and RTK work, what a DroneCAN node publishes.
-When the page and the source disagree, the reader sets a value that doesn't exist, waits for a receiver PX4 never detects, or enables heading fusion for a receiver that can't provide heading.
+When the page and the source disagree, the reader sets a value that doesn't exist, waits for a receiver PX4 never detects, or enables heading fusion for a receiver whose heading PX4 doesn't use.
 Work every checkable claim, not a sample.
 
 Read `references/protocol-sources.md` in full before starting: it says which file answers which question.
@@ -16,7 +16,7 @@ Cite the check ID alongside the source evidence (`G-A1; params.yaml:230 6: NMEA 
 
 1. **Start from the GNSS facts worksheet** (`protocol-sources.md`) the main agent filled in, and re-open a source file only to confirm a value you're about to cite or one the worksheet marks `unknown`.
    If you find a worksheet value wrong, report that and use the corrected value.
-2. **List every checkable claim on the page** that falls in the lookup table: parameter names, values and defaults; the protocol; ports; baud rate; "plug and play" or "detected automatically"; heading and RTK support; Kconfig keys and firmware availability; DroneCAN subscriptions and node parameters; commands, options and topics; the compass, barometer and LED parts and whether PX4 uses them.
+2. **List every checkable claim on the page** that falls in the lookup table: parameter names, values and defaults; the protocol; ports; baud rate; "plug and play" or "detected automatically"; heading and RTK support and the heading setup (`SENS_GNSSn_HDG`, antenna positions); Kconfig keys and firmware availability; DroneCAN subscriptions and node parameters; commands, options and topics; the compass, barometer and LED parts and whether PX4 uses them.
    Include the page's device-table row and any other listing in scope.
 3. **Check each claim** against the file the lookup table names, and record the file and line whatever the outcome.
 4. **Check the other direction**: what the source requires that the page doesn't say (a protocol value that has to be set, a subscription that's off by default, a heading offset parameter).
@@ -59,16 +59,20 @@ This is where GNSS pages most often go wrong, so work it first.
 
 - A page that tells the reader to enable heading fusion ([EKF2_GPS_CTRL](../advanced_config/parameter_reference.md#EKF2_GPS_CTRL) bit 3, value `15` from the default `7`, or any value with that bit) needs a receiver and protocol that publish heading (`protocol-sources.md`, "Heading").
   Telling the reader to set it for a single-antenna receiver is `bug` (G-A5).
-- The heading offset parameter the page names is the one that applies (`protocol-sources.md`, "Heading"): `GPS_YAW_OFFSET` for the `gps` driver; `SEP_YAW_OFFS` for the Septentrio driver; for a DroneCAN receiver, `EKF2_GPS_YAW_OFF` on the flight controller when the node sends `RelPosHeading`, or `GPS_YAW_OFFSET` set on a PX4 node.
-  `GPS_YAW_OFFSET` on the flight controller does nothing for a DroneCAN receiver, so telling the reader to set it there is `bug`, as is a parameter name that doesn't exist.
-- A link's text and anchor name the same parameter; a link that reads `EKF2_GPS_YAW_OFF` but points at `#GPS_YAW_OFFSET` is `bug`.
+- Heading needs `SENS_GNSSn_HDG` in the heading receiver's slot, with the value for this kind of receiver, and the antenna positions (`protocol-sources.md`, "Heading"); for DroneCAN also `SENS_GNSSn_ID` set to the node's ID and `UAVCAN_SUB_GPS_R` left on.
+  A heading setup missing any of these is `bug` (G-A5): PX4 drops the heading and warns.
+- A page naming `GPS_YAW_OFFSET`, `EKF2_GPS_YAW_OFF`, `SEP_YAW_OFFS` or `SEP_PITCH_OFFS` as a PX4 setting names a parameter that no longer exists: `bug`.
+  The exception is a note telling the reader to set an older PX4 CAN node's own `GPS_YAW_OFFSET` to `0` (`dronecan/index.md`).
+- A receiver whose heading PX4 doesn't use (Ashtech/Trimble, Femtomes, NMEA `$xxHDT`) set up as a heading source is `bug`.
+- A link's text and anchor name the same parameter (G-P11).
 - Antenna separation and orientation requirements match the manufacturer facts, and for u-blox moving-base pairs the shared page `u-blox_f9p_heading.md`.
 
 ### DroneCAN
 
 - The `UAVCAN_ENABLE` value given enables sensors (`2` or `3`), and a page that gives two different values without saying why is `bug`.
 - Subscriptions the page tells the reader to enable are ones that exist; telling them to enable one that's already on by default isn't wrong, but saying it's required when it's the default is `minor`.
-- A parameter the page sets "to ensure" an outcome is checked: setting a value to its default with a stated effect (`SENS_GPS_MASK` = `7` "to make sure heading is published") is `bug` when the source shows no such effect, since it tells the reader something about how PX4 works that isn't true.
+- A parameter the page sets "to ensure" an outcome is checked: a value with a stated effect the source doesn't show (`SENS_GNSS_PRIME` set to the moving base's node ID "so heading works", when Auto, the default, already makes a configured moving base primary and selection doesn't gate heading) is `bug`, since it tells the reader something about how PX4 works that isn't true.
+- A parameter that no longer exists (`SENS_GPS_MASK`, `SENS_GPS_PRIME`, `SENS_GPS0_OFFX`, `EKF2_GPS_POS_X`) is `bug` on a new page; old names are migrated, but a reader can't find them.
 - Node parameters (`CANNODE_*`, `GPS_UBX_MODE` on the node) exist in the node firmware the GNSS facts give: PX4 cannode parameters for a PX4 node, the node vendor's for AP_Periph or closed firmware.
   A PX4 parameter name used for an AP_Periph node is `bug`.
 - Firmware targets named for updating a PX4 node exist under `boards/` and are the node's own board.
@@ -88,6 +92,7 @@ Check the Firmware Support section, and anything the opening says about availabi
 - When the page says the module has a compass or barometer, check whether PX4 starts a driver for that part on an external bus by default (`protocol-sources.md`, "Compass, barometer and LEDs").
   A part PX4 doesn't start by default, presented as if it simply works, is `style` (G-S6); presented as required for something ("uses the barometer for altitude") it's `bug`.
 - A safety switch, buzzer or LED claimed to work with PX4 needs the standard GPS1 connector pins (`protocol-sources.md`, "Pixhawk GPS connector") or a driver PX4 starts for it.
+  Safety is off by default (`COM_SAFETY_MODE` `0`), so a page that says the switch must be pressed before arming has to say how to enable it.
 
 ### Features PX4 doesn't use
 
@@ -97,7 +102,7 @@ Check each feature that implies PX4 behaviour (a proprietary command set, a conf
 ### Commands, topics and messages
 
 - Every command and option the page shows is in the driver's usage block (`gps status`, `gps start -p <protocol>`); a `-p` value the parser doesn't accept is `bug`.
-- The uORB topic and MAVLink message the page names are the ones published (`protocol-sources.md`, "Topics").
+- The uORB topic and MAVLink message the page names are the ones published (`protocol-sources.md`, "Topics"): `sensor_gnss`, not `sensor_gps`.
 - The module reference link uses the right anchor.
 
 ### Physical specifications and wiring

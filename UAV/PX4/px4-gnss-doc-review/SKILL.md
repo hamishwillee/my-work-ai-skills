@@ -69,7 +69,7 @@ From the changed files, find:
 
 - new or changed GNSS receiver pages (`references/shared.md`, "What counts as a GNSS page")
 - changes to the device tables or protocol sentences in `docs/en/gps_compass/index.md` or `docs/en/gps_compass/rtk_gps.md`
-- changes to `src/drivers/gps/` (including a bump of the `src/drivers/gps/devices` submodule), `src/drivers/gnss/septentrio/`, the GNSS parts of `src/drivers/uavcan/` or `src/drivers/uavcannode/`, or a GNSS CAN-node board under `boards/`
+- changes to `src/drivers/gps/` (including a bump of the `src/drivers/gps/devices` submodule), `src/drivers/gnss/septentrio/`, `src/lib/gnss/`, `src/modules/sensors/vehicle_gps_position/`, `src/modules/ekf2/params_gnss.yaml`, the GNSS parts of `src/drivers/uavcan/` or `src/drivers/uavcannode/`, or a GNSS CAN-node board under `boards/`
 
 Then choose the mode:
 
@@ -90,6 +90,7 @@ A driver change can affect many pages; list the affected pages in the summary an
 Every value gets its file and line; write `unknown` rather than guess.
 The lenses work from this worksheet, so a mistake here spreads to all of them: read the protocol enum, its default, the auto-detect list and the protocol's Kconfig default from the source line by line rather than from the page or from memory, and run the greps in "In firmware" rather than estimating.
 For a protocol other than u-blox, the auto-detect list and the constrained-flash default decide what the page must say, so get them right.
+Read PX4 upstream, not a fork's stale `main` (`references/protocol-sources.md`), and note whether the base predates the late-September 2026 GNSS changes (renamed topics and parameters, new heading setup).
 
 **Read the manufacturer's material** and fill in the manufacturer facts (`references/shared.md`, "Manufacturer facts"): the product page, and the current manual or datasheet it links, read in full.
 A PDF has to be extracted to text first (`references/shared.md`, "Reaching the sources"); don't leave it unread because `WebFetch` returned binary.
@@ -160,7 +161,7 @@ A file with no findings gets its row in the per-file summary and nothing else.
 
 Sections, captioned, in this order, with nothing above the first:
 
-1. **GNSS summary.** One line per receiver: page, products, connection, protocol and its `GPS_x_PROTOCOL` value (or the Septentrio or DroneCAN path), whether that protocol is auto-detected and built on constrained-flash boards, capability (GNSS / RTK / RTK with heading, and how heading is produced), node firmware for DroneCAN, and the comparator pages used.
+1. **GNSS summary.** One line per receiver: page, products, connection, protocol and its `GPS_x_PROTOCOL` value (or the Septentrio or DroneCAN path), whether that protocol is auto-detected and built on constrained-flash boards, capability (GNSS / RTK / RTK with heading, how heading is produced, and the `SENS_GNSSn_HDG` value), node firmware for DroneCAN, and the comparator pages used.
    Then the bug count and where the bugs are ("2 bugs in 1 of the 3 changed doc files"; "No bugs in 3 changed doc files"), and the finding total.
 2. **GNSS documentation checklist**, for a new receiver: the completeness checklist as a table, `Item | Status | Evidence`, every item listed.
 3. **Issues found**:

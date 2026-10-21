@@ -131,12 +131,19 @@ See [Secondary GPS Configuration (UART)](../gps_compass/index.md#secondary-gps-c
 For RTK setup, see [RTK GNSS](../gps_compass/rtk_gps.md).
 ```
 
-**Heading** (UART; the offset parameter per `protocol-sources.md`, "Heading"):
+**Heading** (`<value>` `2` for a receiver with two antennas, `1` for the rover of a moving-base pair; `protocol-sources.md`, "Heading"):
 
 ```md
-To use the receiver as a heading source, set bit 3 ("Dual antenna heading") of [EKF2_GPS_CTRL](../advanced_config/parameter_reference.md#EKF2_GPS_CTRL) (for example, set it to `15`), and set [GPS_YAW_OFFSET](../advanced_config/parameter_reference.md#GPS_YAW_OFFSET) to the angle of the <antenna baseline> relative to the vehicle's forward axis.
+To use the receiver as a heading source:
+
+1. Set [SENS_GNSS0_HDG](../advanced_config/parameter_reference.md#SENS_GNSS0_HDG) to `<value>` (`<Dual antenna | Moving base rover>`) in the receiver's slot.
+2. Set the antenna positions relative to the vehicle's centre of gravity: <the main antenna in [SENS_GNSS0_OFFX/Y/Z](../advanced_config/parameter_reference.md#SENS_GNSS0_OFFX) and the auxiliary antenna in [SENS_GNSS0_AUXX/Y/Z](../advanced_config/parameter_reference.md#SENS_GNSS0_AUXX) | each receiver's antenna in its own slot's SENS_GNSSn_OFFX/Y/Z>.
+3. Set bit 3 ("Dual antenna heading") of [EKF2_GPS_CTRL](../advanced_config/parameter_reference.md#EKF2_GPS_CTRL) (for example, set it to `15`).
+
 See [Configuring GPS as Yaw/Heading Source](../gps_compass/rtk_gps.md#configuring-gps-as-yaw-heading-source) for more information.
 ```
+
+Say which physical antenna is the main (primary) and which the auxiliary (secondary), since the heading's direction depends on it.
 
 **DroneCAN:**
 
@@ -144,6 +151,7 @@ See [Configuring GPS as Yaw/Heading Source](../gps_compass/rtk_gps.md#configurin
 Enable DroneCAN by setting [UAVCAN_ENABLE](../advanced_config/parameter_reference.md#UAVCAN_ENABLE) to `2` (`Sensors Automatic Config`), and reboot.
 The GNSS and compass subscriptions ([UAVCAN_SUB_GPS](../advanced_config/parameter_reference.md#UAVCAN_SUB_GPS), [UAVCAN_SUB_MAG](../advanced_config/parameter_reference.md#UAVCAN_SUB_MAG)) are enabled by default.
 For RTK, also set [UAVCAN_PUB_RTCM](../advanced_config/parameter_reference.md#UAVCAN_PUB_RTCM) to `1`, so that the flight controller forwards RTCM corrections to the receiver.
+<For heading, set [SENS_GNSS0_ID](../advanced_config/parameter_reference.md#SENS_GNSS0_ID) to the node's ID and set up heading as above; [UAVCAN_SUB_GPS_R](../advanced_config/parameter_reference.md#UAVCAN_SUB_GPS_R), which carries the heading, is on by default.>
 
 For more information, see [DroneCAN > GPS](../dronecan/index.md#gps).
 ```
@@ -151,14 +159,15 @@ For more information, see [DroneCAN > GPS](../dronecan/index.md#gps).
 **Antenna position:**
 
 ```md
-Set the position of the antenna relative to the vehicle's centre of gravity using [SENS_GPS0_OFFX](../advanced_config/parameter_reference.md#SENS_GPS0_OFFX), [SENS_GPS0_OFFY](../advanced_config/parameter_reference.md#SENS_GPS0_OFFY) and [SENS_GPS0_OFFZ](../advanced_config/parameter_reference.md#SENS_GPS0_OFFZ).
+Set the position of the antenna relative to the vehicle's centre of gravity using [SENS_GNSS0_OFFX](../advanced_config/parameter_reference.md#SENS_GNSS0_OFFX), [SENS_GNSS0_OFFY](../advanced_config/parameter_reference.md#SENS_GNSS0_OFFY) and [SENS_GNSS0_OFFZ](../advanced_config/parameter_reference.md#SENS_GNSS0_OFFZ).
 ```
 
 **Testing:**
 
 ```md
-In the [QGroundControl MAVLink Console](../debug/mavlink_shell.md#qgroundcontrol-mavlink-console), run `gps status` to see the protocol, fix type and number of satellites, or `listener sensor_gps` to see the published data.
+In the [QGroundControl MAVLink Console](../debug/mavlink_shell.md#qgroundcontrol-mavlink-console), run `gps status` to see the protocol, fix type and number of satellites, or `listener sensor_gnss` to see the published data.
 <For RTK, `fix_type` is `5` for an RTK float solution and `6` for RTK fixed.>
+<For heading, `listener vehicle_gnss_heading` shows the heading the estimator uses.>
 ```
 
 ### In common with other hardware pages
@@ -226,7 +235,7 @@ Re-check them occasionally: pages get rewritten, and several have known problems
 | Wiring (DroneCAN) | `../dronecan/ark_rtk_gps.md#wiring` |
 | PX4 Configuration (non-u-blox) | `rtk_gps_holybro_unicore_um982.md#px4-configuration`, `rtk_gps_trimble_mb_two.md#configuration` |
 | PX4 Configuration (DroneCAN) | `../dronecan/ark_rtk_gps.md#flight-controller-setup` |
-| Heading | `rtk_gps_holybro_unicore_um982.md#enable-gps-heading-yaw`, `u-blox_f9p_heading.md#setup` |
+| Heading | `rtk_gps.md#configuring-gps-as-yaw-heading-source`, `rtk_gps_holybro_unicore_um982.md#enable-gps-heading-yaw`, `u-blox_f9p_heading.md#setup` |
 | LED Meanings | `../dronecan/ark_rtk_gps.md#led-meanings`, `septentrio_mosaic-go.md#led-status` |
 
 Check each anchor at the base SHA before citing it: several of these pages use default slugs that change with the heading text.
@@ -333,14 +342,14 @@ The values come from the facts worksheet (`protocol-sources.md`, "In firmware").
 | G-A2 | **Baud rate**: says nothing needs setting when the protocol probes the receiver's rate (`SER_GPS1_BAUD` defaults to Auto); gives the `SER_<port>_BAUD` value or the receiver setting (G-C1) when it doesn't. A baud value is a number, not "115200 8N1". | `bug` if wrong, `style` if a needless or malformed value |
 | G-A3 | **Secondary receiver**: the standard wording, with `GPS_2_CONFIG` (which has no default port) and `GPS_2_PROTOCOL` when the protocol isn't u-blox. | `style` if missing; `bug` if it says a secondary receiver needs no configuration |
 | G-A4 | **RTK** (RTK receivers): the standard link to [RTK GNSS](../gps_compass/rtk_gps.md); for DroneCAN, `UAVCAN_PUB_RTCM` (and the node's `CANNODE_SUB_RTCM` when it isn't set by the node's defaults). | `bug` for DroneCAN without the correction publication; `style` otherwise |
-| G-A5 | **Heading** (heading receivers): the heading-fusion bit of `EKF2_GPS_CTRL`, the offset parameter that applies to this driver or node (`protocol-sources.md`, "Heading"), the antenna geometry it's measured against, and the link to the shared heading section. Never present for a receiver that publishes no heading. | `bug` if wrong, missing, or given for a receiver without heading |
+| G-A5 | **Heading** (heading receivers): `SENS_GNSSn_HDG` with the value for this receiver, the antenna positions (`SENS_GNSSn_OFFX/Y/Z`, and `SENS_GNSSn_AUXX/Y/Z` for two antennas on one receiver), `SENS_GNSSn_ID` where the slot isn't the instance order, the heading-fusion bit of `EKF2_GPS_CTRL`, which antenna is main and which auxiliary, and the link to the shared heading section (standard wording; `protocol-sources.md`, "Heading"). Never present for a receiver whose heading PX4 doesn't use, and never naming a removed offset parameter (`GPS_YAW_OFFSET`, `EKF2_GPS_YAW_OFF`, `SEP_YAW_OFFS`, `SEP_PITCH_OFFS`). | `bug` if wrong, missing, incomplete, or given for a receiver without usable heading |
 | G-A6 | **DroneCAN**: the standard wording: `UAVCAN_ENABLE` with a value that enables sensors, the subscriptions (noting they're on by default), and the link to [DroneCAN > GPS](../dronecan/index.md#gps). A parameter set "to ensure" an effect has that effect in the source. | `bug` if wrong or missing |
-| G-A7 | **Antenna position**: the `SENS_GPS0_OFF*` parameters (standard wording), or a link to [Mounting a Compass > Position](../assembly/mount_gps_compass.md#position). | `style` |
+| G-A7 | **Antenna position**: the `SENS_GNSS0_OFF*` parameters (standard wording), or a link to [Mounting a Compass > Position](../assembly/mount_gps_compass.md#position). | `style` |
 | G-A8 | Reboot after any parameter the source marks `reboot_required` (all the port, protocol and DroneCAN ones). | `style` |
 | G-A9 | A receiver with more than one connection has one `###` sub-section per connection under PX4 Configuration (`### DroneCAN {#px4_configuration_dronecan}`), in the same order as under Wiring. | `style` |
 | G-A10 | Steps that must be done in order are a numbered list. | `minor` |
 | G-A11 | The configuration is on the page. A link to the manufacturer's manual is fine as further reading, labelled as a manual, but never in place of the PX4 steps; a manual written for another autopilot is never the PX4 configuration. | `bug` if the page's only configuration is a link |
-| G-A12 | **Septentrio**: `SEP_PORT1_CFG` set to the port, with `GPS_1_CONFIG` set to `0` (Disabled) when the port is `GPS1`; heading with `SEP_YAW_OFFS` (and `SEP_HARDW_SETUP` for moving base); a link to [Septentrio GNSS Receivers](../gps_compass/septentrio.md) for the rest. | `bug` if wrong or missing |
+| G-A12 | **Septentrio**: `SEP_PORT1_CFG` set to the port, with `GPS_1_CONFIG` set to `0` (Disabled) when the port is `GPS1`; heading with `SENS_GNSSn_HDG` and the antenna positions (and `SEP_HARDW_SETUP` `1` for two receivers); a link to [Septentrio GNSS Receivers](../gps_compass/septentrio.md) for the rest. | `bug` if wrong or missing |
 
 ### LED Meanings {#led_meanings} (if present)
 
@@ -352,14 +361,14 @@ The values come from the facts worksheet (`protocol-sources.md`, "In firmware").
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| G-T1 | Says how to confirm the receiver works: `gps status` (or `septentrio status`) and `listener sensor_gps` in the MAVLink console, or the GPS indicator in _QGroundControl_; for RTK, the RTK fix types; for heading, that heading is published. | `style` if missing |
+| G-T1 | Says how to confirm the receiver works: `gps status` (or `septentrio status`) and `listener sensor_gnss` in the MAVLink console, or the GPS indicator in _QGroundControl_; for RTK, the RTK fix types; for heading, `listener vehicle_gnss_heading`. | `style` if missing |
 | G-T2 | Every command, option, topic and message named exists (`protocol-sources.md`, "Commands", "Topics"). | `bug` |
 
 ### Troubleshooting {#troubleshooting} (if present)
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| G-X1 | One `###` per problem, named for the symptom. Commands and parameters named exist. "No GPS detected" covers the protocol setting for a receiver that isn't u-blox. | `bug` if a command or parameter doesn't exist |
+| G-X1 | One `###` per problem, named for the symptom. Commands and parameters named exist. "No GPS detected" covers the protocol setting for a receiver that isn't u-blox; for a heading receiver, PX4's "GPS heading not used: set ..." warnings are worth covering. | `bug` if a command or parameter doesn't exist |
 
 ### Further Information {#further_information}
 

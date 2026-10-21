@@ -15,7 +15,7 @@ This skill reviews the **documentation of a GNSS receiver** (a GPS, GPS/compass 
 It does not review the driver.
 Parser correctness, scheduling, error handling and test coverage belong to the `review-pr` skill in the PX4-Autopilot repo or to `code-review`.
 Never raise a finding on a file under `src/`, `boards/` or `ROMFS/`: those files are evidence, not review targets.
-Parameter descriptions in `params.yaml`, `module.yaml` and `uavcan_params.yaml` belong to `px4-param-review`.
+Parameter descriptions in `params.yaml`, `module.yaml`, `params_heading.yaml` and `uavcan_params.yaml` belong to `px4-param-review`.
 
 Prose quality (grammar, spelling, heading case, emphasis) belongs to `px4-doc-review`.
 When this skill runs inside a `px4-doc-review` review, that skill's lenses already cover the page's prose, so don't raise a grammar or style-guide finding here.
@@ -52,7 +52,7 @@ A lens that finds one of them wrong reports that rather than silently using its 
 | **Protocol** | What the receiver speaks to PX4 over UART: u-blox UBX, NMEA (including Unicore), Ashtech/Trimble, Emlid Reach, MTK, Femtomes, or Septentrio SBF. From the manufacturer facts, never from the page alone. For DroneCAN, the protocol between the node and its receiver chip (it decides the node firmware). |
 | **Driver** | `gps` with its `-p` protocol, `septentrio`, or the DroneCAN GNSS bridge on the flight controller (`protocol-sources.md`, "Where the source is"). |
 | **Node firmware** | DroneCAN only: **PX4 cannode** (a board under `boards/` built as `<vendor>_<board>_canbootloader`/`_default`), **AP_Periph** (ArduPilot), or **vendor** (closed). `n/a` for UART. |
-| **Capability** | **GNSS**, **RTK** (rover; takes RTCM corrections), or **RTK heading**, with how heading is produced: one receiver with two antennas, a moving-base pair of u-blox receivers, or none. A receiver that can be an RTK base is noted too. |
+| **Capability** | **GNSS**, **RTK** (rover; takes RTCM corrections), or **RTK heading**, with how heading is produced and the `SENS_GNSSn_HDG` value it needs: one receiver with two antennas (`2`), the rover of a moving-base pair of u-blox or Septentrio receivers (`1`), or none. A receiver that computes heading PX4 doesn't use (Trimble MB-Two, Femtomes, `$xxHDT` only) counts as none. A receiver that can be an RTK base is noted too. |
 | **Receiver** | The GNSS chip or module (u-blox ZED-F9P, Unicore UM982, Septentrio mosaic-X5), with its source. `unknown` when no manufacturer document names it. |
 | **Compass, barometer, other** | The magnetometer and barometer parts, and safety switch, buzzer and LED driver, each with its source, and whether PX4 starts a driver for it on an external bus by default (`protocol-sources.md`, "Compass, barometer and LEDs"). |
 | **In firmware** | Per connection: the Kconfig key that builds the protocol or driver, whether constrained-flash boards leave it out, and for Septentrio or DroneCAN how many boards build it (`protocol-sources.md`, "In firmware"). |
@@ -112,7 +112,7 @@ Don't guess an affiliation: say what the evidence is ("commit email at globalsat
 Listed in precedence order: a claim backed by a higher source outranks one backed by a lower source.
 Where two genuinely contradict each other, report the contradiction instead of picking a winner.
 
-1. **The source in this PR** at the head SHA: the `gps` driver and its `params.yaml`, `module.yaml` and `Kconfig`; the protocol implementations in the `src/drivers/gps/devices` submodule at the commit the head SHA records; the `septentrio` driver; the DroneCAN bridge and its `uavcan_params.yaml`; `uavcannode` and the CAN node's board directory; the startup scripts in `ROMFS/`; and the EKF2 and sensors parameters the page names.
+1. **The source in this PR** at the head SHA: the `gps` driver and its `params.yaml`, `module.yaml` and `Kconfig`; the protocol implementations in the `src/drivers/gps/devices` submodule at the commit the head SHA records; the `septentrio` driver; the correction injector in `src/lib/gnss/`; the DroneCAN bridge and its `uavcan_params.yaml`; `uavcannode` and the CAN node's board directory; the sensors module's GNSS selection, offsets and heading setup in `src/modules/sensors/vehicle_gps_position/`; the startup scripts in `ROMFS/`; and the EKF2 parameters the page names.
    What these do is what the receiver does under PX4: the protocol value, whether it's detected, whether heading and RTK work, what the node publishes.
    A page claim that contradicts them is a `bug`.
    `references/protocol-sources.md` says which file answers which question, and how to read it.
@@ -132,7 +132,7 @@ Where two genuinely contradict each other, report the contradiction instead of p
 ### Reaching the sources
 
 - **PR diff, description, linked issue**: `gh pr view`, `gh pr diff`, `gh api`.
-- **Source files and comparator pages**: prefer a local `PX4-Autopilot` clone (check `~/github/PX4/PX4-Autopilot` and siblings first).
+- **Source files and comparator pages**: prefer a local `PX4-Autopilot` clone (check `~/github/PX4/PX4-Autopilot` and siblings first), and read PX4 upstream, not the reviewer's fork: find the remote whose URL is `github.com/PX4/PX4-Autopilot` and fetch it (`protocol-sources.md`).
   Read the PR's head, not whatever the clone has checked out: `git -C <clone> fetch origin pull/<n>/head` then `git -C <clone> show FETCH_HEAD:<path>`, or `gh api repos/PX4/PX4-Autopilot/contents/<path>?ref=<head-sha>`.
   Comparator pages come from the base SHA.
   For a local-branch review, the working tree is the head for the docs, but read firmware at the merge-base unless the branch changes it: a clone's working-tree submodule is often at another commit.
@@ -212,7 +212,7 @@ When the GNSS facts give the status as discontinued:
 
 | Severity | Meaning |
 | --- | --- |
-| `bug` | The reader ends up misinformed or unable to act: a wrong protocol value or none when the protocol isn't detected by default, a wrong parameter, port or pin; "plug and play" for a receiver PX4 won't detect; heading set up for a receiver that can't provide it; RTK set up so corrections never reach the receiver; a page nobody can reach; placeholder text on the rendered page; configuration given only as a link to a manual written for another autopilot |
+| `bug` | The reader ends up misinformed or unable to act: a wrong protocol value or none when the protocol isn't detected by default, a wrong parameter, port or pin; a parameter that no longer exists; "plug and play" for a receiver PX4 won't detect; heading set up for a receiver whose heading PX4 doesn't use, or set up without `SENS_GNSSn_HDG` and the antenna positions; RTK set up so corrections never reach the receiver; a page nobody can reach; placeholder text on the rendered page; configuration given only as a link to a manual written for another autopilot |
 | `style` | The page departs from the template or from the form its comparators share, but what it says is right |
 | `minor` | No rule broken and the comparators don't agree on it; a suggestion the author can decline |
 
