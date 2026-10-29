@@ -147,10 +147,12 @@ Add one line below the tables saying the review ran in a single context.
 **Long-description verification.**
 Runs in this context, one in-scope message at a time — never delegated to the `comments` subagent, because it needs to time itself and may need to check in with the reviewer mid-run, and a dispatched subagent can do neither.
 
+Before the first message, read the "Message-level long description" section of `references/comments.md` in full, and "Names in comments" in `references/style-guide.md`: they hold the rules for both a missing and an existing long description.
+
 For every in-scope message (`references/comments.md`, "Message-level long description"):
 
 1. Note the start time, run that one message's publisher/subscriber search (`references/comments.md`, "Finding the actual publishers and subscribers"), note the end time, and record how long it took.
-2. Turn the result into that message's long-description finding exactly as `comments.md` describes: **missing** → replace the `comments` subagent's `(pending source search)` placeholder with the actual drafted paragraph, folding in both the publisher/subscriber findings and anything the short-description check flagged as trimmed from an oversized short description for the same message; **present** → confirmed, or flagged as wrong/incomplete with the specific correction.
+2. Turn the result into that message's long-description finding exactly as `comments.md` describes: **missing** → replace the `comments` subagent's `(pending source search)` placeholder with the actual drafted paragraph, folding in both the publisher/subscriber findings and anything the short-description check flagged as trimmed from an oversized short description for the same message; **present** → confirmed, or a drafted replacement per `comments.md`.
    The placeholder is never something the report shows — if you reach the report step and a Suggestion column still reads `(pending source search)` or any other generic stand-in ("add a long description," "consider documenting this"), that message's verification didn't actually run; go back and run it, or apply the "Stop" handling below, rather than publishing the placeholder.
 3. Keep a running total of time spent on this search across the review. Once that total passes **5 minutes** *and* messages remain unchecked, stop and ask the reviewer whether to continue, quoting the estimated time to finish as (average seconds per message so far) × (messages remaining).
    - **Continue**: keep going the same way, checking in again the next time the running total crosses a further 5-minute boundary with messages still remaining.
