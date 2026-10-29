@@ -65,7 +65,7 @@ Take the page's word for it unless the pinout on the page contradicts it; a cont
 - A sensor started only in one `ver hwtypecmp` block is described as revision-specific, or the page says which revision it describes.
 - Processor part number matches the defconfig; core, clock, flash and RAM match `board-sources.md`, "Processors" (T-S1).
 - Each Interfaces count (T-S3) matches its lookup-table row: serial ports and their labels, I2C internal/external, SPI buses and any external one, CAN, Ethernet, parameter storage, SD card.
-- **Power monitoring** under Electrical data (T-S4) names the monitor that's on by default per `rc.board_defaults` and `rc.board_sensors`.
+- **Power monitoring** under Electrical Data (T-S4) names the monitor that's on by default per `rc.board_defaults` and `rc.board_sensors`.
 
 ### Power
 
