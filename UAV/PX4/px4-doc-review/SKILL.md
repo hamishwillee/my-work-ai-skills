@@ -30,7 +30,8 @@ type(scope): short description of the change
 - **type** is `docs` for a change to documentation only, which covers `docs/en/` and `docs/_link_checker_sc/`.
   A fix made in a generated page's source takes the type and scope of that source instead, such as `docs(param)` for a parameter description or `docs(msg)` for a uORB message comment.
 - **scope** is the docs area affected: the folder under `docs/en/`, such as `docs(dev_setup)` or `docs(gps)`, or `docs(boards)` for pages under `flight_controller/`.
-  Omit the scope, as `docs: ...`, when a change spans several areas, as a sweep of link fixes usually does.
+  The scope is required: CI's PR title check (`Tools/ci/conventional_commits.py`) rejects `docs: ...`.
+  When a change spans several areas, use the primary one, as `CONTRIBUTING.md` requires, or `docs(links)` for a sweep of link fixes.
 - **description** is imperative and at least 5 characters, such as `fix broken CUAV doc links`.
 - The PR title covers every commit in it, since PRs are squash-merged and the title becomes the commit on `main`.
 - A commit containing AI-assisted content ends with the `Assisted-by: NAME:MODEL` trailer that [AI Assistants](https://docs.px4.io/main/en/contribute/ai_assistants#disclosure-required) requires, and no `Co-Authored-By` naming an AI.
