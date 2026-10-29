@@ -10,7 +10,7 @@ Read `description-standard.md` in full, and `examples.md` for how the rules were
 
 Work every Rewritten and New parameter through these, in order.
 
-**Short** (S2 to S6):
+**Short** (S2 to S7):
 
 - Is it a terse phrase that says what the parameter is or controls?
 - Does it repeat the type ("(integer bitmask)"), or say "This parameter"?
@@ -19,6 +19,8 @@ Work every Rewritten and New parameter through these, in order.
 - Would one qualifier moved into `short` make `long` unnecessary (S4)?
 - Does it refer to another parameter or a mode by anything other than the full parameter name (S5)?
 - Does it use an abbreviation a reader can't expand (S6)?
+- If it's restricted to one vehicle type, is that a prefix, with the text after it in sentence case as if the prefix weren't there (S7)?
+  A trailing "(FW)" or a lower-case word after the prefix, in text the PR wrote, is a `minor` finding: S7 is a preference.
 
 **Long** (L1 to L3, L5 to L7, L9):
 

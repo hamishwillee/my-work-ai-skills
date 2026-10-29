@@ -33,10 +33,14 @@ Check the raw YAML at the head, not just the parsed text:
   The docs reference joins the lines, and without one the options run together.
 - **W4.** Is a scalar containing `: ` unquoted?
   YAML either fails to parse it or reads it as a mapping; the script's validator run shows which.
+  Flag at `bug`: it breaks the build.
 - **W5.** Does a multi-instance (`${i}`) description keep its placeholder where the old one had it?
+- **W7.** Does the prose of `short` or `long` contain a colon?
+  The `Label: effect.` lines of a `|-` block and a `WARNING:` lead in a quoted scalar are the only exceptions.
+  Flag at `style`, and suggest a semicolon or a full stop; an unquoted one is the W4 `bug` instead.
 - Does `short` end with a full stop in one parameter and not its neighbours in the same file?
   Only flag it when the PR introduced the inconsistency, at `minor`: the generator adds one anyway.
 
 ## Returning findings
 
-One row per finding: file, line, parameter, issue, severity, suggestion, and evidence (the quoted text, and for W2 to W4 the raw YAML lines).
+One row per finding: file, line, parameter, issue, severity, suggestion, and evidence (the quoted text, and for W2 to W4 and W7 the raw YAML lines).
