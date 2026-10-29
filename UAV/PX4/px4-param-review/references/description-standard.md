@@ -42,6 +42,9 @@ That's why a correct string is left alone rather than reworded for taste.
   A partial or informal name is a wrong name: [review](https://github.com/PX4/PX4-Autopilot/pull/27758#discussion_r3511073930) corrected `DISARM_TRIGGER` to `VTQ_DISARM_TRIG`.
 - **S6.** No abbreviation the reader can't expand from context.
   [Review](https://github.com/PX4/PX4-Autopilot/pull/27758#discussion_r3510988641): "Number of IFCI CVs in use" → "Number of IFCI control variables in use", because "CVs" "can't be inferred".
+- **S7.** A restriction to one vehicle type is a prefix, and the text is in sentence case: "FW Altitude acceptance radius before landing", not "Altitude acceptance radius before landing (FW)" or "FW altitude acceptance radius before landing".
+  The sentence case assumes the prefix is not there, so the first word after it keeps its capital.
+  A preference rather than part of the #27758 spec: the convention set out in the description of [#28899](https://github.com/PX4/PX4-Autopilot/pull/28899), the second split-off batch, so that descriptions are consistent.
 
 ## Long description (`long`)
 
@@ -95,6 +98,10 @@ That's why a correct string is left alone rather than reworded for taste.
   Newlines belong only between per-option lines (O2), in a `|-` block.
 - **W3.** Each per-option line in a `|-` block is a sentence ending in a full stop, because the docs page joins the lines into one paragraph and only the full stops keep the options apart there.
 - **W4.** A scalar containing `: ` (such as `WARNING: ...`) is quoted, or YAML reads it as a mapping.
+  An unquoted one fails to load and breaks the build, as in [#28938](https://github.com/PX4/PX4-Autopilot/pull/28938), so it is a `bug`.
 - **W5.** Multi-instance descriptions keep their `${i}` placeholders.
 - **W6.** Spelling follows the [PX4 docs style guide](https://docs.px4.io/main/en/contribute/docs#style-guide): British English, except industry-standard software terms and names.
   Much existing parameter text is American; only flag spelling in text this PR wrote.
+- **W7.** No colon in the prose of `short` or `long`: reword with a semicolon or a full stop.
+  [#28938](https://github.com/PX4/PX4-Autopilot/pull/28938) fixed a broken build on main, where `NAV_FW_ALTL_RAD`'s unquoted `long` held "Usually smaller than NAV_FW_ALT_RAD: accuracy matters more near the ground." and YAML read the `: ` as a mapping key; its review concluded that "`:` are not allowed in short/long descriptions".
+  The only exceptions are the `Label: effect.` lines of a `|-` block (O2), where YAML takes the colon literally, and a `WARNING:` lead (L4) in a quoted scalar (W4).
