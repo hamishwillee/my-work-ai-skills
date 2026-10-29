@@ -36,9 +36,9 @@ It is based on the [<reference design>](<standard url>) <if any>, and <what dist
 
 ### Interfaces {#interfaces}
 
-### Electrical data {#electrical_data}
+### Electrical Data {#electrical_data}
 
-### Mechanical data {#mechanical_data}
+### Mechanical Data {#mechanical_data}
 
 ## Where to Buy {#store}
 
@@ -171,9 +171,9 @@ The old slug of a heading with no explicit anchor is its text, lower case, with 
 | T-S1 | `### Processor {#processor}`: **Main FMU processor:** the part, linked to its manufacturer page, with core, clock and RAM (`board-sources.md`, "Processors"), and any core PX4 doesn't use. **Code store:** only when code doesn't run from internal flash (say where it runs from and how much PX4 uses). **IO processor:** when there's a PX4IO, and "on carriers that fit one" when that depends on the carrier. | `bug` if wrong, `style` if missing |
 | T-S2 | `### Sensors {#sensors}`: **IMU:**, **Barometer:**, **Magnetometer:**, each a comma-separated list of parts linked to their manufacturer pages with the bus in parentheses (`(SPI1)`, `(I2C2)`); **Heater:** when fitted, with how it's controlled. A sensor that differs by hardware revision says which revision. | `bug` if wrong, `style` if missing |
 | T-S3 | `### Interfaces {#interfaces}`, in this order, each the board has: **PWM outputs:** (FMU count, plus IO count); **Serial ports:** (count, then the port labels in backticks); **I2C buses:** (count, which are internal); **SPI buses:** (count, and any external bus with its chip selects and data-ready lines); **CAN buses:** (count enabled, and any pinned out but unused); **Ethernet:** (speed); **USB:**; **RC input:**; **Parameter storage:** (FRAM, EEPROM or flash, with part); **SD card:** (slot type, or none). | `bug` if a count is wrong, `style` if missing |
-| T-S4 | `### Electrical data {#electrical_data}`: **Input voltage:**, **Current draw:** (with the heater's share when there's a heater), **Power monitoring:** (number of inputs, analog or digital, and which monitor is on by default). | `bug` if wrong, `style` if missing |
-| T-S5 | `### Mechanical data {#mechanical_data}`: **Dimensions:**, **Weight:**, and **Form factor:** when the board follows a standard (for example [Pixhawk Autopilot Bus](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-010%20Pixhawk%20Autopilot%20Bus%20Standard.pdf)), linked. **Mounting hole spacing:** when the manufacturer gives it (FPV stack boards: `30.5 × 30.5 mm`, `20 × 20 mm`), with the screw size if given (`30.5 × 30.5 mm, M4`); use this label, not "Mounting:", so the hole pattern isn't read as a second, conflicting board size. Operating temperature when the manufacturer gives it. | `style` if missing |
-| T-S6 | **Form**: each item is one list entry, `- **Label:** value`, with the colon inside the bold and labels in sentence case as above. Units carry a space (`480 MHz`, `2 MB`). Sub-headings are sentence case (`Electrical data`, not `Electrical Data`). | `style` |
+| T-S4 | `### Electrical Data {#electrical_data}`: **Input voltage:**, **Current draw:** (with the heater's share when there's a heater), **Power monitoring:** (number of inputs, analog or digital, and which monitor is on by default). | `bug` if wrong, `style` if missing |
+| T-S5 | `### Mechanical Data {#mechanical_data}`: **Dimensions:**, **Weight:**, and **Form factor:** when the board follows a standard (for example [Pixhawk Autopilot Bus](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-010%20Pixhawk%20Autopilot%20Bus%20Standard.pdf)), linked. **Mounting hole spacing:** when the manufacturer gives it (FPV stack boards: `30.5 × 30.5 mm`, `20 × 20 mm`), with the screw size if given (`30.5 × 30.5 mm, M4`); use this label, not "Mounting:", so the hole pattern isn't read as a second, conflicting board size. Operating temperature when the manufacturer gives it. | `style` if missing |
+| T-S6 | **Form**: each item is one list entry, `- **Label:** value`, with the colon inside the bold and labels in sentence case as above. Units carry a space (`480 MHz`, `2 MB`). Sub-headings use First Letter Capitalisation, as the PX4 docs style guide requires for all headings (`Electrical Data`, not `Electrical data`). | `style` |
 
 A board page can add an item the list doesn't have (**OSD:**, **Airspeed:**); it goes in the sub-section it belongs to, in the same form.
 An item the board doesn't have is left out, except **USB:** and **RC input:**, which say `No` when absent.
@@ -183,7 +183,7 @@ Pages copied from FPV-style boards often have `## Key Features` or `## Features`
 Report it as one finding on its heading line (T-P1, T-S1–T-S6), not as one finding per missing sub-section.
 Its suggestion is the restructured section, written out in full below the tables in place of a placeholder stub:
 
-- **Keep every fact.** Move each list item into the sub-section it belongs to (`Processor`, `Sensors`, `Interfaces`, `Electrical data`, `Mechanical data`), in the `- **Label:** value` form of T-S6.
+- **Keep every fact.** Move each list item into the sub-section it belongs to (`Processor`, `Sensors`, `Interfaces`, `Electrical Data`, `Mechanical Data`), in the `- **Label:** value` form of T-S6.
   An item that fits no label (an optional flash chip, a connector type) goes in the closest sub-section as its own entry, not dropped.
 - **Fill the gaps from the board source.** Add what T-S1–T-S4 require and the board files settle: the full part number and its core, flash and RAM (`board-sources.md`, "Processors"), each sensor's bus (`rc.board_sensors`, `spi.cpp`), internal and external I2C/SPI buses (`i2c.cpp`, `spi.cpp`), parameter storage (`CONFIG_BOARD_PARAM_FILE`, `FLASH_BASED_PARAMS`), and power monitoring (`board_config.h` ADC channels, `board_adc` in `rc.board_sensors`).
 - **Cite each addition.** List, under the suggested block, every value that wasn't on the page with the file and line it came from, so the reviewer can check each one without redoing the work.
@@ -220,13 +220,13 @@ Model, for a PAB module with an optional PX4IO:
 - **Parameter storage:** FRAM (FM25V02A) on FlexSPI2
 - **SD card:** MicroSD slot
 
-### Electrical data {#electrical_data}
+### Electrical Data {#electrical_data}
 
 - **Input voltage:** 5 V
 - **Current draw:** 500 mA (300 mA main system, 200 mA heater)
 - **Power monitoring:** 2 digital power bricks, INA226 by default
 
-### Mechanical data {#mechanical_data}
+### Mechanical Data {#mechanical_data}
 
 - **Dimensions:** 3.6 x 2.9 x 0.5 cm
 - **Weight:** 5.0 g
@@ -252,7 +252,7 @@ Model, for a PAB module with an optional PX4IO:
 | --- | --- | --- |
 | T-W1 | Which ports take power (as labelled), their connector type, and whether two inputs give redundancy. | `style` if missing, `bug` if wrong |
 | T-W2 | Battery monitoring: analog or digital, the monitor chip for digital, and which is enabled by default. | `bug` if wrong |
-| T-W3 | The servo-rail warning when outputs aren't powered from the power input: "The PWM output ports are not powered by the POWER port. The output rail must be [separately powered](../assembly/servo_power.md) if it needs to power servos or other hardware." | `style` |
+| T-W3 | The servo-rail warning when outputs aren't powered from the power input: "The PWM output ports are not powered by the POWER port. The output rail must be [separately powered](../peripherals/pwm_escs_and_servo.md) if it needs to power servos or other hardware." | `style` |
 | T-W4 | A link to [Battery and Power Module Setup](../config/battery.md). | `minor` |
 
 ### Voltage Ratings {#voltage_ratings}
