@@ -82,7 +82,7 @@ Include its findings in this report as their own captioned section, **uORB messa
 **Parameter descriptions go to `px4-param-review`.**
 When the PR adds or changes a parameter definition (a `module.yaml` or `*_params.yaml` under `src/` whose change touches a `parameters:` definition, or a `PARAM_DEFINE_*` comment block in a `.c` file), or changes `docs/en/advanced_config/parameter_reference.md`, don't review the parameter text with this skill's lenses.
 Run the `px4-param-review` skill on the same PR instead, passing it the PR number, head and base SHAs, and changed-file list: it holds the parameter description standard, checks every rewritten description for lost facts, and runs the schema validator.
-Include its findings as their own captioned section, **Parameter description review**, after the detailed per-file review and after any board or rangefinder section, before any uORB section: its triage lines (parameter counts and size change), then its findings as per-file tables in this skill's format, then its dropped-content note.
+Include its findings as their own captioned section, **Parameter description review**, after the detailed per-file review and after any board, rangefinder or GNSS section, before any uORB section: its triage lines (parameter counts and size change), then its findings as per-file tables in this skill's format, then its dropped-content note.
 Leave the definition files and the parameter reference out of this skill's triage and per-file tables, and add one line to the triage summary giving its bug count, so the opening count isn't read as the whole PR's.
 A changed `docs/en/` page that mentions a parameter is still this skill's to review; the flight-behavior lens checks what it says about the parameter.
 
@@ -100,8 +100,15 @@ Include what it returns as its own captioned section, **Rangefinder documentatio
 Where one of its findings and one of this skill's describe the same problem on the same line, keep it in the Rangefinder documentation review section only, with the higher severity.
 Its findings stay out of this skill's triage and per-file tables; add one line to the triage summary giving its bug count, so the opening count isn't read as the whole PR's.
 
+**GNSS receivers also go to `px4-gnss-doc-review`.**
+When the PR adds or changes a GNSS receiver's page (a page nested under `gps_compass/index.md` or `gps_compass/rtk_gps.md` in `docs/en/SUMMARY.md`, whether it lives in `docs/en/gps_compass/` or `docs/en/dronecan/`), changes the device tables or protocol sentences in `docs/en/gps_compass/index.md` or `docs/en/gps_compass/rtk_gps.md`, or changes `src/drivers/gps/` (including its `devices` submodule), `src/drivers/gnss/septentrio/`, or a GNSS CAN-node board, run the `px4-gnss-doc-review` skill on the same PR as well, passing it the PR number, head and base SHAs, and changed-file list.
+It checks the page against the GPS driver and protocol source, its sibling pages, its listings, and a page template shared by every GNSS page; this skill's lenses still review the page's prose as normal.
+Include what it returns as its own captioned section, **GNSS documentation review**, after the detailed per-file review and after any board or rangefinder section, before any parameter or uORB section: its GNSS summary lines, its documentation checklist, then its findings as per-file tables in this skill's format.
+Where one of its findings and one of this skill's describe the same problem on the same line, keep it in the GNSS documentation review section only, with the higher severity.
+Its findings stay out of this skill's triage and per-file tables; add one line to the triage summary giving its bug count, so the opening count isn't read as the whole PR's.
+
 If no file under `docs/en/` changed, say so and stop: this skill has nothing to review.
-The exception is a PR whose only in-scope changes are ones handed off above (parameter definitions, uORB messages, a board directory, or a rangefinder driver directory): run those skills and give their reports as the whole review.
+The exception is a PR whose only in-scope changes are ones handed off above (parameter definitions, uORB messages, a board directory, a rangefinder driver directory, or the GPS driver): run those skills and give their reports as the whole review.
 
 **Reviewer preferences.**
 Load `~/.config/px4-doc-review/preferences.md` if it exists and apply it here, not in the lens agents.
