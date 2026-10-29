@@ -36,6 +36,7 @@ No existing page has a Firmware Support section yet, so for that row the templat
 | Which port to use | Serial | "can be connected to any unused serial port (UART), such as `TELEM2`, `TELEM3` or `GPS2`" |
 | Setting the port | Serial | "[Configure the serial port](../peripherals/serial_configuration.md) on which the rangefinder will run using [SENS_<X>_CFG](...)" |
 | Baud rate | Serial | "There is no need to set the baud rate for the port, as this is configured by the driver." |
+| Port in use | Serial | "If the port is already used by another function, see [Deconflicting Ports](../peripherals/serial_configuration.md#deconflicting-ports) in _Serial Port Configuration_." |
 | Firmware support | Serial, I2C, PWM | The Firmware Support section's standard paragraphs: the keys, how widely it's built, how to check, how to add it, how it's enabled |
 | Missing parameter | Serial, I2C | "If the parameter is not available in _QGroundControl_ then the driver is not in the firmware: see [Firmware Support](#firmware_support)." |
 | Not in most firmware | any, driver not in the common set | The top-of-page `::: info` note linking `#firmware_support` |

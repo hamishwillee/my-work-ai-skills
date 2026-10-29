@@ -8,6 +8,7 @@ This holds what all lenses share: the read-only rule, what's in scope, the range
 You are read-only.
 Never modify a file in the repository under review, and never run `gh pr comment`, `gh pr review`, `gh pr edit`, or any other write operation.
 The one file you may create is the report itself, and only the main agent does that, only when the reviewer asks for it, and only outside the clone.
+The one exception to posting is the main agent posting comment drafts the reviewer has explicitly asked it to post, after a review (`page-update.md`, "What turns up along the way"); a lens never posts.
 
 ## Scope
 
@@ -79,6 +80,10 @@ A value the material doesn't give is written `not stated`; material that couldn'
 Check the output frame format against what the driver parses.
 A match confirms the driver really is the one for this product, which matters when a product was renamed or replaced an older one; a mismatch goes below the tables as a firmware question.
 
+**Interfaces the page's driver doesn't use.**
+When the manufacturer gives the sensor an interface the page's driver doesn't handle (I2C on a serial sensor, CAN on a UART one), search the other drivers for one that speaks it: the manufacturer's name and model in `src/`, then the I2C address and the command bytes from the manual (`grep -rn "0x10" src/drivers/distance_sensor/*/*.hpp`, `grep -rn "0x5A, 0x05" src/drivers`).
+A driver that matches on address and protocol but names another product (`tf02pro` for a TFmini in I2C mode) is evidence it might work, not that it does: it goes below the tables as a question for the manufacturer or the reviewer, with the range limits that driver would report, and never onto the page.
+
 ## Finding who to ask
 
 For the report's "Who to ask" note.
@@ -89,9 +94,13 @@ Look in three places, and record for each person the handle, what ties them to t
 - **The page's history.**
   PX4-Autopilot's `docs/` history starts at the March 2025 import, so for anything older ask the old repositories: `gh api "repos/PX4/PX4-user_guide/commits?path=en/sensor/<page>.md"`, and `PX4/PX4-Devguide` for pages that began there.
 - **The manufacturer's own documents**: a manual's revision history names its authors, and a name that matches a page or driver contributor is the best manufacturer contact there is.
+- **The manufacturer on GitHub**: `gh api "search/users?q=<manufacturer>"` finds its organisation and the accounts named for it.
+  The organisation can't be @-mentioned, but an account that commits to the organisation's repositories, or whose profile links the manufacturer's site, can (`benewakesupport` for Benewake).
+  Prefer a support account active in the last few months over an individual's or a dormant one, and check activity with `gh api users/<handle>/events/public`.
+  Give the manufacturer's contact email from its product page or organisation profile as well, since a manufacturer that has never taken part in a PX4 issue may not answer a mention.
 
 Confirm each handle with `gh api users/<handle>` (it exists, and whether it has been active recently), and say so when an account looks dormant.
-A manufacturer's GitHub organisation can't be mentioned for review; give its support address instead.
+A manufacturer's GitHub organisation can't be mentioned for review; give its support account, or failing that its support address, instead.
 Don't guess an affiliation: say what the evidence is ("listed as an author of the manual", "company on profile") and no more.
 
 ## Sources of truth

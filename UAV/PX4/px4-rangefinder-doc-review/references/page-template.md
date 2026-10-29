@@ -53,7 +53,7 @@ See [Firmware Support](#firmware_support) for how to check your board and add it
 ## Supported Models {#supported_models}               (family pages)
 
 | Model | Range | Connection | <parameter> value | Notes |
-| ----- | ----- | ---------- | ----------------- | ----- |
+| ----- | ----- | ---------- | ----------------- | ----- |  (Notes only if a row has one)
 
 ## Specifications {#specifications}
 
@@ -95,7 +95,7 @@ The rangefinder is supported by the [<driver>](../modules/modules_driver_distanc
 Most boards set `CONFIG_COMMON_DISTANCE_SENSOR`, so the driver is present in most firmware.
 To check your board, look for either key in its configuration file, `boards/<vendor>/<board>/default.px4board`, or check whether [SENS_<X>_CFG](../advanced_config/parameter_reference.md#SENS_<X>_CFG) is listed in _QGroundControl_ (parameters are only shown for drivers that are in the firmware).
 
-If the driver is missing, add either key to the board's `default.px4board` file, or enable it in [boardconfig](../hardware/porting_guide_config.md#px4-menuconfig-setup) under **Drivers > Distance sensors**, and then [build and upload the firmware](../dev_setup/building_px4.md).
+If the driver is missing, add either key to the board's `default.px4board` file, or enable it in [`boardconfig`](../hardware/porting_guide_config.md#px4-menuconfig-setup) under **Drivers > Distance sensors**, and then [build and upload the firmware](../dev_setup/building_px4.md).
 
 The driver does not start until it is enabled using the parameters in [PX4 Configuration](#px4_configuration).
 
@@ -103,6 +103,7 @@ The driver does not start until it is enabled using the parameters in [PX4 Confi
 
 [Configure the serial port](../peripherals/serial_configuration.md) on which the rangefinder will run using [SENS_<X>_CFG](../advanced_config/parameter_reference.md#SENS_<X>_CFG), and then reboot.
 There is no need to set the baud rate for the port, as this is configured by the driver.
+If the port is already used by another function, see [Deconflicting Ports](../peripherals/serial_configuration.md#deconflicting-ports) in _Serial Port Configuration_.
 
 If the parameter is not available in _QGroundControl_ then the driver is not in the firmware: see [Firmware Support](#firmware_support).
 
@@ -223,7 +224,7 @@ The aim is that a reader with any one of them can follow the page without guessi
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| R-M1 | `## Supported Models {#supported_models}` directly after the opening, as one table with a row per model: `Model` (linked to its product page, or to its own page if it has one), `Range`, `Connection`, the value of the model parameter when the driver selects the model by parameter (the column headed with the parameter name), and `Notes`. | `style` |
+| R-M1 | `## Supported Models {#supported_models}` directly after the opening, as one table with a row per model: `Model` (linked to its product page, or to its own page if it has one), `Range`, `Connection`, the value of the model parameter when the driver selects the model by parameter (the column headed with the parameter name), and `Notes` when at least one row has a note. An empty `Notes` column is left out. | `style` |
 | R-M2 | Every model the page names is in the table, and is one the driver supports for that connection (its model parameter has a value for it, or the driver detects it). | `bug` for a model the driver doesn't support |
 | R-M3 | Every model the driver supports is in the table, or the page says why not. | `style` |
 | R-M4 | Each row's range, connection and parameter value match the driver (`driver-sources.md`, "Models"). | `bug` |
@@ -250,6 +251,7 @@ A page that covers two near-identical products with one line of difference (ARK 
 | R-O7 | A discontinued product has ` (Discontinued)` in the H1, `<Badge type="info" text="Discontinued" />` under it, and a `::: warning` saying it's no longer available and, if stock exists, where. | `style` |
 | R-O8 | A "tested on" statement, when there is one, names the board and is in an `::: info` note; it doesn't stand in for R-O6. | `minor` |
 | R-O9 | When the manufacturer sells the sensor in interface variants that a unit is configured as at the factory (UART, CAN or DroneCAN), the page says which variant it documents, in a note where the reader meets the wiring, and Where to Buy says which to order when the store offers the choice. | `bug` if the page's setup only works for one variant and nothing says so, otherwise `style` |
+| R-O10 | The product is named as its manufacturer styles it (`TFmini LiDAR`, `AS-DT1 LiDAR`), the same way in the H1, the `SUMMARY.md` entry, and the `rangefinders.md` row and summary heading, even where neighbouring entries spell a generic word differently ("Lidar"). Running text about the product keeps the same styling. | `style` |
 
 ### Specifications {#specifications}
 
@@ -293,6 +295,7 @@ Settings made on the sensor itself, with the manufacturer's tool or by updating 
 | R-W4 | An I2C sensor gives its address, and says so if the address can clash with another PX4 device or can be changed. | `bug` if wrong, `minor` if missing |
 | R-W5 | A PWM sensor names the pins the driver uses and says they're fixed. | `bug` if wrong |
 | R-W6 | A sensor with more than one connection has one `####` sub-section per connection under Wiring, named for it (`#### I2C {#wiring_i2c}`, `#### Serial {#wiring_serial}`), in the order the opening lists them. | `style` |
+| R-N2 | When the sensor's connector isn't the JST-GH series that the [Pixhawk Connector Standard](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-009%20Pixhawk%20Connector%20Standard.pdf) uses for flight-controller ports, Pinouts says so, links the standard, and says an adapter cable is needed to connect to those ports. Based on the connector the manufacturer names; when it names none, the page doesn't guess. | `style` if missing, `bug` if it says a non-GH connector plugs straight into a Pixhawk-standard port |
 
 Mounting, Pinouts and Wiring can be one `## Hardware Setup` section with no sub-headings when the whole of it is a few lines, as long as R-H1, R-N1 and R-W1 to R-W3 are covered.
 
@@ -308,7 +311,7 @@ The values come from the facts worksheet (`driver-sources.md`, "In firmware").
 | R-F4 | **The keys**: every board configuration key that builds the driver, each in code style with `=y`. That's the driver's own key, `CONFIG_DRIVERS_DISTANCE_SENSOR_<X>`, and also `CONFIG_COMMON_DISTANCE_SENSOR` when the common set selects the driver. The page says what each is: the common set, or this driver alone. | `bug` for a key that's wrong, in an obsolete form (`distance_sensor/cm8jl65`, `drivers/ll40ls`), or a common-set key given for a driver the set doesn't select; `style` for a key left out |
 | R-F5 | **How widely it's built**, following from which key applies: in the common set, "most boards" (the standard sentence); not in it, that only boards setting the driver's own key have it, naming them, each linked to its flight-controller page. When no board sets it, the page names none and doesn't say so. | `bug` if it says "most boards" for a driver outside the common set, or the reverse; `bug` for a named board that doesn't build it; `style` if missing |
 | R-F6 | **How to check a board**: look for the key(s) in `boards/<vendor>/<board>/default.px4board`, or see whether the enabling parameter is listed in _QGroundControl_. | `style` |
-| R-F7 | **How to add it**: add a key to the board's `default.px4board`, or enable the driver in [boardconfig](../hardware/porting_guide_config.md#px4-menuconfig-setup) under **Drivers > Distance sensors**, then [build and upload](../dev_setup/building_px4.md). | `style` if missing, `bug` if the menu path or key is wrong |
+| R-F7 | **How to add it**: add a key to the board's `default.px4board`, or enable the driver in [`boardconfig`](../hardware/porting_guide_config.md#px4-menuconfig-setup) under **Drivers > Distance sensors**, then [build and upload](../dev_setup/building_px4.md). | `style` if missing, `bug` if the menu path or key is wrong |
 | R-F8 | **How it's enabled**: says that being in firmware doesn't start the driver, and links PX4 Configuration for the parameter that does. A driver a board starts by itself (a line in its `rc.board_sensors`) says so, naming the board. | `style`; `bug` if it says the driver starts automatically when it doesn't |
 | R-F9 | A sensor with several drivers (one per connection) lists each driver with its own keys, and says which connection each serves. Each connection gets a `###` sub-section named for it (`### I2C {#firmware_support_i2c}`), in the same order as under Wiring and PX4 Configuration, with what the drivers share (how to check a board, how to add a driver, how they are enabled) above the first sub-section. | `bug` when a reader can't tell which key their connection needs |
 | R-F10 | A DroneCAN or MAVLink sensor has no driver of its own in the flight controller. The section says so in a line, and names what the flight controller does need: the DroneCAN driver (`CONFIG_DRIVERS_UAVCAN=y`, in most boards) or MAVLink on the port. The sensor's own firmware is covered in Sensor Configuration (R-C3). | `style` |
@@ -321,7 +324,7 @@ The values come from the facts worksheet (`driver-sources.md`, "In firmware").
 | R-A9 | Says that if the enabling parameter isn't listed in _QGroundControl_ the driver isn't in the firmware, and links `#firmware_support` (the sentence from the skeleton) in place of the older "add the driver to the firmware" info note. | `style` |
 | R-A2 | Says whether the port's baud rate has to be set. When the driver sets it, the standard sentence from the skeleton; when it doesn't, the `SER_<port>_BAUD` value. | `bug` if wrong, `style` if missing |
 | R-A3 | Every other parameter the driver defines (model, orientation, rate, mode) is listed with what it does and when to change it, and any default the page states is the driver's. Several parameters go in a table, `Parameter` and `Description`. | `bug` if wrong, `style` for a driver parameter the page doesn't mention |
-| R-A4 | Says to reboot after setting any parameter the driver marks `reboot_required`, and that a serial port already assigned to another service has to be freed first, linking Serial Port Configuration. | `style` |
+| R-A4 | Says to reboot after setting any parameter the driver marks `reboot_required`, and, for a serial sensor, that a port already used by another function has to be freed first: the "Deconflicting Ports" sentence from the skeleton. | `style` |
 | R-A5 | Links [Rangefinders > Configuration/Setup](../sensor/rangefinders.md#configuration) for the `EKF2_RNG_*` parameters every rangefinder shares, using the sentence from the skeleton, instead of repeating them. A value this sensor needs that differs from the default ([EKF2_RNG_QLTY_T](../advanced_config/parameter_reference.md#EKF2_RNG_QLTY_T) for DroneCAN sensors) is given here. | `style` |
 | R-A6 | A sensor publishing `obstacle_distance` links [Collision Prevention](../computer_vision/collision_prevention.md) and [CP_DIST](../advanced_config/parameter_reference.md#CP_DIST), and leaves out R-A5. | `style` |
 | R-A7 | A sensor with more than one connection has one `###` sub-section per connection under PX4 Configuration (`### I2C {#px4_configuration_i2c}`), in the same order as under Wiring. | `style` |

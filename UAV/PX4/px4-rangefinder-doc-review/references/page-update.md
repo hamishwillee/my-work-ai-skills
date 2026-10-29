@@ -38,6 +38,15 @@ A usual run:
 
 Fold a trivial fix on an adjacent line (an image's alt text, a missing space in a container) into the suggestion next to it, and say so.
 
+Run-specific rules:
+
+- **Version badge.** Propose the badge (R-O2) even on an existing page: the update PR is the PR that adds it.
+- **Variants the driver can't use.** A model or interface variant the driver can't use as delivered (an RS-485 or CAN variant of a UART sensor) is dropped from the page, not documented as "not supported".
+  Put what would make it work on the questions for the manufacturer.
+- **Links you can't fetch.** A reseller page that blocks automated requests (Mouser) can't be checked for stock or product.
+  Give the link the manufacturer's own "Buy now" button uses, say it wasn't fetched, and ask the reviewer to confirm it before the edit is applied.
+- **`_sidebar.md`.** Never edit it, even when `SUMMARY.md` changes: it's generated, and the committed copy is often stale.
+
 Each suggestion gives, in this order:
 
 - **Where**: the section and line, and a count of where this sits in the run ("Suggestion 4").
@@ -97,8 +106,15 @@ Keep a running list and give it with the suggestion that turned it up, then agai
 - **Contacts**: who could review the page or answer the questions (`shared.md`, "Finding who to ask").
 
 Draft each as a review comment for the reviewer to post, addressed to a named handle and anchored to the specific line of the diff it's about (`SKILL.md`, Report, "Comment drafts").
-Never post one yourself, and never name anyone in a commit message or PR description: whether to raise something, and with whom, is the reviewer's decision, and they may know that a contributor has left the project.
+Never name anyone in a commit message or PR description: whether to raise something, and with whom, is the reviewer's decision, and they may know that a contributor has left the project.
 The PR description states what changed and nothing else.
+
+Post nothing unless the reviewer explicitly asks.
+When they do, after the PR is open:
+
+- **Manufacturer questions** go as a separate comment on the PR, addressed to the manufacturer's GitHub contact (`shared.md`, "Finding who to ask"), one numbered question per item, each saying what the page will say once it's answered.
+- **Driver observations** go in a separate issue, not the docs PR: the repository's bug-report form (`.github/ISSUE_TEMPLATE/bug_report.yml`: its `[Bug] ` title prefix and its two sections; its `bug-report` label doesn't exist in the repository, so use `kind:bug`), naming the driver, each observation with its file and line and the manufacturer evidence, and linking the docs PR.
+- Show the reviewer the URL of each one once posted.
 
 ## Finishing
 

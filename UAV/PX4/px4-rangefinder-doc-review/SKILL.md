@@ -27,7 +27,7 @@ Your output is the report; the reviewer posts it themselves.
 **Updating a page.**
 When the reviewer asks for a page to be updated, fixed or restructured rather than reviewed, run the review below first if there isn't one, then follow `references/page-update.md`.
 That is the one mode that edits files in the clone, and only the changes the reviewer approves, one at a time.
-It still never posts a comment.
+It posts a comment or opens an issue only when the reviewer explicitly asks (`references/page-update.md`, "What turns up along the way").
 
 ## Workflow
 
