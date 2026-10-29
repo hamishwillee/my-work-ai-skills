@@ -42,6 +42,15 @@ Allowed units (from the parser's own list — treat as authoritative):
 
 Description text: starts with a capital letter, omits the terminal period for a single-sentence description; a multi-sentence description punctuates normally throughout (including its final sentence).
 
+**Where `@enum` doesn't fit.** `[@enum PREFIX]` only links to constants declared in the same message. Two cases come up:
+
+- The field's value is handed to the publisher in another message (an ID from a registration reply, say). Point to that field, as in `mode_id from RegisterExtComponentReply`, rather than the constant set the value happens to be drawn from.
+- The field's meaning depends on a discriminator field, so it's enum-valued for only some discriminator values. Say what the value is for each one.
+
+**Names in comments.** Use only names a consumer of the message can see: messages, topics, fields, constants and modules.
+Don't use C++ structs, classes or functions (`vehicle_status_s::`, `ModeManagement`, `Modes::valid()`), and don't name another message's constants when a field already tells the consumer where the value comes from.
+Cite code in a review's evidence, never in the suggested comment text.
+
 ## Constants
 
 ```

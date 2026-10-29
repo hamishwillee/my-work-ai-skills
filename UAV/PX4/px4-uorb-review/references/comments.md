@@ -43,7 +43,16 @@ That publisher/subscriber list is the ground truth the long description is check
   2. Whatever the short-description check flagged as trimmed from an oversized short description for this same message — if that check found the short description carrying real content beyond a label, that content belongs in this draft, not nowhere.
 
   Severity `style` when the message's purpose or architectural fit genuinely isn't clear without one; `minor` when it would be a nice-to-have but the message is already small and self-explanatory (a handful of clearly-named diagnostic fields, say).
-- **Present but wrong or incomplete.** An in-scope long description that misstates or omits a discovered publisher/subscriber, or that doesn't actually explain the message's role (restates the short description, or is boilerplate): `style`. Name the specific module it misses or misstates — never just "incomplete."
+- **Present: check every claim, then offer a rewrite if it's wrong or wordy.**
+  Check the publisher/subscriber list, and also every claim about behaviour: what the receiver does with the data (stores it or acts on it), what a published value is built from (which inputs are merged, which take precedence), and when it's published.
+  A claimed consumer that doesn't exist in `src/**` is wrong too. A topic that is only logged has no consumers.
+  A description that restates the short description, or is boilerplate, doesn't explain the message's role and counts as wrong.
+  When anything is wrong, or the text is longer than it needs to be, name each specific error (never just "incomplete") and draft a full replacement below the tables rather than listing corrections: `style` if wrong, `minor` if only wordy.
+  Shape it like this:
+  - One sentence per topic, in data-flow order: who publishes it, what it carries, and what the receiver does with it.
+  - No filler: "this message backs", "implementing a … protocol", "for other consumers to observe". The flow should show the protocol without naming it.
+  - Only names a consumer can see (`style-guide.md`, "Names in comments").
+  - Check the short description in the same pass. If the rewrite shows its wording is imprecise ("Configurable overrides" for overrides *of* configuration), include a fix.
 - **Don't overreach.** Only check what's mechanically discoverable by source search. Don't speculate about *why* the architecture is shaped the way it is beyond what a comment elsewhere in the source already says, and don't fail a description for reasonably omitting a generic consumer.
 
 ## Field/constant presence
@@ -62,6 +71,17 @@ From `style-guide.md`:
   `uint64 timestamp # time since system start (microseconds)` → `uint64 timestamp # [us] Time since system start`.
   This exact `timestamp`/`timestamp_sample`-with-prose-unit shape recurs constantly across the tree — apply the fix every time you see it, not just the first time.
   **Don't assert a unit value you haven't sourced.** The two cases above are safe because the unit is already stated, in the field's own comment, in this exact spot — moving it into the tag is mechanical. When a field has no `[<unit>]` tag *and* its own comment says nothing about units, don't fill the tag from the field name, a plausible-sounding neighboring comment, or a similar field elsewhere. Confirm it first, in order of preference: (1) the publishing module's actual source in `src/**` — a raw value's scaling, a documented range, a struct comment (`shared.md` source-of-truth #3); (2) an adjacent group/internal comment or a sibling field in the same message, *only* when it unambiguously states the unit for this exact field, and name it explicitly as your source rather than folding it in silently. If neither confirms a specific unit, still raise the missing-tag finding (`style`), but leave the value out of the suggestion — `add a [<unit>] tag once the unit is confirmed` — rather than guessing `[deg]`/`[m]`/etc. Either way, name the source you used for the unit in the finding's evidence, the same as any other cited rule.
+- **IDs, indices and borrowed values: describe where the value comes from, not how it's consumed.**
+  When a field carries an ID, slot or index, or a value from another message's constant set, its comment should tell a *publisher* how to fill it in.
+  That means saying who assigns the value and which message or field delivers it (for example, an ID handed back in a registration reply).
+  It shouldn't describe how a subscriber's code looks the value up internally.
+  Before drafting, trace the value back to where it's assigned: grep `src/**` for writes to the field and for the function that hands the ID out, then follow it to the message that carries it to the client.
+  When the field's meaning depends on a discriminator field (`source_type`, `*_type`, `*_kind`), give the origin for each discriminator value.
+  Cite where the value is assigned as the evidence.
+  An internal lookup like `Modes::valid(nav_state)` is not enough evidence.
+  `uint8 source_id # [-] ID depending on source_type`
+  → not `Mode nav_state (SOURCE_TYPE_MODE) or mode executor ID (SOURCE_TYPE_MODE_EXECUTOR)` (consumer view),
+  → but `ID assigned at registration (RegisterExtComponentReply): mode_id for SOURCE_TYPE_MODE, mode_executor_id for SOURCE_TYPE_MODE_EXECUTOR`.
 
 From `community-conventions.md`, "When a comment is required" (cite the link with each finding):
 
