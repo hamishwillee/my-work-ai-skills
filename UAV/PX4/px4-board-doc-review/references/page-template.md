@@ -267,7 +267,7 @@ Model, for a PAB module with an optional PX4IO:
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| T-PWM1 | Output count, split into IO (`MAIN`) and FMU (`AUX`) outputs when there's a PX4IO. | `bug` if wrong |
+| T-PWM1 | Output count, split into IO (`MAIN`) and FMU (`AUX`) outputs when there's a PX4IO, saying "on carriers that fit one" when the IO is on the carrier. A capture channel (`board-sources.md`, "Capture channels") is named separately, as a capture channel with its timer, and isn't counted as an output. | `bug` if wrong |
 | T-PWM2 | Which outputs support [DShot](../peripherals/dshot.md) and which support [bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry), as output ranges. IO outputs never support DShot. | `bug` if wrong, `style` if missing |
 | T-PWM3 | The timer groups, as output ranges, and the rule that "All outputs within the same group must use the same output protocol and rate." | `bug` if wrong, `style` if missing |
 
