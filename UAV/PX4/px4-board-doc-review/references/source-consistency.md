@@ -36,8 +36,13 @@ Cite the check ID alongside the board-file evidence (`T-U2; default.px4board:6 C
 
 ### Outputs
 
-- FMU output count equals `DIRECT_PWM_OUTPUT_CHANNELS` and the `initIOTimerChannel` entries.
+- FMU PWM output count equals the `initIOTimerChannel` entries in `timer_config.cpp`. It equals `DIRECT_PWM_OUTPUT_CHANNELS` only when there are no `initIOTimerChannelCapture` entries (`board-sources.md`, "FMU PWM output count" and "Capture channels").
+- A capture channel is described as one, with its timer, and isn't counted among the PWM outputs or put in a PWM output group.
+  A page that counts it as an ordinary PWM output is `bug`: a reader plans an ESC or servo on a pin that the carrier may route to a capture connector.
+  A page that leaves it out is `style`.
 - With a PX4IO, the page distinguishes the 8 IO (`MAIN`) outputs from the FMU (`AUX`) outputs, and doesn't claim DShot on IO outputs.
+- On a module whose PX4IO sits on the carrier, the page says the IO outputs depend on the carrier.
+  Claiming 8 `MAIN` outputs with no qualification is `bug` when any carrier the page names, or the manufacturer's own carrier, has no PX4IO.
 - Timer groups on the page match `timer_config.cpp`.
 - DShot and bidirectional DShot claims match, output by output, what `board-sources.md` ("DShot" rows and "DShot by chip family") gives for this board; a board with DShot the page doesn't mention is `style` (T-PWM2).
 - DShot claimed on an STM32F4 or STM32F7 board is `bug`: PX4 doesn't support it there.
