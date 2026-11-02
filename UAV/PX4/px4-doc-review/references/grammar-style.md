@@ -26,6 +26,12 @@ The published style guide doesn't state an audience; this is this skill's standa
   Flag one that has neither.
   Prefer a link to a PX4 docs page that explains the term; otherwise suggest a definition in place.
   Don't flag a term that is already defined or linked earlier on the same page, a term that is the page's own subject and is explained in its introduction, or an everyday term (USB, GPS, battery, Wi-Fi).
+  Don't flag a term that is standard in drones and flight controllers either, such as IMU, FMU, ESC, PWM, UART, I2C, SPI or CAN.
+  Readers of these pages know them, so never expand one in place; at most, link its first use in running text, and only when a PX4 docs page explains it.
+  When no PX4 page explains such a term, leave it unlinked rather than inventing a definition.
+- **Links, not glosses.** A link that explains a term is enough on its own: don't also add a parenthetical expansion after it ("[ESCs](...) (electronic speed controllers)").
+- **Not in labels.** Don't link or expand a term inside a bold list label such as `**Main FMU processor:**`.
+  The label acts as a heading, so a link belongs in the value after it, or in running text.
 - **Assumed knowledge.** A step or explanation that depends on something the page neither explains nor links, such as what a parameter is, how to set one, how to open a terminal, how to flash firmware, or which connector is which.
   Suggest a link to the PX4 page that covers it.
 - **Needless complexity.** Wording that is harder than the idea it carries: a long or abstract word where a plain one says the same thing (`utilise` → `use`, `in order to` → `to`), a chain of nouns, or a passive sentence that hides who does what.

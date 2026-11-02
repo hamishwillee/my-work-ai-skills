@@ -85,6 +85,15 @@ Every finding needs evidence you actually checked:
 
 A finding that fails verification is dropped, not downgraded.
 
+## Suggestions
+
+Suggestions and stubs follow the same rules as `px4-doc-review` (its `references/shared.md`, "Suggestions"):
+
+- No longer than they need to be.
+- No caveats, judgements or assumptions the sources don't state, such as "which most users don't need".
+- Nothing that restates what the page or a link already says.
+- Change only what the finding is about.
+
 ## Severity
 
 | Severity | Meaning |
