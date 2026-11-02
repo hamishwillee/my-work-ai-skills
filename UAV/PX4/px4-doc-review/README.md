@@ -5,10 +5,14 @@ A Claude Code skill for editorial review of [PX4-Autopilot](https://github.com/P
 It performs the following checks on every changed doc file:
 
 - Grammar and spelling (British English, with the project's own terminology exceptions)
+- Audience level: the page is understandable to a reader with roughly high-school knowledge, with jargon and acronyms linked or defined at first use, and no unexplained assumed knowledge
 - Compliance with the [PX4 documentation style guide](https://docs.px4.io/main/en/contribute/docs#style-guide)
 - Structural correctness: file placement, `SUMMARY.md` entries, heading structure, images, and cross-links
 - Technical accuracy, checked against sources appropriate to the part of the docs tree the file is in — firmware source, sibling pages, linked vendor material, or the project's own contributing guide
 - Links, using the project's own link checker over the changed files (the same check CI runs), with a suggested fix for each broken link where one can be found, and an optional external-link check
+- A final pass once everything else has reported:
+  - that each change, in the PR and in the review's own suggestions, has been applied consistently everywhere it applies
+  - that each changed page still reads through as one document with the changes in place
 
 Some changes in a docs PR are handed to sibling skills, whose reports are included as their own sections: parameter definitions to [`px4-param-review`](../px4-param-review), uORB messages to [`px4-uorb-review`](../px4-uorb-review), flight-controller boards to [`px4-board-doc-review`](../px4-board-doc-review), rangefinders to [`px4-rangefinder-doc-review`](../px4-rangefinder-doc-review), and GNSS receivers to [`px4-gnss-doc-review`](../px4-gnss-doc-review).
 
@@ -37,13 +41,14 @@ px4-doc-review/
 ├── references/
 │   ├── shared.md                     # read by every lens: sources of truth, routing table, severity
 │   ├── style-guide.md                # the PX4 style guide, extracted as checkable rules
-│   ├── grammar-style.md              # universal lens: grammar, spelling, style guide
+│   ├── grammar-style.md              # universal lens: grammar, spelling, audience level, style guide
 │   ├── structural.md                 # universal lens: placement, navigation, page mechanics
 │   ├── accuracy-hardware.md          # accuracy lens: airframes, boards, sensors, wiring
 │   ├── accuracy-flight-behavior.md   # accuracy lens: flight modes, parameters, config
 │   ├── accuracy-developer.md         # accuracy lens: middleware, modules, APIs, build/CI
 │   ├── accuracy-simulation.md        # accuracy lens: sim_* pages
 │   ├── accuracy-contribute.md        # accuracy lens: contribute/getting-started/tutorials
+│   ├── final-pass.md                 # runs last: changes applied consistently, pages read through in context
 │   └── link-check.md                 # main agent: link checker, triage, fix research
 ├── preferences.example.md            # boilerplate to copy to ~/.config/px4-doc-review/preferences.md
 └── README.md                         # this file
@@ -60,6 +65,9 @@ Those four kinds of accuracy check share almost nothing, so folding them into on
 Grammar/spelling and style-guide compliance, on the other hand, *are* uniform across the whole docs tree — every page is prose in the same style guide — so those two stay as single lenses that run over every changed file, the same way MDN's lint and clarity lenses do.
 
 The result: two universal lenses (`grammar-style`, `structural`) plus one accuracy lens per doc category, selected by a routing table (`references/shared.md`) keyed on the top-level folder under `docs/en/`.
+
+The lenses each check changed lines one at a time, so a final pass runs after them over the merged findings.
+It catches what no single line shows: a change made in one place but not another, review suggestions that contradict each other, and changed text that no longer fits the page around it.
 
 ## Sources of truth
 
@@ -126,7 +134,7 @@ For a link check of your own checkout, ask for one, such as "link check the PX4 
 
 The review report has three sections:
 
-1. **PR triage summary.** Bug count, whether a linked issue is solved, findings by area (Structural / Style guide / Technical accuracy), and every bug-severity finding with its line, so you can tell whether the PR needs you before reading any of it.
+1. **PR triage summary.** Bug count, whether a linked issue is solved, findings by area (Structural / Style guide / Technical accuracy / Consistency and context), and every bug-severity finding with its line, so you can tell whether the PR needs you before reading any of it.
 2. **Issue summary per file.** Counts per file, ordered by bug count.
 3. **Detailed per-file review of changed lines.** A row per issue with line, severity, and suggested fix.
 

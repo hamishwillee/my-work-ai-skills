@@ -38,11 +38,14 @@ type(scope): short description of the change
 
 When the clone provides `commit` and `pr` skills (PX4-Autopilot does, under `.claude/skills/`), use them: they apply the same format and handle branching, sign-off and the PR body.
 
+Before committing changes you have applied, whether link fixes from a standalone link check or suggestions the reviewer asked you to apply, run the final pass (`references/final-pass.md`) over the edited files and fix what it finds.
+
 ## Workflow
 
 Scope, Dispatch, and Report run here, in this context.
 Two lenses apply to every changed file — grammar-style and structural — and exactly one **accuracy** lens applies per file, chosen by which part of the docs tree it's in, routed by the table in `references/shared.md`.
 Verify runs inside each lens agent, against the requirements in `references/shared.md`.
+After the lenses and the link check, and once their findings are merged, one final pass checks that the changes were applied consistently and still read through in context.
 
 The files in this skill directory:
 
@@ -50,6 +53,7 @@ The files in this skill directory:
 - `references/style-guide.md`: the PX4 documentation style guide, extracted and rewritten as checkable rules
 - `references/grammar-style.md`, `references/structural.md`: the two universal lenses
 - `references/accuracy-hardware.md`, `references/accuracy-flight-behavior.md`, `references/accuracy-developer.md`, `references/accuracy-simulation.md`, `references/accuracy-contribute.md`: one lens per doc category
+- `references/final-pass.md`: the final pass, which checks that changes were applied consistently and that each changed page reads through in context
 - `references/link-check.md`: running the project's link checker, triaging what it reports, and researching fixes; read by you, not by a lens
 - `preferences.example.md`: boilerplate for a reviewer's own preference file
 
@@ -165,18 +169,37 @@ Never pass a relative path: the working directory during a review is the `PX4-Au
 While the lenses run, run the link check yourself over the PR's changed `docs/en/**/*.md` files at the head SHA, as `references/link-check.md` describes, and research a fix for each finding it keeps.
 Its findings merge into the report as structural findings.
 
+**Final pass.**
+When every lens has returned and the link check is done, merge their findings as the Report step describes.
+Then spawn one more subagent for the final pass, with this prompt, filling the bracketed slots:
+
+> You are the final pass of a PX4-Autopilot documentation review, and you are read-only: never modify a file, and never run `gh pr comment`, `gh pr review`, or any other write operation.
+>
+> Read ${CLAUDE_SKILL_DIR}/references/shared.md in full, then ${CLAUDE_SKILL_DIR}/references/final-pass.md in full.
+> Those two files are your instructions.
+>
+> Repository PX4/PX4-Autopilot, PR [number], head SHA [sha], base SHA [sha].
+> The changed docs/en/ files are: [file paths].
+> The review's merged findings so far are: [the merged rows, each with file, line, issue, severity and suggestion].
+>
+> Return new findings in the lens row shape, and corrections to the existing rows separately, as final-pass.md describes.
+
+Add its new findings to the merged set and apply its corrections to the rows they name, before writing the report.
+
 **Work silently.**
 Say nothing between dispatching and the report itself: no plan, no "dispatching the lenses", no per-lens status, no "waiting on results", no count of what has come back.
 The harness already shows the reviewer that tool calls are running, and the report is the first thing you write.
 
 **Without subagents.**
 On a harness that can't spawn them, read `references/shared.md`, `references/style-guide.md`, `references/grammar-style.md`, `references/structural.md`, and the accuracy file for each category present, then run the lenses in sequence over the whole PR, one lens at a time, holding to the same verification and the same return shape — and still apply each accuracy file only to that category's files, matching what Route and batch would have assigned it.
+Then merge the findings and run `references/final-pass.md` last, over the merged set.
 Add one line below the tables saying the review ran in a single context, because the lenses no longer shield each other's findings from one another.
 
 ### 3. Report
 
 Collect what the lens agents returned and merge it: two lenses can catch one problem, so same file and same line describing the same problem is one row, keeping the more specific evidence and the higher severity.
 Two genuinely different problems on one line stay two rows.
+Then add the final pass's new findings and apply its corrections (Dispatch, "Final pass").
 
 The report has three captioned sections in this order: **PR triage summary**, **Issue summary per file**, and **Detailed per-file review of changed lines**.
 Caption each one, so a reviewer scrolling knows which is which.
@@ -219,12 +242,18 @@ When the PR links an issue, add one line for whether it solves it, and when part
 | Structural | | | | |
 | Style guide | | | | |
 | Technical accuracy | | | | |
+| Consistency and context | | | | |
 
-The `total` column sums each row, so the reviewer can see which area accounts for the bulk; the three row totals add up to the finding total in the opening line.
+The `total` column sums each row, so the reviewer can see which area accounts for the bulk; the four row totals add up to the finding total in the opening line.
 
 Label the rows by area, never "Template compliance" or "Style guide compliance": the cells count failures, so a compliance label makes `0` read as zero compliance when it means zero issues.
 
-Three rows, in that order, and no others: grammar/spelling findings count under Style guide alongside the emphasis/heading/formatting rules, since both come from the grammar-style lens; every accuracy-lens finding, regardless of category, counts under Technical accuracy.
+Four rows, in that order, and no others:
+
+- Grammar, spelling and audience-level findings count under Style guide, alongside the emphasis, heading and formatting rules, since they all come from the grammar-style lens.
+- Every accuracy-lens finding, regardless of category, counts under Technical accuracy.
+- The final pass's new findings count under Consistency and context.
+  A correction it makes to an existing row leaves that row in its own area.
 
 When there are bugs, close the section by listing every one, each with its file and line, so the reviewer can judge the count instead of trusting it.
 When there are none, close the section after the table: the opening line already said so, and a line reading "No bug-severity findings" repeats it.
