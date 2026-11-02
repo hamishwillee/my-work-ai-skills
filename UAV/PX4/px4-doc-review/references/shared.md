@@ -123,6 +123,19 @@ Every finding needs evidence you actually checked, not evidence you expect to be
 
 A finding that fails verification is dropped, not downgraded.
 
+## Suggestions
+
+A suggestion is a fix the author will paste in, so it has to be at least as good as the text it replaces:
+
+- **No longer than it needs to be.** A rewrite keeps the original's length or shortens it, unless it adds a fact the reader needs.
+  Don't suggest rewording text that is already correct and clear just to polish it: a rewrite that is wordier and adds nothing is worse than no finding.
+- **No unsupported qualifiers.** Don't add caveats, judgements or assumptions the sources don't state, such as "which most users don't need" or "for advanced users".
+  They are guesses, and they add words without telling the reader anything they can act on.
+- **No redundancy.** Don't restate what the page or a link already says: no parenthetical expansion after a link that explains the term, and no second sentence repeating the first.
+- **Fix the problem, nothing more.** A suggestion changes only what the finding is about.
+
+A finding whose only fix would break one of these rules is dropped.
+
 ## Severity
 
 | Severity | Meaning |

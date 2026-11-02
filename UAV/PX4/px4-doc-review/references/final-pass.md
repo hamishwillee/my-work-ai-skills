@@ -37,6 +37,8 @@ Check the merged findings as a set:
 - The same problem gets the same fix everywhere: two rows must not suggest different spellings, labels, units or wordings for one thing.
 - No two suggestions conflict: one row must not rename a heading or anchor that another row's suggestion links to by its old name, or reword a sentence another row also rewrites differently.
 - A suggestion that changes a term, value, heading or anchor names the other places that must change with it.
+- Every suggestion follows the Suggestions rules in `references/shared.md`: no wordier than the text it replaces unless it adds a needed fact, no unsupported qualifiers, and no redundancy.
+  A suggestion that breaks them is corrected, or the row is dropped when it has no other fix.
 
 Return a missing instance as a new finding, and a conflict or inconsistency as a correction to the rows involved, giving the row's file and line and the consistent fix.
 
