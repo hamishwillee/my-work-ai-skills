@@ -38,8 +38,9 @@ Cite the check ID alongside the board-file evidence (`T-U2; default.px4board:6 C
 
 - FMU PWM output count equals the `initIOTimerChannel` entries in `timer_config.cpp`. It equals `DIRECT_PWM_OUTPUT_CHANNELS` only when there are no `initIOTimerChannelCapture` entries (`board-sources.md`, "FMU PWM output count" and "Capture channels").
 - A capture channel is described as one, with its timer, and isn't counted among the PWM outputs or put in a PWM output group.
-  A page that counts it as an ordinary PWM output is `bug`: a reader plans an ESC or servo on a pin that the carrier may route to a capture connector.
-  A page that leaves it out is `style`.
+  A page that counts it as an ordinary PWM output, without saying it's the capture channel and where it's routed, is `bug`: a reader plans an ESC or servo on a pin that the carrier may route to a capture connector.
+  A page that says it can only capture, or claims DShot on it when its timer has no DMA entry, is `bug`; one that doesn't say it can also be a PWM or OneShot output is `style` (T-PWM1).
+  A page that leaves the channel out entirely is `style`.
 - With a PX4IO, the page distinguishes the 8 IO (`MAIN`) outputs from the FMU (`AUX`) outputs, and doesn't claim DShot on IO outputs.
 - On a module whose PX4IO sits on the carrier, the page says the IO outputs depend on the carrier.
   Claiming 8 `MAIN` outputs with no qualification is `bug` when any carrier the page names, or the manufacturer's own carrier, has no PX4IO.
@@ -59,6 +60,10 @@ Check the Radio Control section (`page-template.md`, "Radio Control") claim by c
 - **Wiring limits**: the page's limits agree with the wiring macros (single-wire, swapped RX/TX, shared PPM pin, inversion, Spektrum power), and with the chip family (no hardware UART inversion on STM32F4).
   A protocol the page offers that the wiring rules out is `bug`.
   A limit in source the page doesn't mention (for example, CRSF offered on the IO path) is `bug` if a reader following the page would wire a receiver that won't work, otherwise `style`.
+- **DSM binding and power**: compare the port the page sends DSM receivers to with the bind pin (`board-sources.md`, "DSM bind pin") and the manufacturer's pinout.
+  A port that can't be bound from PX4 or _QGroundControl_, with no note on the page saying so, is `bug` (T-RC8), and its evidence says it's worked out from source and untested on hardware.
+  With `SPEKTRUM_POWER` defined, a page that doesn't say which pin supplies the receiver's 3.3 V is `style`.
+- **Not built is not unsupported**: a port or protocol the page calls unsupported, whose driver PX4 has but the board doesn't build, is `style` (T-P11); the fix is "not supported by the default firmware".
 - **Enabling parameters**: the parameter names exist (`RC_CRSF_PRT_CFG`, `RC_DSM_PRT_CFG`, `RC_GHST_PRT_CFG`, `RC_SBUS_PRT_CFG`, `RC_PORT_CONFIG`, `RC_INPUT_PROTO`) and link to `../advanced_config/parameter_reference.md#<NAME>`.
 
 Which physical connector the IO's RC input reaches isn't in board source.
@@ -76,17 +81,38 @@ Take the page's word for it unless the pinout on the page contradicts it; a cont
 
 - The monitor type (analog/digital, chip name) matches the drivers started in `rc.board_sensors`.
 - The number of power inputs matches `BOARD_NUMBER_BRICKS`.
+- On a module, input selection, protection and the power connectors belong to the carrier; a sentence that makes the module do them is `minor` (T-W5).
+- The manufacturer's own power modules for this board use the monitor enabled by default, or the page gives the parameters that switch it (T-W6, `minor`).
 
 ### Build targets
 
 - The `make` command in Building Firmware names a target that exists (`<vendor>_<board>_default`), with the vendor and board spelled exactly as the directory names them.
 - Every variant `.px4board` either has its target listed or the page says why not.
 
+### Build variants and hardware variants
+
+- For each change in the worksheet's "Variant builds" row, find the page claims it contradicts: `MAIN`/`AUX` labels and IO outputs when the variant drops PX4IO, RC paths and protocols, power monitors, sensors, serial ports.
+  An unscoped claim a variant contradicts is `style` (T-P11); the fix scopes it to "the default firmware", and adds the variant's difference when the page lists that variant.
+- For each part only some hardware variants have, compare the first release with its driver (worksheet) with the badge.
+  A later release the page doesn't state is `bug` (T-S7).
+- Each hardware variant sold separately has a purchase link (T-B2, `minor`).
+
 ### Physical specifications
 
 Voltage ratings, dimensions, weight and temperature range aren't in the board files.
-Check them only against manufacturer material the page links (`shared.md`, source 5), and against the same figures elsewhere on the page.
+Check them against manufacturer material (`shared.md`, source 5), and against the same figures elsewhere on the page.
 An unsourced figure you can't check is not a finding.
+
+Two checks need only the figures themselves:
+
+- **Rating terms** (T-V4): a range whose upper figure the source calls an absolute maximum is written as one, under Voltage Ratings and Electrical Data alike.
+- **The power path** (T-V5): compare each protection threshold on the way in (a carrier's or power module's overvoltage cut-off) with the absolute maximum of the board it feeds.
+  A cut-off above that maximum, with no warning on the page, is `bug`.
+
+### The same fact on other pages
+
+When a finding corrects a figure or claim (a threshold, a port, a release), grep `docs/en/` for the same stale value on related pages: the carrier's page, the manufacturer's other pages, the comparators.
+Those pages are outside the review, so return each hit as a note with its file and line, not as a finding.
 
 ## Severity
 

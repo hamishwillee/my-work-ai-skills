@@ -132,6 +132,8 @@ A suggestion is a fix the author will paste in, so it has to be at least as good
 - **No unsupported qualifiers.** Don't add caveats, judgements or assumptions the sources don't state, such as "which most users don't need" or "for advanced users".
   They are guesses, and they add words without telling the reader anything they can act on.
 - **No redundancy.** Don't restate what the page or a link already says: no parenthetical expansion after a link that explains the term, and no second sentence repeating the first.
+- **No contrast clauses.** State what is true, without the alternative the reader wasn't asking about: "powered with 3.3 V from pin 4", not "powered with 3.3 V from pin 4, not 5 V from pin 1".
+  A real limit of the thing itself ("PWM or OneShot, but not DShot") is a fact, not a contrast.
 - **Fix the problem, nothing more.** A suggestion changes only what the finding is about.
 
 A finding whose only fix would break one of these rules is dropped.
