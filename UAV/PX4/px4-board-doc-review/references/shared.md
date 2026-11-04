@@ -58,7 +58,8 @@ Where two genuinely contradict each other, report the contradiction instead of p
    They show the form the maintainers accept today: disclaimers, listing placement, naming, shared-design wording.
    A comparator can itself be wrong or out of date, so a difference from it is a finding only when the comparators agree with each other.
    Where two or more agree on something the template does differently, report against the template and note the comparators below the tables.
-5. **Manufacturer material** the page links (product page, datasheet, pinout PDF), only for claims the page sources there.
+5. **Manufacturer material**: what the page links (product page, datasheet, pinout PDF), and also the manufacturer's store page for each hardware variant, its documentation site, and its public hardware repository (schematics, BOMs, datasheet sources; for example `ARK-Electronics/ark-hardware`, whose `datasheets/products/*.toml` give each product's ratings and name the documents they came from).
+   Use it for what board files can't settle: ratings and limits, connector types, which connector a signal reaches.
 6. **The rest of this skill**, last on purpose.
 
 ### Reaching the sources
@@ -67,7 +68,7 @@ Where two genuinely contradict each other, report the contradiction instead of p
 - **Board files and comparator pages**: prefer a local `PX4-Autopilot` clone (check `~/github/PX4/PX4-Autopilot` and siblings first).
   Read the PR's head, not whatever the clone has checked out: `git -C <clone> fetch origin pull/<n>/head` then `git -C <clone> show FETCH_HEAD:<path>`, or `gh api repos/PX4/PX4-Autopilot/contents/<path>?ref=<head-sha>`.
   Comparator pages and `boards/px4/<design>/` come from the base SHA.
-- **Vendor material**: `WebFetch` the URL the page links.
+- **Vendor material**: `WebFetch` the URL the page links, or the manufacturer page it should link (the store page for each variant, the docs page); read a public hardware repository with `gh api repos/<org>/<repo>/contents/<path>`.
 
 ## Verification
 
@@ -80,6 +81,7 @@ Every finding needs evidence you actually checked:
 - **Against manufacturer material**: quote the exact text from the page you fetched, with its URL.
   A `WebFetch` answer is a model's summary of the page, and it can misread a spec table (a JST-GH port reported as JST-SH), so before raising a `bug` on manufacturer evidence alone, fetch the page a second time with a prompt asking only for that one spec, verbatim.
   If the two fetches disagree, or the board photo or board files contradict the page, raise it as a question for the author below the tables, not as a finding.
+- **Reasoned, not tested**: a wiring finding worked out from board source and manufacturer material (which connector a pin reaches, whether binding works on a port) says in its evidence, and in its suggestion if the page will carry it, that it comes from source and wasn't tested on hardware.
 - **Line numbers**: match the head SHA's file.
   A finding about something *missing* anchors to the line where it would go (the heading it belongs under, or line 1 for a page-level gap) and says so.
 
@@ -92,6 +94,7 @@ Suggestions and stubs follow the same rules as `px4-doc-review` (its `references
 - No longer than they need to be.
 - No caveats, judgements or assumptions the sources don't state, such as "which most users don't need".
 - Nothing that restates what the page or a link already says.
+- No contrast clauses: state what is true, without the alternative the reader wasn't asking about ("3.3 V from pin 4", not "3.3 V from pin 4, not 5 V from pin 1").
 - Change only what the finding is about.
 
 ## Severity

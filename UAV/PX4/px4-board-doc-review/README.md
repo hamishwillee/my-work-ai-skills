@@ -7,7 +7,7 @@ The page is mostly a description of settings that already exist in the board's f
 This skill checks:
 
 - **Against a page template**: a skeleton page and numbered checks (`T-P1`, `T-RC5`, ...) covering every section, heading, anchor and required piece of content, each with a severity
-- **Against the board's source**: serial port mapping, output counts and DShot groups, sensors, processor, power monitoring, console port, and build targets, checked against the files that configure them
+- **Against the board's source**: serial port mapping, output counts and DShot groups, sensors, processor, power monitoring, console port, and build targets, checked against the files that configure them, including what each variant build changes and the first PX4 release each hardware variant's parts need
 - **Against its siblings**: pages for boards on the same reference design (every FMUv6X board, say), in the same support category, and from the same manufacturer — disclaimers, listing placement, section set, and whether a paragraph copied from a sibling is still true for this board
 - **Against the board support guide**: pinout, block diagram or schematic, flight logs in the PR description, navigation and category listings
 - **Radio Control, always**: RC wiring varies board to board, so every page needs a `### Radio Control {#radio_control}` section under Assembly, saying whether RC goes to the FMU, the PX4IO or both, what the wiring rules out, and which protocols are built in and enabled by default, all checked against the board's source
@@ -74,10 +74,11 @@ With no PR, it offers **Enter PR** or **Local branch**; a local-branch run diffs
 
 ## Output
 
-1. **Board summary**: board directory, page, reference design, support category, and the comparator pages used; bug and finding counts.
+1. **Board summary**: a one-line verdict, then board directory, page, reference design, support category, and the comparator pages used; bug and finding counts.
 2. **Board submission checklist**: each documentation requirement with `yes` / `no` / `partial` and evidence.
 3. **Issues found**, by area: matches board source, matches sibling pages, template and submission requirements.
 4. **Issue summary per file** and **Detailed review**, one row per issue with line, severity, the template check it fails, and suggested fix.
+5. Below the tables, when they apply: answers to questions the author asked in the PR, and the same stale facts on pages outside the PR.
 
 | Severity | Meaning |
 | --- | --- |

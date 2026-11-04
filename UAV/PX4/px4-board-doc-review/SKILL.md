@@ -71,12 +71,17 @@ A PR touching several boards reviews each one separately, with its own checklist
 **Establish the board facts** in `references/shared.md` ("Board facts"): board directory, build targets, board page, reference design, support category, manufacturer.
 
 **Fill in the board facts worksheet** (`references/board-sources.md`, "Board facts worksheet") from the board's files at the head SHA, using the lookup table, "Processors", "UART order", and "DShot by chip family".
+Include what each variant `.px4board` changes, and, for a part only some hardware variants have, the first PX4 release with its driver.
 Every value gets its file and line; write `unknown` rather than guess.
 The lenses work from this worksheet, so a mistake here spreads to all of them: work out the UART order and the per-output DShot capability step by step rather than by eye.
 
 Then **choose the comparator pages** by the rules in `references/sibling-comparison.md` ("Choosing comparator pages"), so all three lenses use the same set.
 
 **Run the reference-design diff** (`references/board-sources.md`, "Diffing against the reference design") once, when there's a reference design, and record which areas differ from `boards/px4/<design>/` in the worksheet's last row.
+
+**Collect the author's open questions.**
+Read the PR description and conversation for questions the author asks reviewers or the manufacturer to confirm (a numbered "please confirm" list, a question addressed to a maintainer).
+Keep them, numbered as the author numbered them, for the Report.
 
 **Reviewer preferences.**
 Load `~/.config/px4-board-doc-review/preferences.md` if it exists, and apply it here, not in the lens agents.
@@ -106,7 +111,7 @@ Give each the prompt below, with the brackets filled in, as written rather than 
 > Verify every finding as shared.md requires, then return one row per finding with the file path, line number, issue, severity, suggestion, and the evidence you checked.
 > [Completeness lens: also return the checklist, one row per item, with status and evidence.]
 > [Sibling-comparison lens: also return the comparator pages you used.]
-> Return anything shared.md sends below the tables (source disagreements, unverified wiring claims, firmware questions) as separate notes.
+> Return anything shared.md sends below the tables (source disagreements, unverified wiring claims, firmware questions), and any stale value you find on pages outside the files in scope, as separate notes.
 > If you find nothing, say so rather than returning prose.
 
 `${CLAUDE_SKILL_DIR}` is this skill's own directory.
@@ -132,7 +137,8 @@ A file with no findings gets its row in the per-file summary and nothing else.
 
 Sections, captioned, in this order, with nothing above the first:
 
-1. **Board summary.** One line per board: board directory, board page, reference design, support category, and the comparator pages used.
+1. **Board summary.** First, a one-line verdict: **Ready**, **Merge after fixes** (any `bug`), or **Not ready** (a `no` on the submission checklist), with the number of wrong facts.
+   Then one line per board: board directory, board page, reference design, support category, and the comparator pages used.
    Then the bug count and where the bugs are ("2 bugs in 1 of the 3 changed doc files"; "No bugs in 3 changed doc files"), and the finding total.
 2. **Board submission checklist**, for a new board: the completeness checklist as a table, `Item | Status | Evidence`, every item listed.
 3. **Issues found**:
@@ -158,8 +164,10 @@ Below the tables, only these, in this order, each only when it applies:
 2. Firmware questions the docs can't settle (two labels on one device, a board ID that looks copied), for the reviewer to raise; point to `review-pr` for the firmware review itself
 3. Where the sources disagree, including comparators that agree with each other against the template
 4. Claims that matter for wiring but couldn't be checked against any source
-5. A single note that the page's prose wasn't reviewed, suggesting `px4-doc-review` (standalone runs only)
-6. A single note if the review ran in one context
+5. **Answers to the author's questions**, numbered as the author numbered them: each answered from source with its evidence, or marked as needing the manufacturer
+6. **Outside this PR**: the same stale facts on pages the PR doesn't touch, with file and line
+7. A single note that the page's prose wasn't reviewed, suggesting `px4-doc-review` (standalone runs only)
+8. A single note if the review ran in one context
 
 Cite lines as GitHub links with the full head SHA and one line of context each side:
 `https://github.com/PX4/PX4-Autopilot/blob/<full-sha>/docs/en/flight_controller/<page>.md#L12-L16`

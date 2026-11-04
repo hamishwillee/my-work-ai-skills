@@ -93,6 +93,7 @@ It is based on the [<reference design>](<standard url>) <if any>, and <what dist
 | T-P8 | A block diagram or schematic of the main components (sensors, power supply) is on the page or linked from it (board support guide, step 5). | `bug` |
 | T-P9 | Every skeleton heading on the page has its explicit anchor, as "Anchors" below gives it. A heading that isn't in the skeleton needs no anchor, so don't report one for lacking it. | `style` |
 | T-P10 | Adding or changing an anchor on an existing page doesn't break links to it: every link to the old slug (`<page>.md#<old-slug>` elsewhere in `docs/en/`, and `#<old-slug>` on the page itself) is updated in the same PR. | `bug` per link left broken |
+| T-P11 | A claim that a variant build changes (`board-sources.md`, "Variant builds") is scoped to the default build ("The default firmware is built with PX4IO support ..."), and a feature whose driver PX4 has but this board doesn't build is "not supported by the default firmware", not "not supported". | `style` |
 
 ### Stubs for missing sections
 
@@ -174,6 +175,7 @@ The old slug of a heading with no explicit anchor is its text, lower case, with 
 | T-S4 | `### Electrical Data {#electrical_data}`: **Input voltage:**, **Current draw:** (with the heater's share when there's a heater), **Power monitoring:** (number of inputs, analog or digital, and which monitor is on by default). | `bug` if wrong, `style` if missing |
 | T-S5 | `### Mechanical Data {#mechanical_data}`: **Dimensions:**, **Weight:**, and **Form factor:** when the board follows a standard (for example [Pixhawk Autopilot Bus](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-010%20Pixhawk%20Autopilot%20Bus%20Standard.pdf)), linked. **Mounting hole spacing:** when the manufacturer gives it (FPV stack boards: `30.5 × 30.5 mm`, `20 × 20 mm`), with the screw size if given (`30.5 × 30.5 mm, M4`); use this label, not "Mounting:", so the hole pattern isn't read as a second, conflicting board size. Operating temperature when the manufacturer gives it. | `style` if missing |
 | T-S6 | **Form**: each item is one list entry, `- **Label:** value`, with the colon inside the bold and labels in sentence case as above. Units carry a space (`480 MHz`, `2 MB`). Sub-headings use First Letter Capitalisation, as the PX4 docs style guide requires for all headings (`Electrical Data`, not `Electrical data`). | `style` |
+| T-S7 | Each hardware variant (a version sold separately with different parts, such as an extended-range IMU) whose parts need a later PX4 release than the badge says which release it needs ("The Extended Range needs PX4 v1.14 or later"). `board-sources.md`, "First PX4 release with a driver", says how to find it. | `bug` if missing: the badge reads as covering every variant |
 
 A board page can add an item the list doesn't have (**OSD:**, **Airspeed:**); it goes in the sub-section it belongs to, in the same form.
 An item the board doesn't have is left out, except **USB:** and **RC input:**, which say `No` when absent.
@@ -238,6 +240,7 @@ Model, for a PAB module with an optional PX4IO:
 | ID | Check | Severity |
 | --- | --- | --- |
 | T-B1 | A link to where the board can be bought (manufacturer store or listed resellers). | `style` |
+| T-B2 | Each hardware variant sold separately has its own purchase link. | `minor` |
 
 ### Pinouts {#pinouts}
 
@@ -254,6 +257,8 @@ Model, for a PAB module with an optional PX4IO:
 | T-W2 | Battery monitoring: analog or digital, the monitor chip for digital, and which is enabled by default. | `bug` if wrong |
 | T-W3 | The servo-rail warning when outputs aren't powered from the power input: "The PWM output ports are not powered by the POWER port. The output rail must be [separately powered](../peripherals/pwm_escs_and_servo.md) if it needs to power servos or other hardware." | `style` |
 | T-W4 | A link to [Battery and Power Module Setup](../config/battery.md). | `minor` |
+| T-W5 | Each power function is attributed to the board that has it. On a module, input selection, protection and the power connectors are the carrier's, so the carrier is the subject of the sentence ("The carrier selects between `POWER1`, `POWER2` and USB"). | `minor` |
+| T-W6 | When the manufacturer's own power module for this board uses a different monitor chip from the one enabled by default, the page gives the parameters that switch it (for example [SENS_EN_INA226](../advanced_config/parameter_reference.md#SENS_EN_INA226) to 0 and [SENS_EN_INA238](../advanced_config/parameter_reference.md#SENS_EN_INA238) to 1), or links the power module page that does. | `minor` |
 
 ### Voltage Ratings {#voltage_ratings}
 
@@ -262,12 +267,14 @@ Model, for a PAB module with an optional PX4IO:
 | T-V1 | **Normal operation maximum ratings** for each power input and the USB input, in the order the board draws from them. | `style` if missing |
 | T-V2 | **Absolute maximum ratings**: the range each input survives undamaged, including the servo rail. | `style` if missing |
 | T-V3 | Figures match the Specifications section and any linked datasheet. | `bug` |
+| T-V4 | Each limit is named as the source names it. A range whose upper figure is the absolute maximum says so ("5 V nominal (4.8 V minimum, 5.5 V absolute maximum)"): "4.8 V to 5.5 V" reads as an operating range. This applies to **Input voltage:** under Electrical Data too. | `style` |
+| T-V5 | When a protection threshold on the way in (an overvoltage cut-off on the board, its carrier or its power module) is above the absolute maximum of the board it feeds, the page warns that the supply must stay at or below that maximum. | `bug` if missing: a supply under the cut-off can still damage the board |
 
 ### PWM Outputs {#pwm_outputs}
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| T-PWM1 | Output count, split into IO (`MAIN`) and FMU (`AUX`) outputs when there's a PX4IO, saying "on carriers that fit one" when the IO is on the carrier. A capture channel (`board-sources.md`, "Capture channels") is named separately, as a capture channel with its timer, and isn't counted as an output. | `bug` if wrong |
+| T-PWM1 | Output count, split into IO (`MAIN`) and FMU (`AUX`) outputs when there's a PX4IO, saying "on carriers that fit one" when the IO is on the carrier. A capture channel (`board-sources.md`, "Capture channels") is named separately, as a capture channel with its timer, and isn't counted among the PWM outputs. The page says it can also be used as an extra PWM or OneShot output, and as DShot only if its timer has DMA. | `bug` if wrong, `style` if the extra-output use is missing |
 | T-PWM2 | Which outputs support [DShot](../peripherals/dshot.md) and which support [bidirectional DShot](../peripherals/dshot.md#bidirectional-dshot-telemetry), as output ranges. IO outputs never support DShot. | `bug` if wrong, `style` if missing |
 | T-PWM3 | The timer groups, as output ranges, and the rule that "All outputs within the same group must use the same output protocol and rate." | `bug` if wrong, `style` if missing |
 
@@ -338,6 +345,7 @@ The heading is exactly `### Radio Control {#radio_control}`, under Assembly; `RC
 | T-RC5 | **Enabled by default**: which protocols work with no configuration on each path, or that none does on the FMU. | `bug` if wrong or missing where the FMU needs configuration |
 | T-RC6 | **Enabling others**: the parameters that map a protocol to a port (`RC_CRSF_PRT_CFG`, `RC_DSM_PRT_CFG`, `RC_GHST_PRT_CFG`, `RC_SBUS_PRT_CFG`, or `RC_PORT_CONFIG` for `rc_input`), linked to `../advanced_config/parameter_reference.md#<NAME>`, and that only one protocol can be active on a port. | `style` |
 | T-RC7 | A PWM receiver (one wire per channel) needs a [PPM encoder](../getting_started/rc_transmitter_receiver.md#connecting-receivers); say so if the board has no PWM RC input. | `minor` |
+| T-RC8 | **DSM binding and power**: when the page sends DSM (Spektrum) receivers to a port, binding from PX4 or _QGroundControl_ works there only if the bind pin reaches that port (`board-sources.md`, "DSM bind pin"); if it doesn't, the page says to bind another way. When the board switches the receiver supply (`SPEKTRUM_POWER`), the page says which pin gives the receiver its 3.3 V. | `bug` if the port can't be bound from PX4 and the page doesn't say so, `style` for the power pin |
 
 T-RC4 to T-RC6 can be one list per path, as the ARK V6X-RT page does.
 
