@@ -35,6 +35,7 @@ A `no` or `partial` also becomes a finding, at the severity given.
 | **Hero image** (T-O6) | A photo of the board near the top, stored locally | `style` |
 | **No leftovers** (T-P3, T-P4) | No `TODO` or placeholder text, and no guidance or checklist comments | `bug` if visible on the rendered page (`TODO` text), `style` if in a comment |
 | **Images resolve** (T-P6) | Every referenced image exists in the PR or the repo, under `docs/assets/flight_controller/<page-stem>/` | `bug` |
+| **Discontinued markers** (T-D1 to T-D5) | Only for a board the manufacturer has discontinued (the PR says so, the page or a category page marks it, or the store lists it as sold out): the title, badge, warning, Where to Buy note and category listings | `style`; `bug` for a T-D3 link to the wrong page |
 
 A PR that changes an existing board rather than adding one skips the first three rows and the flight-log row, unless the change is large enough that the PR description should justify it with a log (a new sensor set or a new variant): then report the missing log as a question below the tables, not a finding.
 
