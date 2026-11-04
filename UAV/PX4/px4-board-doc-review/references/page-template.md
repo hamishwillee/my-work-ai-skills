@@ -364,3 +364,17 @@ T-RC4 to T-RC6 can be one list per path, as the ARK V6X-RT page does.
 | --- | --- | --- |
 | T-I1 | Links the manufacturer's own documentation, and the schematic or block diagram if T-P8 is met by a link. | `style` |
 | T-I2 | For a board on a reference design, links the design's standard and the [Pixhawk Series](../flight_controller/pixhawk_series.md) or reference-design page where siblings do. | `minor` |
+
+### Discontinued boards
+
+When a manufacturer discontinues a board that PX4 still builds, its page stays up for at least one more PX4 release, so users of the board can find it in that release's docs.
+In a later release the page is replaced by a redirect to `autopilot_discontinued.md`, with the H1 kept in a comment and a `DOC REMOVED: <yyyymm>` note, and the board's entry on the category pages changes to an unlinked name with a "last published in [PX4 vX.Y](https://docs.px4.io/vX.Y/en/flight_controller/<page-stem>)" link.
+These checks apply while the page is still up; the rest of the template applies too.
+
+| ID | Check | Severity |
+| --- | --- | --- |
+| T-D1 | The H1 ends ` (Discontinued)`, and the `SUMMARY.md` entry ends ` - Discontinued`. | `style` |
+| T-D2 | `<Badge type="info" text="Discontinued" px4_current="vX.Y" year="YYYY"/>` follows the T-O2 version badge on the same line. `px4_current` is the release being prepared on `main` when the board is marked (the one whose docs will still have the page), and `year` the year it's marked: both say when the page can become a redirect. | `style` |
+| T-D3 | A warning box above the manufacturer warning (T-O3): "This flight controller has been [discontinued](../flight_controller/autopilot_discontinued.md) and is no longer commercially available.", followed by "It is still supported by PX4." The link goes to `autopilot_discontinued.md`; older pages link `autopilot_experimental.md`, which is `bug`. | `style` if missing, `bug` for the wrong link |
+| T-D4 | Where to Buy keeps the store or product link (the product page usually still hosts the manufacturer's documents) and ends `(No longer available).` | `style` |
+| T-D5 | The board is listed in `autopilot_discontinued.md`, and on its support-category page under that page's `## Discontinued` heading rather than in the main list. | `style` |
