@@ -45,6 +45,8 @@ Cite the check ID alongside the board-file evidence (`T-U2; default.px4board:6 C
 - On a module whose PX4IO sits on the carrier, the page says the IO outputs depend on the carrier.
   Claiming 8 `MAIN` outputs with no qualification is `bug` when any carrier the page names, or the manufacturer's own carrier, has no PX4IO.
 - Timer groups on the page match `timer_config.cpp`.
+- A camera-capture claim on a pin the firmware doesn't use for capture (`board-sources.md`, "Capture channels") is `bug`: a reader wires a camera to a pin PX4 never reads.
+- On a board with no PX4IO that's built with `CONFIG_DRIVERS_PX4IO=y` (`board-sources.md`, "IO (MAIN) output count"), a page that calls the outputs `MAIN`, or doesn't say they're labelled `AUX` in actuator configuration, is `style`.
 - DShot and bidirectional DShot claims match, output by output, what `board-sources.md` ("DShot" rows and "DShot by chip family") gives for this board; a board with DShot the page doesn't mention is `style` (T-PWM2).
 - DShot claimed on an STM32F4 or STM32F7 board is `bug`: PX4 doesn't support it there.
 

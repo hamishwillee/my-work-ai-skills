@@ -69,6 +69,9 @@ Use the reference-design diff from `board-sources.md` ("Diffing against the refe
   A paragraph that matches a sibling's word for word in an area where the board files differ is a likely copy that wasn't updated: check each claim in it against the board files, and report any that are wrong as `bug`.
 - **A feature the siblings document that this board has** (per its board files) but its page doesn't mention, such as Ethernet, an IMU heater, a PX4IO coprocessor and its MAIN/AUX split, or the Pixhawk Autopilot Bus form factor, is `style`.
 - **A feature the siblings document that this board lacks** should be absent from the page, or stated as absent when a reader would expect it from the design ("unlike other FMUv6X boards, the Atlas has no Ethernet port").
+- **Text copied from another design.** Siblings can share a copied error, so agreeing with them isn't evidence: check every shared-design claim against the board files.
+  A pin, UART or bus name that doesn't exist on this board's chip family is `bug`, for example an STM32 pin (`PI0`, `PH11`) or `USART3` on an i.MX RT page; check it against `board_config.h`, `nuttx-config/include/board.h` and the defconfig.
+  A link to another manufacturer's store or products, copied from a sibling, is `minor`.
 
 ### Section set and order
 

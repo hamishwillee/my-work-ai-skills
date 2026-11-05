@@ -79,6 +79,13 @@ It is based on the [<reference design>](<standard url>) <if any>, and <what dist
 ## Further Information {#further_information}
 ````
 
+### Accepted extra sections
+
+These aren't in the skeleton, but a page that has them isn't reported for it, and their headings need no anchor:
+
+- `## Secure Boot`, after Building Firmware, for a board with `secureboot.px4board` and `bootloader_secureboot.px4board`. It names both build targets and links [Bootloader Secure Boot](../advanced_config/bootloader_secure_boot.md).
+- `## Peripherals`, before Further Information, listing the manufacturer's own add-on hardware. A link to another manufacturer's store in it is `minor` (`sibling-comparison.md`, "Shared-design facts").
+
 ## Page-wide checks
 
 | ID | Check | Severity if failed |
@@ -122,16 +129,21 @@ Re-check them occasionally: pages get rewritten.
 
 | Section | Examples |
 | --- | --- |
-| Specifications (all sub-sections) | `ark_v6xrt.md#specifications` (the model form), `cuav_pixhawk_v6x.md#interfaces`, `pixhawk6x.md#electrical-data`, `pixhawk6x.md#mechanical-data` |
-| Where to Buy | `ark_v6xrt.md#store`, `cuav_pixhawk_v6x.md#store` |
-| Pinouts | `amovlab_flycore.md#pinouts`, `radiolink_pix6.md#pinouts`, `cuav_pixhawk_v6x.md#pinouts` |
-| Voltage Ratings | `cuav_pixhawk_v6x.md#voltage-ratings`, `agam_v6xrt.md#voltage-ratings` |
-| PWM Outputs | `nwblue_pro-h757.md#pwm-outputs`, `amovlab_flycore.md#pwm_outputs`; `ark_v6xrt.md#pwm_outputs` for an i.MX RT board with no timer groups |
-| Telemetry Radios | `amovlab_flycore.md#telemetry` |
-| Ethernet | `siyi-unifc-6-pico.md#ethernet` |
-| Debug Port | `agam_v6xrt.md#debug_port`, `ark_v6xrt.md#debug_port`, `cuav_pixhawk_v6x.md#debug_port` |
-| Radio Control | `ark_v6xrt.md#radio_control` |
-| GPS & Compass | `ark_v6xrt.md#gps_compass`, `amovlab_flycore.md#gps_compass` |
+| Specifications (all sub-sections) | `ark_v6x.md#specifications` (the model form), `cuav_pixhawk_v6x.md#interfaces`, `pixhawk6x.md#electrical-data`, `pixhawk6x.md#mechanical-data` |
+| Where to Buy | `ark_v6x.md#store`, `ark_v6xrt.md#store`, `cuav_pixhawk_v6x.md#store` |
+| Pinouts | `ark_v6x.md#pinouts`, `amovlab_flycore.md#pinouts`, `radiolink_pix6.md#pinouts`, `cuav_pixhawk_v6x.md#pinouts` |
+| Power | `ark_v6x.md#power` |
+| Voltage Ratings | `ark_v6x.md#voltage_ratings`, `cuav_pixhawk_v6x.md#voltage-ratings`, `agam_v6xrt.md#voltage_ratings` |
+| PWM Outputs | `ark_v6x.md#pwm_outputs`, `nwblue_pro-h757.md#pwm-outputs`, `amovlab_flycore.md#pwm_outputs`; `ark_v6xrt.md#pwm_outputs` and `agam_v6xrt.md#pwm_outputs` for an i.MX RT board with no timer groups, the second with no PX4IO |
+| Ethernet | `ark_v6x.md#ethernet`, `siyi-unifc-6-pico.md#ethernet` |
+| SD Card | `ark_v6x.md#sd_card` |
+| Serial Port Mapping | `ark_v6x.md#serial_port_mapping` |
+| Radio Control | `ark_v6x.md#radio_control` (with and without a PX4IO), `ark_v6xrt.md#radio_control`, `agam_v6xrt.md#radio_control` (FMU only, nothing enabled by default) |
+| GPS & Compass | `ark_v6x.md#gps_compass`, `ark_v6xrt.md#gps_compass`, `amovlab_flycore.md#gps_compass` |
+| Telemetry Radios | `ark_v6x.md#telemetry`, `amovlab_flycore.md#telemetry` |
+| CAN | `ark_v6x.md#can` |
+| Building Firmware | `ark_v6x.md#building_firmware` |
+| Debug Port | `agam_v6xrt.md#debug_port`, `ark_v6xrt.md#debug_port`, `ark_v6x.md#debug_port`, `cuav_pixhawk_v6x.md#debug_port` |
 
 ### Anchors
 
@@ -290,7 +302,7 @@ Under Assembly, as `###`. Many existing pages have it as a `##` section before S
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| T-E1 | Present when the board has Ethernet (`CONFIG_BOARD_ETHERNET=y`), absent otherwise. Gives the speed and links [PX4 Ethernet Setup](../advanced_config/ethernet_setup.md). | `style` if missing, `bug` if present on a board without it |
+| T-E1 | Present when the board has Ethernet (`CONFIG_BOARD_ETHERNET=y`), absent otherwise. Gives the speed and links [PX4 Ethernet Setup](../advanced_config/ethernet_setup.md). For a 100BASE-T1 (2-wire automotive) port, says that a device with a standard Ethernet port needs a 100BASE-T1 media converter. | `style` if missing, `bug` if present on a board without it |
 
 ### SD Card (Optional) {#sd_card} (if present)
 
@@ -304,6 +316,7 @@ Under Assembly, as `###`. Many existing pages have it as a `##` section before S
 | --- | --- | --- |
 | T-U1 | A table with columns `UART`, `Device`, `Port` (and `Flow Control` when any port has it), one row per configured UART, in `/dev/ttyS*` order. | `style` for form |
 | T-U2 | Every row matches board source, including the debug console and the PX4IO link (`source-consistency.md`, "Serial port mapping"). | `bug` |
+| T-U3 | An info note after the table names the UART the bootloader enables and its port label, as the only port `px4_uploader.py` can flash over (`board-sources.md`, "Bootloader UART"). Model: `ark_v6x.md#serial_port_mapping`. | `minor` |
 
 ### Building Firmware {#building_firmware}
 
