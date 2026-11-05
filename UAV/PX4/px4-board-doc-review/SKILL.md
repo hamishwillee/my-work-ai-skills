@@ -1,6 +1,6 @@
 ---
 name: px4-board-doc-review
-description: Review of flight-controller board documentation in PX4-Autopilot pull requests — the board's docs/en/flight_controller/ page checked against a numbered page template, against the board's own source files (boards/<vendor>/<board>/), against the pages of its siblings (same reference design, same support category, same manufacturer), and against the board support guide's documentation requirements. Use when a PX4-Autopilot PR adds or changes a board under boards/ or adds a page under docs/en/flight_controller/, when px4-doc-review hands off such a PR, or when the user asks to review a board's docs on a local branch. Use px4-doc-review for the page's prose, and review-pr or code-review for the board firmware itself.
+description: Review of flight-controller board documentation in PX4-Autopilot pull requests — the board's docs/en/flight_controller/ page checked against a numbered page template, against the board's own source files (boards/<vendor>/<board>/), against the pages of its siblings (same reference design, same support category, same manufacturer), and against the board support guide's documentation requirements. Use when a PX4-Autopilot PR adds or changes a board under boards/ or adds a page under docs/en/flight_controller/, when px4-doc-review hands off such a PR, or when the user asks to review a board's docs on a local branch. Also use when the user asks for an existing board page to be updated or restructured to the template (applied as a sequence of approved commits). Use px4-doc-review for the page's prose, and review-pr or code-review for the board firmware itself.
 allowed-tools: Bash(gh pr view:*) Bash(gh pr diff:*) Bash(gh pr list:*) Bash(gh api:*) Bash(git -C:*) Bash(grep:*) Bash(diff:*) Bash(ls:*)
 ---
 
@@ -21,6 +21,7 @@ This skill doesn't review the page's prose (that's `px4-doc-review`) or the boar
 **Read-only**, here and in every subagent this review spawns.
 Never modify a file in the repository under review, and never run `gh pr comment`, `gh pr review`, or any other write operation.
 Your output is the report; the reviewer posts it themselves.
+The one exception is the restructure mode below, and only in the main agent: its lenses stay read-only.
 
 ## Workflow
 
@@ -175,6 +176,28 @@ Cite lines as GitHub links with the full head SHA and one line of context each s
 **In chat by default, in a file when asked.**
 A file copy opens with a title line (`# PX4-Autopilot PR <n> — board docs review: <board directory>`) and labelled `PR`, `Head SHA`, and `Reviewed` lines, is written outside the clone, and overwrites any earlier copy.
 For a local-branch run, offer to open the report in VS Code once it's shown, if `command -v code` finds it: write the file first if it only exists in chat, then run `code <path>`.
+
+## Restructure mode
+
+When the user asks for an existing board page to be brought onto the template, rather than reviewed, apply the changes as a sequence of commits on a branch, each one approved before it's made:
+
+1. **Branch** from the upstream default branch.
+2. **Move only.** Reorder the sections into skeleton order, and rename headings and add anchors (T-P1, T-P9), changing no other text. Fix only the in-page links a renamed anchor breaks (T-P10).
+   Before editing, put to the user every section with no skeleton slot and every place the page would depart from the template, and apply their decisions.
+   Check that no text was lost by diffing the sorted non-heading lines of the old and new page.
+3. **Review** the whole page as a new board (all three lenses, plus `px4-doc-review`'s lenses for prose), and present the findings grouped by the commits below. List as decisions for the user each place where the template and the closest comparator disagree.
+4. **Apply** in this order, one commit each:
+   1. wrong facts
+   2. the Specifications form
+   3. missing sections and reworked sections
+   4. prose
+   
+   Show each step as a `git diff` and get approval before committing.
+   Before each commit, run the link check and the final pass (`px4-doc-review` references), and Prettier.
+5. **No placeholders on the page.** Write what the board files and the manufacturer's material support, and collect what only the manufacturer can answer (ratings, connector types, which part is fitted) as questions.
+6. **Questions last.** Once everything is committed and the PR is open, post the questions, after the user approves them, as a review on the PR. Use one line comment per question, on the line it affects, and put questions about files the PR doesn't change in the review body.
+
+Commit messages follow PX4's conventional-commit format (`docs(boards): ...`) with the `Assisted-by:` trailer.
 
 #### Handoff to px4-doc-review
 

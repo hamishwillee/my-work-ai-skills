@@ -61,6 +61,11 @@ Read `references/shared.md` yourself before reporting: merging findings and coun
 
 ### 1. Scope
 
+**A local branch instead of a PR.** When the reviewer asks for a review of a branch rather than a PR, diff the branch against its merge-base with `main` (`git merge-base HEAD upstream/main`, or `origin/main`), and fill the lens prompts' PR slots with the branch name, merge-base and head SHA.
+There is no PR description or linked issue to read; say so below the tables.
+When a commit on the branch only moves text (a restructure's first commit), tell the lenses to review the whole page as if every line had changed.
+Hand board, rangefinder and GNSS pages to their skills in their local-branch modes.
+
 A bare PR number means `PX4/PX4-Autopilot`; any other repo has to be named, as `owner/PX4-Autopilot#456` or a full URL (a PR opened from a fork is still identified by its number on `PX4/PX4-Autopilot`, since that's the base repo the PR lives against).
 
 Stop and say so if the PR is closed, merged, a draft, or automated (dependency bumps, metadata regeneration, Crowdin translation sync, bot commits).
