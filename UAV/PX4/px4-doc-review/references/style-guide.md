@@ -66,6 +66,7 @@ Each of the three has exactly one job; using one for another's job is a `style` 
 ## Images
 
 - Use the smallest size and lowest resolution that still serves the reader — this is a bandwidth cost for users, not a cosmetic choice, so a needlessly large embedded image is a `style` finding, not `minor`.
-- SVG for diagrams, PNG over JPG for screenshots.
-- Reference images two directories up into `/assets/`: `![Image description](../../assets/path_to_file/filename.jpg)`.
+- SVG for diagrams, PNG for screenshots, and WebP for photos.
+  Never suggest JPG: a JPG or a large PNG photo is converted to WebP.
+- Reference images two directories up into `/assets/`: `![Image description](../../assets/path_to_file/filename.png)`.
   The alt text describes the image content, not "screenshot" or "image".

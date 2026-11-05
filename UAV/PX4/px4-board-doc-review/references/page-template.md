@@ -24,7 +24,7 @@ Contact the [manufacturer](<manufacturer url>) for hardware support or complianc
 The [<Product>](<product url>) is <what it is>, manufactured by <Manufacturer>.
 It is based on the [<reference design>](<standard url>) <if any>, and <what distinguishes it>.
 
-![<Product>](../../assets/flight_controller/<page-stem>/<image>.jpg)
+![<Product>](../../assets/flight_controller/<page-stem>/<image>.webp)
 
 <support-category note: see sibling-comparison.md, "Category-specific content">
 
