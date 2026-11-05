@@ -105,6 +105,7 @@ These aren't in the skeleton, but a page that has them isn't reported for it, an
 | T-P9 | Every skeleton heading on the page has its explicit anchor, as "Anchors" below gives it. A heading that isn't in the skeleton needs no anchor, so don't report one for lacking it. | `style` |
 | T-P10 | Adding or changing an anchor on an existing page doesn't break links to it: every link to the old slug (`<page>.md#<old-slug>` elsewhere in `docs/en/`, and `#<old-slug>` on the page itself) is updated in the same PR. | `bug` per link left broken |
 | T-P11 | A claim that a variant build changes (`board-sources.md`, "Variant builds") is scoped to the default build ("The default firmware is built with PX4IO support ..."), and a feature whose driver PX4 has but this board doesn't build is "not supported by the default firmware", not "not supported". | `style` |
+| T-P12 | No `## Supported Platforms / Airframes` section (or a similar list of the vehicle types the board supports). PX4 runs every frame type in the [Airframe Reference](../airframes/airframe_reference.md) on any flight controller with enough outputs, so the section says nothing about this board: suggest removing it. A real limit the board has (too few outputs for a frame type) belongs in the section it affects, such as PWM Outputs. | `minor` |
 
 ### Stubs for missing sections
 

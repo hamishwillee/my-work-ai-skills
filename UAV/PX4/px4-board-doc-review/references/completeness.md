@@ -2,7 +2,7 @@
 
 Does the PR contain everything the docs need for a board to be accepted, and is the page finished?
 
-This lens applies `page-template.md` in full for *presence and form*: every page-wide check (T-P1 to T-P10, including anchors) and every section check's "missing" case.
+This lens applies `page-template.md` in full for *presence and form*: every page-wide check (T-P1 to T-P10 and T-P12, including anchors) and every section check's "missing" case.
 Whether present content is *correct* is `source-consistency.md`'s job; where a check has both halves, raise only the missing or malformed half here.
 Cite the check ID in each finding's evidence.
 
