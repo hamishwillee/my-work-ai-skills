@@ -94,7 +94,7 @@ Suggestions and stubs follow the same rules as `px4-doc-review` (its `references
 - No longer than they need to be.
 - No caveats, judgements or assumptions the sources don't state, such as "which most users don't need".
 - Nothing that restates what the page or a link already says.
-- No contrast clauses: state what is true, without the alternative the reader wasn't asking about ("3.3 V from pin 4", not "3.3 V from pin 4, not 5 V from pin 1").
+- No contrast clauses: state what is true, without the alternative the reader wasn't asking about ("3.3V from pin 4", not "3.3V from pin 4, not 5V from pin 1").
 - Change only what the finding is about.
 
 ## Severity

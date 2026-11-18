@@ -80,13 +80,13 @@ The page should give the part with its core, clock, flash and RAM; check them ag
 
 | Model | Core | Clock | Flash | RAM |
 | --- | --- | --- | --- | --- |
-| STM32H743, STM32H753, STM32H747, STM32H757 | Arm Cortex-M7 | 480 MHz | 2 MB | 1 MB |
-| STM32F765, STM32F767, STM32F777 | Arm Cortex-M7 | 216 MHz | 2 MB | 512 KB |
-| STM32F427, STM32F437 | Arm Cortex-M4 | 168 MHz | 2 MB | 256 KB |
-| STM32F405, STM32F407 | Arm Cortex-M4 | 168 MHz | 1 MB | 192 KB |
-| MIMXRT1062 | Arm Cortex-M7 | 600 MHz | external | 1 MB |
-| MIMXRT1176 | Arm Cortex-M7, plus a Cortex-M4 400 MHz secondary core | 1 GHz | external (64 MB on FMUv6X-RT) | 2 MB |
-| STM32F100 (PX4IO) | Arm Cortex-M3 | 24 MHz | 64 KB | 8 KB |
+| STM32H743, STM32H753, STM32H747, STM32H757 | Arm Cortex-M7 | 480MHz | 2MB | 1MB |
+| STM32F765, STM32F767, STM32F777 | Arm Cortex-M7 | 216MHz | 2MB | 512KB |
+| STM32F427, STM32F437 | Arm Cortex-M4 | 168MHz | 2MB | 256KB |
+| STM32F405, STM32F407 | Arm Cortex-M4 | 168MHz | 1MB | 192KB |
+| MIMXRT1062 | Arm Cortex-M7 | 600MHz | external | 1MB |
+| MIMXRT1176 | Arm Cortex-M7, plus a Cortex-M4 400MHz secondary core | 1GHz | external (64MB on FMUv6X-RT) | 2MB |
+| STM32F100 (PX4IO) | Arm Cortex-M3 | 24MHz | 64KB | 8KB |
 
 ## UART order
 

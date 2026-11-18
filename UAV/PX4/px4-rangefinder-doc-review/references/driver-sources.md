@@ -26,7 +26,7 @@ A value the files don't settle is written `unknown` with what was searched, neve
 **A comment is not proof.**
 Record what the code does, not what a comment says it does.
 This matters most where a driver detects the hardware version and sets limits from it: a comment such as "v1 and v3 don't have the unit id register" is the author's belief about the hardware, and can be wrong.
-Record the condition the code tests ("hardware version register > 0 and unit id > 0 → 35 m"), and, where the manufacturer facts list the sensor's registers or identification, check which branch a given model would really take.
+Record the condition the code tests ("hardware version register > 0 and unit id > 0 → 35m"), and, where the manufacturer facts list the sensor's registers or identification, check which branch a given model would really take.
 If the two disagree, the worksheet says the limit for that model is unverified, gives the possible values, and the disagreement goes below the tables as a firmware question.
 
 | Fact | Value | Source (file:line) |

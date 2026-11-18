@@ -18,7 +18,7 @@ From the diff, list each kind of change the PR makes, for example:
 - a term, product, parameter, port or command renamed
 - a value, unit or default changed
 - a heading, anchor or link target changed
-- a convention applied, such as port labels put in code style, a space added between number and unit, or a spelling corrected
+- a convention applied, such as port labels put in code style or a spelling corrected
 
 For each one, find the other places it applies and check they got the same change:
 

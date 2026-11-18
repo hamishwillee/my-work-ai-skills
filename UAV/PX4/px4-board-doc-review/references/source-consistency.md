@@ -64,7 +64,7 @@ Check the Radio Control section (`page-template.md`, "Radio Control") claim by c
   A limit in source the page doesn't mention (for example, CRSF offered on the IO path) is `bug` if a reader following the page would wire a receiver that won't work, otherwise `style`.
 - **DSM binding and power**: compare the port the page sends DSM receivers to with the bind pin (`board-sources.md`, "DSM bind pin") and the manufacturer's pinout.
   A port that can't be bound from PX4 or _QGroundControl_, with no note on the page saying so, is `bug` (T-RC8), and its evidence says it's worked out from source and untested on hardware.
-  With `SPEKTRUM_POWER` defined, a page that doesn't say which pin supplies the receiver's 3.3 V is `style`.
+  With `SPEKTRUM_POWER` defined, a page that doesn't say which pin supplies the receiver's 3.3V is `style`.
 - **Not built is not unsupported**: a port or protocol the page calls unsupported, whose driver PX4 has but the board doesn't build, is `style` (T-P11); the fix is "not supported by the default firmware".
 - **Enabling parameters**: the parameter names exist (`RC_CRSF_PRT_CFG`, `RC_DSM_PRT_CFG`, `RC_GHST_PRT_CFG`, `RC_SBUS_PRT_CFG`, `RC_PORT_CONFIG`, `RC_INPUT_PROTO`) and link to `../advanced_config/parameter_reference.md#<NAME>`.
 

@@ -118,7 +118,7 @@ For heading to be used, all of these are needed:
 - [EKF2_GPS_CTRL](../advanced_config/parameter_reference.md#EKF2_GPS_CTRL) bit 3 ("Dual antenna heading"); the default is `7`, so the usual instruction is "set to `15`".
 - [SENS_GNSSn_HDG](../advanced_config/parameter_reference.md#SENS_GNSS0_HDG) in the slot of the receiver that reports heading: `1` (`Moving base rover`) or `2` (`Dual antenna`). The default is `0` (Disabled).
 - The antenna positions: [SENS_GNSSn_OFFX/Y/Z](../advanced_config/parameter_reference.md#SENS_GNSS0_OFFX) (for a moving-base pair, in both receivers' slots), and for a dual-antenna receiver the auxiliary antenna's [SENS_GNSSn_AUXX/Y/Z](../advanced_config/parameter_reference.md#SENS_GNSS0_AUXX).
-  The configured baseline must be at least 5 cm, and the reported baseline length within 20% of it (`GnssHeadingBaseline.hpp`).
+  The configured baseline must be at least 5cm, and the reported baseline length within 20% of it (`GnssHeadingBaseline.hpp`).
 - The slot matched to the receiver: [SENS_GNSSn_ID](../advanced_config/parameter_reference.md#SENS_GNSS0_ID) when it isn't the instance order (always for DroneCAN; instance order is "only reliable for serial GPS").
 
 The shared page [Configuring GPS as Yaw/Heading Source](../gps_compass/rtk_gps.md#configuring-gps-as-yaw-heading-source) gives this as a table; device pages link it.
@@ -127,7 +127,7 @@ Boards that don't build `EKF2_GNSS_YAW` (some small FPV boards) have no `SENS_GN
 
 | Source | Publishes heading | `SENS_GNSSn_HDG` |
 | --- | --- | --- |
-| u-blox moving base (`GPS_UBX_MODE` `1`/`3` on the rover, `2`/`4` on the base) | the rover, from NAV-RELPOSNED, when carrier-fixed, valid, and baseline < 10 m | `1` in the rover's slot; `OFF*` of both receivers |
+| u-blox moving base (`GPS_UBX_MODE` `1`/`3` on the rover, `2`/`4` on the base) | the rover, from NAV-RELPOSNED, when carrier-fixed, valid, and baseline < 10m | `1` in the rover's slot; `OFF*` of both receivers |
 | u-blox X20 dual antenna | NAV-DAHEADING, when not in a moving-base setup | `2`; `OFF*` main antenna, `AUX*` auxiliary |
 | Unicore (NMEA `6`) | `UNIHEADINGA`, the bearing from primary to secondary antenna | `2`; `OFF*` primary, `AUX*` secondary |
 | Septentrio, one receiver, two antennas | AttEuler, with fixed ambiguities | `2` |
@@ -185,7 +185,7 @@ Flight-controller firmware no longer embeds node firmware; nodes are updated fro
 
 To check a module's pinout claimed to follow the standard, read the pin table from the standard itself (extract the PDF as `shared.md` says), or from the `GPS1` pinout on a Pixhawk-standard board's page (`docs/en/flight_controller/pixhawk6x.md` or another current FMUv6 page), and compare pin by pin.
 A flight controller's table names TX and RX from the controller's side and a module's names them from the module's side, so the module's RX sits on the controller's TX pin: don't report that as a swap.
-Note the module's signal levels too: a UART at 2.8 V or 5 V rather than 3.3 V is worth stating on the page (G-W2).
+Note the module's signal levels too: a UART at 2.8V or 5V rather than 3.3V is worth stating on the page (G-W2).
 
 ## Lookup table
 
@@ -196,7 +196,7 @@ Note the module's signal levels too: a UART at 2.8 V or 5 V rather than 3.3 V is
 | **In firmware** | `src/drivers/gps/Kconfig`, `boards/**/default.px4board` | The protocol's key and its default; count the boards ("In firmware" below). |
 | **Port** | `module.yaml`, `generate_config.py` | `GPS_1_CONFIG` default `GPS1`, `GPS_2_CONFIG` no default (`0`), port values. |
 | **Baud** | `serial_params.c.jinja`, protocol `.cpp` | `SER_<TAG>_BAUD` default `0`; the rates each protocol probes (table above). |
-| **u-blox options** | `params.yaml`, `ubx.cpp` | `GPS_UBX_MODE` (moving-base rover and base, rover with static base, UART2 output modes, Galileo HAS), `GPS_UBX_BAUD2` (applied only in some modes), `GPS_UBX_RATE` (forced to 5 Hz in moving-base modes), `GPS_UBX_DYNMODEL`, `GPS_1_GNSS` (constellations; u-blox only), `GPS_UBX_PPK`, `GPS_UBX_CFG_INTF`. |
+| **u-blox options** | `params.yaml`, `ubx.cpp` | `GPS_UBX_MODE` (moving-base rover and base, rover with static base, UART2 output modes, Galileo HAS), `GPS_UBX_BAUD2` (applied only in some modes), `GPS_UBX_RATE` (forced to 5Hz in moving-base modes), `GPS_UBX_DYNMODEL`, `GPS_1_GNSS` (constellations; u-blox only), `GPS_UBX_PPK`, `GPS_UBX_CFG_INTF`. |
 | **Heading** | `ubx.cpp`, `nmea.cpp`, `septentrio.cpp`, `gnss_relative.cpp`, `params_heading.yaml`, `VehicleGPSPosition.cpp`, `params_gnss.yaml`, `EKF2.cpp` | "Heading" above. |
 | **RTK** | `correction_injector.h`, `gps.cpp`, protocol `.cpp`, `uavcan_params.yaml`, `uavcannode_params.yaml` | "RTK" above. |
 | **Selection, antenna position** | `vehicle_gps_position/module.yaml`, `VehicleGPSPosition.cpp` | "Selection and antenna position" above. |

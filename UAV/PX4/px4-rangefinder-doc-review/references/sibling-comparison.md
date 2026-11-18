@@ -83,7 +83,7 @@ Compare with the other discontinued pages (`teraranger.md`, `cm8jl65_ir_distance
 
 ### Listing form
 
-- The `SUMMARY.md` entry and `rangefinders.md` row have the same form as their neighbours: link text, the connection in the name where neighbours give it (`(CAN)`), cell contents (`ToF (IR laser)`, `UART`, `0.2 m – 100 m`).
+- The `SUMMARY.md` entry and `rangefinders.md` row have the same form as their neighbours: link text, the connection in the name where neighbours give it (`(CAN)`), cell contents (`ToF (IR laser)`, `UART`, `0.2m – 100m`).
 - A technology, connection or range written differently from every neighbouring row (`Serial` where they have `UART`) is `style`.
 
 ### Naming

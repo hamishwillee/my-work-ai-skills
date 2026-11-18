@@ -185,8 +185,8 @@ The old slug of a heading with no explicit anchor is its text, lower case, with 
 | T-S2 | `### Sensors {#sensors}`: **IMU:**, **Barometer:**, **Magnetometer:**, each a comma-separated list of parts linked to their manufacturer pages with the bus in parentheses (`(SPI1)`, `(I2C2)`); **Heater:** when fitted, with how it's controlled. A sensor that differs by hardware revision says which revision. | `bug` if wrong, `style` if missing |
 | T-S3 | `### Interfaces {#interfaces}`, in this order, each the board has: **PWM outputs:** (FMU count, plus IO count); **Serial ports:** (count, then the port labels in backticks); **I2C buses:** (count, which are internal); **SPI buses:** (count, and any external bus with its chip selects and data-ready lines); **CAN buses:** (count enabled, and any pinned out but unused); **Ethernet:** (speed); **USB:**; **RC input:**; **Parameter storage:** (FRAM, EEPROM or flash, with part); **SD card:** (slot type, or none). | `bug` if a count is wrong, `style` if missing |
 | T-S4 | `### Electrical Data {#electrical_data}`: **Input voltage:**, **Current draw:** (with the heater's share when there's a heater), **Power monitoring:** (number of inputs, analog or digital, and which monitor is on by default). | `bug` if wrong, `style` if missing |
-| T-S5 | `### Mechanical Data {#mechanical_data}`: **Dimensions:**, **Weight:**, and **Form factor:** when the board follows a standard (for example [Pixhawk Autopilot Bus](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-010%20Pixhawk%20Autopilot%20Bus%20Standard.pdf)), linked. **Mounting hole spacing:** when the manufacturer gives it (FPV stack boards: `30.5 × 30.5 mm`, `20 × 20 mm`), with the screw size if given (`30.5 × 30.5 mm, M4`); use this label, not "Mounting:", so the hole pattern isn't read as a second, conflicting board size. Operating temperature when the manufacturer gives it. | `style` if missing |
-| T-S6 | **Form**: each item is one list entry, `- **Label:** value`, with the colon inside the bold and labels in sentence case as above. Units carry a space (`480 MHz`, `2 MB`). Sub-headings use First Letter Capitalisation, as the PX4 docs style guide requires for all headings (`Electrical Data`, not `Electrical data`). | `style` |
+| T-S5 | `### Mechanical Data {#mechanical_data}`: **Dimensions:**, **Weight:**, and **Form factor:** when the board follows a standard (for example [Pixhawk Autopilot Bus](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-010%20Pixhawk%20Autopilot%20Bus%20Standard.pdf)), linked. **Mounting hole spacing:** when the manufacturer gives it (FPV stack boards: `30.5 × 30.5mm`, `20 × 20mm`), with the screw size if given (`30.5 × 30.5mm, M4`); use this label, not "Mounting:", so the hole pattern isn't read as a second, conflicting board size. Operating temperature when the manufacturer gives it. | `style` if missing |
+| T-S6 | **Form**: each item is one list entry, `- **Label:** value`, with the colon inside the bold and labels in sentence case as above. Units follow the number with no space (`4V`, `2g`, `8.3W`, `480MHz`, `2MB`); a unit written as a word keeps its space (`115200 baud`). A space between number and unit is not a finding on its own; text the review writes or suggests uses the unspaced form. Sub-headings use First Letter Capitalisation, as the PX4 docs style guide requires for all headings (`Electrical Data`, not `Electrical data`). | `style` |
 | T-S7 | Each hardware variant (a version sold separately with different parts, such as an extended-range IMU) whose parts need a later PX4 release than the badge says which release it needs ("The Extended Range needs PX4 v1.14 or later"). `board-sources.md`, "First PX4 release with a driver", says how to find it. | `bug` if missing: the badge reads as covering every variant |
 
 A board page can add an item the list doesn't have (**OSD:**, **Airspeed:**); it goes in the sub-section it belongs to, in the same form.
@@ -210,8 +210,8 @@ Model, for a PAB module with an optional PX4IO:
 
 ### Processor {#processor}
 
-- **Main FMU processor:** [NXP i.MX RT1176](https://www.nxp.com/products/i.MX-RT1170) (Arm® Cortex®-M7 at 996 MHz, 2 MB RAM). The second Cortex®-M4 core is unused by PX4.
-- **Code store:** no internal flash. Code executes in place from a 64 MB external octal NOR on FlexSPI1, of which PX4 uses the first 4 MB.
+- **Main FMU processor:** [NXP i.MX RT1176](https://www.nxp.com/products/i.MX-RT1170) (Arm® Cortex®-M7 at 996MHz, 2MB RAM). The second Cortex®-M4 core is unused by PX4.
+- **Code store:** no internal flash. Code executes in place from a 64MB external octal NOR on FlexSPI1, of which PX4 uses the first 4MB.
 - **IO processor:** PX4IO v2, on carriers that fit one.
 
 ### Sensors {#sensors}
@@ -236,14 +236,14 @@ Model, for a PAB module with an optional PX4IO:
 
 ### Electrical Data {#electrical_data}
 
-- **Input voltage:** 5 V
-- **Current draw:** 500 mA (300 mA main system, 200 mA heater)
+- **Input voltage:** 5V
+- **Current draw:** 500mA (300mA main system, 200mA heater)
 - **Power monitoring:** 2 digital power bricks, INA226 by default
 
 ### Mechanical Data {#mechanical_data}
 
-- **Dimensions:** 3.6 x 2.9 x 0.5 cm
-- **Weight:** 5.0 g
+- **Dimensions:** 3.6 x 2.9 x 0.5cm
+- **Weight:** 5.0g
 - **Form factor:** [Pixhawk Autopilot Bus (PAB)](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-010%20Pixhawk%20Autopilot%20Bus%20Standard.pdf)
 ```
 
@@ -279,7 +279,7 @@ Model, for a PAB module with an optional PX4IO:
 | T-V1 | **Normal operation maximum ratings** for each power input and the USB input, in the order the board draws from them. | `style` if missing |
 | T-V2 | **Absolute maximum ratings**: the range each input survives undamaged, including the servo rail. | `style` if missing |
 | T-V3 | Figures match the Specifications section and any linked datasheet. | `bug` |
-| T-V4 | Each limit is named as the source names it. A range whose upper figure is the absolute maximum says so ("5 V nominal (4.8 V minimum, 5.5 V absolute maximum)"): "4.8 V to 5.5 V" reads as an operating range. This applies to **Input voltage:** under Electrical Data too. | `style` |
+| T-V4 | Each limit is named as the source names it. A range whose upper figure is the absolute maximum says so ("5V nominal (4.8V minimum, 5.5V absolute maximum)"): "4.8V to 5.5V" reads as an operating range. This applies to **Input voltage:** under Electrical Data too. | `style` |
 | T-V5 | When a protection threshold on the way in (an overvoltage cut-off on the board, its carrier or its power module) is above the absolute maximum of the board it feeds, the page warns that the supply must stay at or below that maximum. | `bug` if missing: a supply under the cut-off can still damage the board |
 
 ### PWM Outputs {#pwm_outputs}
@@ -358,7 +358,7 @@ The heading is exactly `### Radio Control {#radio_control}`, under Assembly; `RC
 | T-RC5 | **Enabled by default**: which protocols work with no configuration on each path, or that none does on the FMU. | `bug` if wrong or missing where the FMU needs configuration |
 | T-RC6 | **Enabling others**: the parameters that map a protocol to a port (`RC_CRSF_PRT_CFG`, `RC_DSM_PRT_CFG`, `RC_GHST_PRT_CFG`, `RC_SBUS_PRT_CFG`, or `RC_PORT_CONFIG` for `rc_input`), linked to `../advanced_config/parameter_reference.md#<NAME>`, and that only one protocol can be active on a port. | `style` |
 | T-RC7 | A PWM receiver (one wire per channel) needs a [PPM encoder](../getting_started/rc_transmitter_receiver.md#connecting-receivers); say so if the board has no PWM RC input. | `minor` |
-| T-RC8 | **DSM binding and power**: when the page sends DSM (Spektrum) receivers to a port, binding from PX4 or _QGroundControl_ works there only if the bind pin reaches that port (`board-sources.md`, "DSM bind pin"); if it doesn't, the page says to bind another way. When the board switches the receiver supply (`SPEKTRUM_POWER`), the page says which pin gives the receiver its 3.3 V. | `bug` if the port can't be bound from PX4 and the page doesn't say so, `style` for the power pin |
+| T-RC8 | **DSM binding and power**: when the page sends DSM (Spektrum) receivers to a port, binding from PX4 or _QGroundControl_ works there only if the bind pin reaches that port (`board-sources.md`, "DSM bind pin"); if it doesn't, the page says to bind another way. When the board switches the receiver supply (`SPEKTRUM_POWER`), the page says which pin gives the receiver its 3.3V. | `bug` if the port can't be bound from PX4 and the page doesn't say so, `style` for the power pin |
 
 T-RC4 to T-RC6 can be one list per path, as the ARK V6X-RT page does.
 
