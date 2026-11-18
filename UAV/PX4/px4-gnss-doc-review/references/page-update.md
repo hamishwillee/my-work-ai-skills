@@ -39,6 +39,7 @@ A usual run:
 14. `SUMMARY.md`, the device-table row, the protocol sentences, then any other listing
 
 Fold a trivial fix on an adjacent line (an image's alt text, a missing space) into the suggestion next to it, and say so.
+Unit spacing is one change, not one per line: put a single proposal to the reviewer that fixes every case on the page (`SKILL.md`, "Report"), listing the lines.
 
 Each suggestion gives, in this order:
 

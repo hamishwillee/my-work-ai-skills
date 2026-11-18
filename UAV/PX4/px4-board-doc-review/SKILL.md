@@ -130,6 +130,8 @@ Add one line below the tables saying the review ran in a single context.
 Merge what the lenses returned: the same problem on the same line from two lenses is one row, keeping the more specific evidence and the higher severity.
 Different problems on one line at the same severity combine into one row naming each; different severities stay separate rows.
 
+**Unit spacing is one finding per file.** Gather every value written with a space before its unit symbol into a single `style` row at the first case, worded `PX4 prefers no space between a value and its unit symbol (so "3V", not "3 V"): fix cases L28, L56, L57`, listing every line, with the Suggestion "Remove the space in every case". A unit written as a word (`115200 baud`) isn't a case.
+
 **Report findings, not machinery.**
 Never name a lens or say how many ran.
 A file with no findings gets its row in the per-file summary and nothing else.
@@ -193,6 +195,7 @@ When the user asks for an existing board page to be brought onto the template, r
    4. prose
    
    Show each step as a `git diff` and get approval before committing.
+   Unit spacing is one change, not one per line: put a single proposal to the reviewer that fixes every case on the page (`SKILL.md`, "Report"), listing the lines.
    Before each commit, run the link check and the final pass (`px4-doc-review` references), and Prettier.
 5. **No placeholders on the page.** Write what the board files and the manufacturer's material support, and collect what only the manufacturer can answer (ratings, connector types, which part is fitted) as questions.
 6. **Questions last.** Once everything is committed and the PR is open, post the questions, after the user approves them, as a review on the PR. Use one line comment per question, on the line it affects, and put questions about files the PR doesn't change in the review body.

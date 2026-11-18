@@ -52,6 +52,7 @@ Work `references/style-guide.md` section by section against the diff:
 - Headings: wrong level, wrong capitalisation, styled heading text.
 - Admonitions: an altered `::: tip`/`::: info`/`::: warning` keyword — this one is `bug`, not `style`, because it breaks rendering.
 - Line breaks: a paragraph hard-wrapped to a fixed column instead of broken on sentences.
+- Units: PX4 prefers no space between a value and its unit symbol (`3V`, not `3 V`); a unit written as a word keeps its space (`115200 baud`). Return every case in the file as one row listing the lines (`SKILL.md`, "Report").
 - Videos: a YouTube embed not in `<lite-youtube>` form; a new long tutorial video where a shorter written procedure would serve (flag as `minor`, not `style` — this is a preference, not a hard rule).
 - File/folder placement and naming, and image sizing/format/alt-text conventions — only when the diff actually adds or renames a file or image; don't re-litigate an unchanged file's name.
 

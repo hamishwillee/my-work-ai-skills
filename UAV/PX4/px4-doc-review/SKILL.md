@@ -39,6 +39,7 @@ type(scope): short description of the change
 When the clone provides `commit` and `pr` skills (PX4-Autopilot does, under `.claude/skills/`), use them: they apply the same format and handle branching, sign-off and the PR body.
 
 Before committing changes you have applied, whether link fixes from a standalone link check or suggestions the reviewer asked you to apply, run the final pass (`references/final-pass.md`) over the edited files and fix what it finds.
+When the reviewer has asked you to make the changes, put unit spacing to them as one change that fixes every case on the page, listing the lines, not one change per line.
 
 ## Workflow
 
@@ -204,6 +205,7 @@ Add one line below the tables saying the review ran in a single context, because
 
 Collect what the lens agents returned and merge it: two lenses can catch one problem, so same file and same line describing the same problem is one row, keeping the more specific evidence and the higher severity.
 Two genuinely different problems on one line stay two rows.
+**Unit spacing is one finding per file.** Gather every value written with a space before its unit symbol into a single `style` row at the first case, worded `PX4 prefers no space between a value and its unit symbol (so "3V", not "3 V"): fix cases L28, L56, L57`, listing every line, with the Suggestion "Remove the space in every case". A unit written as a word (`115200 baud`) isn't a case.
 Then add the final pass's new findings and apply its corrections (Dispatch, "Final pass").
 
 The report has three captioned sections in this order: **PR triage summary**, **Issue summary per file**, and **Detailed per-file review of changed lines**.

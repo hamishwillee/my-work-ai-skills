@@ -153,6 +153,8 @@ Add one line below the tables saying the review ran in a single context.
 Merge what the lenses returned: the same problem on the same line from two lenses is one row, keeping the more specific evidence and the higher severity.
 Different problems on one line at the same severity combine into one row naming each; different severities stay separate rows.
 
+**Unit spacing is one finding per file.** Gather every value written with a space before its unit symbol into a single `style` row at the first case, worded `PX4 prefers no space between a value and its unit symbol (so "3V", not "3 V"): fix cases L28, L56, L57`, listing every line, with the Suggestion "Remove the space in every case". A unit written as a word (`115200 baud`) isn't a case.
+
 **Report findings, not machinery.**
 Never name a lens or say how many ran.
 A file with no findings gets its row in the per-file summary and nothing else.

@@ -261,7 +261,7 @@ A page that covers two near-identical products with one line of difference (ARK 
 | R-S2 | Each value matches the manufacturer material the page links. | `bug` |
 | R-S3 | The range PX4 reports is the driver's (`driver-sources.md`, "Range"). When the driver's limits differ from the manufacturer's figure, the page gives both ("0.17–8m; PX4 uses 0.2–7.9m"). | `bug` if the page promises a range the driver won't report and nothing sources it; otherwise a note below the tables |
 | R-S5 | Labels the flight-controller template also has are spelled as it spells them: **Input voltage:** (not "Supply voltage" or "Power"), **Current draw:**, **Dimensions:**, **Weight:**. | `style` |
-| R-S4 | Units follow the number with no space, a unit written as a word keeps its space, and ranges use an en dash with the unit once (`0.2–100m`, `100Hz`, `460800 baud`). A space between number and unit is not a finding on its own; text the review writes or suggests uses the unspaced form. | `style` |
+| R-S4 | PX4 prefers no space between a value and its unit symbol (`3V`, not `3 V`); a unit written as a word keeps its space, and ranges use an en dash with the unit once (`0.2–100m`, `100Hz`, `460800 baud`). All the unit-spacing cases in a file are one finding (`SKILL.md`, "Report"). | `style` |
 
 A page can add an item the list doesn't have; it goes in the same form.
 A flat marketing list in place of Specifications (`- Unbreakable, lightweight design`) is one finding on its first line (R-S1), with the restructured list written out below the tables, keeping every fact.

@@ -37,6 +37,7 @@ A usual run:
 13. `rangefinders.md` row and summary, then any other listing
 
 Fold a trivial fix on an adjacent line (an image's alt text, a missing space in a container) into the suggestion next to it, and say so.
+Unit spacing is one change, not one per line: put a single proposal to the reviewer that fixes every case on the page (`SKILL.md`, "Report"), listing the lines.
 
 Run-specific rules:
 
