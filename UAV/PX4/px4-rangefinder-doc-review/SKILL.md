@@ -23,6 +23,7 @@ This skill doesn't review the page's prose (that's `px4-doc-review`), the driver
 **Read-only**, here and in every subagent this review spawns.
 Never modify a file in the repository under review, and never run `gh pr comment`, `gh pr review`, or any other write operation.
 Your output is the report; the reviewer posts it themselves.
+In review mode, end the report with this line on its own, so that it goes with the text when the reviewer posts it (GitHub hides it, but the reviewer's triage report reads it to tell AI-assisted reviews from human ones): `<!-- ai-review skill=px4-rangefinder-doc-review round=initial -->`. Never put it in anything that isn't an AI-assisted review.
 
 **Updating a page.**
 When the reviewer asks for a page to be updated, fixed or restructured rather than reviewed, run the review below first if there isn't one, then follow `references/page-update.md`.

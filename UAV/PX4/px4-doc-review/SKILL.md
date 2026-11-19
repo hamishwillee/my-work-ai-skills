@@ -14,6 +14,7 @@ Never modify a file in the repository under review, and never run `gh pr comment
 The one file you may create is the report itself, only when the reviewer asks for it and only outside the clone.
 Scratch files for the link check (a file list, an extract of the PR's docs) go in a scratch directory outside the clone too.
 Your output is the report; the reviewer posts it to GitHub themselves, after reading it.
+In review mode, end the report with this line on its own, so that it goes with the text when the reviewer posts it (GitHub hides it, but the reviewer's triage report reads it to tell AI-assisted reviews from human ones): `<!-- ai-review skill=px4-doc-review round=initial -->`. Never put it in anything that isn't an AI-assisted review.
 You will offer to open the report in an editor, such as VSCode if this is supported. 
 
 **Standalone link check.**

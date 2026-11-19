@@ -13,6 +13,7 @@ This is prose-and-convention review, not code review: the deliverable is a repor
 Never modify a file in the PR under review, and never run `gh pr comment`, `gh pr review`, or any other write operation.
 The one file you may create is the report itself, only when the reviewer asks for it and only outside the clone.
 Your output is the report; the reviewer posts it to GitHub themselves, after reading it (except for a local run, where there's nothing to post — see "Offer to open in an editor" at the end of the Report step).
+In review mode, end the report with this line on its own, so that it goes with the text when the reviewer posts it (GitHub hides it, but the reviewer's triage report reads it to tell AI-assisted reviews from human ones): `<!-- ai-review skill=px4-uorb-review round=initial -->`. Never put it in anything that isn't an AI-assisted review.
 
 ## Workflow
 
