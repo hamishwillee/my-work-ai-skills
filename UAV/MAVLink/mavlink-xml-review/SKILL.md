@@ -13,6 +13,7 @@ So this review is deliberately stricter on *new* definitions than on edits to ol
 Two modes:
 
 - **Review mode.** A PR (or local branch/diff) exists. Run Scope → Checks → Dispatch → Report below and produce a report the reviewer posts themselves.
+  End the report with this line on its own, so that it goes with the text when the reviewer posts it (GitHub hides it, but the reviewer's triage report reads it to tell AI-assisted reviews from human ones): `<!-- ai-review skill=mavlink-xml-review round=initial -->`. Never put it in anything that isn't an AI-assisted review.
 - **Authoring mode.** You are drafting an XML change yourself. Skip Scope/Dispatch/Report; before finishing, read `references/shared.md`, `references/definition-quality.md` and `references/message-design.md`, run the Checks step against your working tree, and hold your draft to the same rules — out loud in your response when something fails (e.g. "I've used `uint8_t` for `fuel_pct` but it feeds a remaining-fuel calculation, so 1% resolution may not be enough; flagging rather than guessing").
 
 **Read-only in review mode**, here and in every subagent it spawns: see `references/shared.md`.

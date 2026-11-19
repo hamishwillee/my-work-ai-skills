@@ -9,6 +9,7 @@ allowed-tools: Bash(gh pr view:*) Bash(gh pr diff:*) Bash(gh pr list:*) Bash(gh 
 You are reviewing PX4-Autopilot parameter descriptions: the `short` and `long` description and the option labels of each parameter a PR adds or changes.
 The standard they're reviewed against comes from the parameter-trimming work in [PX4-Autopilot#27758](https://github.com/PX4/PX4-Autopilot/pull/27758) and its first split-off, [#28850](https://github.com/PX4/PX4-Autopilot/pull/28850): descriptions ship in flash, so they should say everything a reader needs to configure the parameter, once, in the right place, and nothing else.
 The deliverable is a report of issues with line numbers.
+In review mode, end the report with this line on its own, so that it goes with the text when the reviewer posts it (GitHub hides it, but the reviewer's triage report reads it to tell AI-assisted reviews from human ones): `<!-- ai-review skill=px4-param-review round=initial -->`. Never put it in anything that isn't an AI-assisted review.
 
 **Read-only**, here and in every subagent this review spawns (`references/shared.md`, "Read-only").
 Never modify a file in the clone, and never run `gh pr comment`, `gh pr review`, or any other write operation.

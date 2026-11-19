@@ -18,6 +18,7 @@ Two modes:
 Never modify a file in the repository under review, and never run `gh pr comment`, `gh pr review`, or any other write operation.
 The one file you may create is the report itself, only when the reviewer asks for it and only outside the clone.
 Your output is the report; the reviewer posts it to GitHub themselves, after reading it.
+In review mode, end the report with this line on its own, so that it goes with the text when the reviewer posts it (GitHub hides it, but the reviewer's triage report reads it to tell AI-assisted reviews from human ones): `<!-- ai-review skill=mavlink-command-review round=initial -->`. Never put it in anything that isn't an AI-assisted review.
 Authoring mode is naturally not read-only — you're the one editing — but it never touches files outside the one you were already asked to write.
 
 ## Workflow (review mode)

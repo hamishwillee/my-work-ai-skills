@@ -13,6 +13,7 @@ So this review is execution-first: every claim the PR makes about behaviour is t
 Two modes:
 
 - **Review mode.** A PR or local branch exists. Run Scope → Setup → Dispatch → Report below and produce a report the reviewer posts themselves.
+  End the report with this line on its own, so that it goes with the text when the reviewer posts it (GitHub hides it, but the reviewer's triage report reads it to tell AI-assisted reviews from human ones): `<!-- ai-review skill=mavlink-toolchain-review round=initial -->`. Never put it in anything that isn't an AI-assisted review.
 - **Authoring mode.** You are writing a toolchain change yourself. Before finishing, read `references/shared.md`, `references/fix-proof.md` and `references/downstream.md` and do what they say against your own change: show the problem fixture failing on the unmodified code and passing on yours, show your new test failing against the unmodified code, and diff the tool's output over every dialect. Report the results in your response rather than asserting the fix works.
 
 **Read-only in review mode**, here and in every subagent: see `references/shared.md`. Execution happens only in scratch worktrees.
