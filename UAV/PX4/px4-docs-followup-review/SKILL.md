@@ -7,6 +7,13 @@ description: Follow-up review of a PX4-Autopilot docs or board PR after an earli
 
 A follow-up round on a PR that has already had at least one review.
 The user has authorized these writes for this workflow: pushing one commit to the PR branch, resolving review threads, and posting one review.
+
+## Modes
+
+- **Local-only (default).** Commit the fixes locally but don't push. Write the review to `followup-<n>.json` (the exact payload for step 5) outside the clone instead of posting it, and show it to the user. Resolving threads is still allowed: resolve every thread you judge fixed in step 2, including ones raised by the user or by an earlier AI review. End by telling the user what's waiting and that `publish` will push the commit and post the review.
+- **Publish.** The user says `publish` (for this PR, or after a local-only run), or invokes the skill with `--publish`. Do every write described below. After a local-only run, publish the saved commit and `followup-<n>.json` unchanged unless the PR head has moved since; if it has, say so and redo steps 1–3 first.
+- **Unattended batch.** A batch prompt that says `unattended` counts as `--publish` for each PR, but only once the user has confirmed the batch in this session. If they haven't, ask once before starting; if they decline or don't answer, run every PR local-only.
+
 This overrides the read-only rule in `px4-board-doc-review`, `px4-gnss-doc-review`, `px4-rangefinder-doc-review` and `px4-doc-review`. Use those skills' references as checklists, but do the writes described here.
 
 Argument: a PR number or URL (bare number means `PX4/PX4-Autopilot`). With no argument, use the PR for the current branch (`gh pr view`).
@@ -52,15 +59,15 @@ Docs-only changes are preferred. Leave firmware changes as suggestions unless th
 Then:
 - run Prettier on the changed markdown (`cd docs && npx --no-install prettier --check <files>`)
 - commit with the `/commit` skill: `docs(boards): ...` or a fitting scope, with the `Assisted-by:` trailer and no `Co-Authored-By`. Stage only the intended files, never submodule changes.
-- push to the contributor's fork: `git push https://github.com/<owner>/<repo>.git HEAD:<headRefName>`
+- in publish mode only, push to the contributor's fork: `git push https://github.com/<owner>/<repo>.git HEAD:<headRefName>`
 
 ## 4. Resolve the fixed threads
 
-Use `resolveReviewThread` (GraphQL) for each thread judged fixed in step 2, after the commit is pushed.
+Use `resolveReviewThread` (GraphQL) for each thread judged fixed in step 2. In publish mode, do this after the commit is pushed. In local-only mode, resolve only threads that are already fixed at the current PR head, not ones that depend on your unpushed commit; list those as "resolve on publish".
 
 ## 5. Post one grouped review
 
-Post with `gh api repos/PX4/PX4-Autopilot/pulls/<n>/reviews --input <json>`, using `event: "COMMENT"` and `commit_id` set to the full SHA of the new head.
+In local-only mode, write the payload to `followup-<n>.json` and stop here. In publish mode, post with `gh api repos/PX4/PX4-Autopilot/pulls/<n>/reviews --input <json>`, using `event: "COMMENT"` and `commit_id` set to the full SHA of the new head.
 
 **Inline comments**, one per issue, each on the line it's about:
 - Before posting, print each anchor line with `sed -n <line>p` and check it's the intended line. Never anchor on a blank line.
@@ -79,7 +86,7 @@ Don't reply inside existing threads. A follow-up on an open thread goes in the "
 
 ## 6. Report to the user
 
-Give the review link, then:
+Give the review link (or, local-only, the path to `followup-<n>.json`, the unpushed commit and the threads left for publish), then:
 - the commit SHA, and a line for each change
 - the threads resolved
 - each inline comment, in one line
