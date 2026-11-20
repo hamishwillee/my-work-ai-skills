@@ -78,7 +78,8 @@ In local-only mode, write the payload to `followup-<n>.json` and stop here. In p
 **Review body**, in this order:
 1. A note that this is an AI review: `> [!NOTE]` / `> This is an AI review (Claude).`
    Put the hidden marker `<!-- ai-review skill=px4-docs-followup-review round=followup -->` on the line before the note. GitHub doesn't show it; the reviewer's triage report uses it to find AI review rounds.
-2. "I've resolved the N threads that are now fixed, and pushed `<short-sha>` to your branch with these changes:", then a bullet per change with a bold label. Then: "Please pull before making further changes."
+2. "N threads have been resolved since my last review, and pushed `<short-sha>` to your branch with these changes:", then a bullet per change with a bold label. Then: "Please pull before making further changes."
+   Count and list (linked, one line each) every thread that was open at the baseline review and is resolved now: the ones resolved in this run, the ones resolved earlier in local-only mode, and any the author or others resolved. Work it out from thread state, not from what this run did. If there are none, say so in one line.
 3. **New since the last review**: a one-line pointer to the inline comments, then any questions that can't go on a specific line (CI state, files the PR doesn't change, cross-file questions).
 4. **Still open from earlier reviews**: one bullet per outstanding thread, linked as `https://github.com/PX4/PX4-Autopilot/pull/<n>#discussion_r<first-comment-databaseId>`, with what's still missing when it was partly answered.
 
