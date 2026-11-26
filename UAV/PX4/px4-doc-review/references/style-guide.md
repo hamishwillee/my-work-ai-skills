@@ -66,7 +66,10 @@ Each of the three has exactly one job; using one for another's job is a `style` 
 ## Images
 
 - Use the smallest size and lowest resolution that still serves the reader — this is a bandwidth cost for users, not a cosmetic choice, so a needlessly large embedded image is a `style` finding, not `minor`.
-- SVG for diagrams, PNG for screenshots, and WebP for photos.
-  Never suggest JPG: a JPG or a large PNG photo is converted to WebP.
+- SVG for diagrams, PNG for screenshots, and preferably WebP for photos.
+  A JPG or PNG photo is acceptable, so it never blocks a merge.
+  In a review, suggest converting it to WebP (`style`); if the author can't, let it go.
+  When making the changes yourself (a follow-up commit, a restructure, a page update), convert it once it's cropped (or needs no cropping) with `yarn filecheck <file> --to-webp` and update the references to it.
+  An image already on `main` keeps its original file as well, because translated pages still reference it.
 - Reference images two directories up into `/assets/`: `![Image description](../../assets/path_to_file/filename.png)`.
   The alt text describes the image content, not "screenshot" or "image".

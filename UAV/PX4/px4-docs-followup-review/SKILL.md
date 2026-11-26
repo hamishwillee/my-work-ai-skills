@@ -34,10 +34,15 @@ Check the author's new changes for regressions and new issues too:
   For every new or changed raster image (`.jpg`, `.png`), first look at it for excess whitespace or empty background around the subject.
   To measure it, take the bounding box of the pixels that differ from the corner colour (PIL `ImageChops.difference` + `getbbox`).
   It needs cropping if the margins are large, for example if the subject spans less than about two thirds of the image's width or height.
-  - **Needs cropping:** don't compress it or commit any change to it.
-    Put an inline comment on the line where the page uses the image, asking the author to crop it to the subject and then compress it with `yarn filecheck <file> --save-compression`.
-  - **Otherwise:** run it through the docs filecheck tool: `cd /home/ubunut/github/PX4/filereduce && yarn filecheck <absolute-path> --save-compression`.
-    Look at the image again after it's written. If the tool compressed it, the smaller file goes in the commit (step 3). If it skipped it as not worth compressing, there's nothing to do.
+  - **Needs cropping:** don't convert, compress or commit any change to it.
+    Put an inline comment on the line where the page uses the image, asking the author to crop it to the subject and then run `yarn filecheck <file> --to-webp` on a photo, or `--save-compression` on a screenshot.
+  - **A photo (`.jpg`, or a `.png` photo) that needs no cropping:** convert it to WebP with the docs filecheck tool: `cd /home/ubunut/github/PX4/filereduce && yarn filecheck <absolute-path> --to-webp`.
+    It writes `<name>.webp` and removes the original, and skips the conversion when the WebP would be no smaller.
+    Update every reference to the old name in `docs/en`.
+    If the original is already on `main`, restore it (`git checkout HEAD -- <file>`), because translated pages still reference it.
+  - **Anything else** (a screenshot, or a photo that wasn't converted): compress it with `yarn filecheck <absolute-path> --save-compression`.
+
+  Look at the image again after it's written. The converted or compressed file and the updated references go in the commit (step 3). If the tool skipped the image, there's nothing to do.
 - CI status (`gh api repos/PX4/PX4-Autopilot/commits/<sha>/check-runs`)
 - facts the author supplied, checked against their own sources (drawings, board files) where possible
 
@@ -49,7 +54,7 @@ One check runs every round regardless: on a board page whose badge is `main (PX4
 Make only changes that are clearly correct and need no input from the author:
 - typos, formatting, quote and backtick style, one sentence per line
 - battery cell counts in upper case (`6S`, `2-6S`, never `6s`), every case on the page, without asking
-- compressed versions of new or changed images that don't need cropping (from the filecheck run in step 2), without asking
+- WebP conversion or compression of new or changed images that don't need cropping (from the filecheck run in step 2), without asking
 - changes the author confirmed in a thread but didn't make
 - edits that bring the page in line with the board source, where the fact itself is settled
 

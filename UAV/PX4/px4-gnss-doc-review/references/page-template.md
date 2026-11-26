@@ -45,7 +45,7 @@ The [<Manufacturer> <Product>](<product url>) is a <bands> <GNSS | RTK GNSS> rec
 It <is based on the <receiver chip> and> includes <a compass, barometer, safety switch, buzzer and LED>.
 <What sets it apart.>
 
-![<Manufacturer> <Product>](../../assets/hardware/gps/<folder>/<image>.jpg)
+![<Manufacturer> <Product>](../../assets/hardware/gps/<folder>/<image>.webp)
 
 ## Supported Models {#supported_models}                   (family pages)
 
