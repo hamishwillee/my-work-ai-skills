@@ -53,6 +53,7 @@ Work `references/style-guide.md` section by section against the diff:
 - Admonitions: an altered `::: tip`/`::: info`/`::: warning` keyword — this one is `bug`, not `style`, because it breaks rendering.
 - Line breaks: a paragraph hard-wrapped to a fixed column instead of broken on sentences.
 - Units: PX4 prefers no space between a value and its unit symbol (`3V`, not `3 V`); a unit written as a word keeps its space (`115200 baud`). Dimensions give the unit once, at the end (`36 x 42 x 8.63mm`), not on every value. Return every case in the file as one row listing the lines (`SKILL.md`, "Report").
+- Battery cell counts: upper-case `S` with no space (`6S`, `2-6S`, `2~12S`). This is the hobby-industry convention and what most of the PX4 docs use (about 170 upper-case uses against about 10 lower-case). A lower-case `s` (`3-8s`) is `style`, and a page that mixes the two is fixed to upper case throughout. Return every case in the file as one row, like units.
 - Videos: a YouTube embed not in `<lite-youtube>` form; a new long tutorial video where a shorter written procedure would serve (flag as `minor`, not `style` — this is a preference, not a hard rule).
 - File/folder placement and naming, and image sizing/format/alt-text conventions — only when the diff actually adds or renames a file or image; don't re-litigate an unchanged file's name.
 

@@ -29,6 +29,7 @@ A `no` or `partial` also becomes a finding, at the severity given.
 | **Radio Control section** (T-RC0 to T-RC6) | A `### Radio Control {#radio_control}` section (a differently named or levelled RC section counts as present; its heading is a `style` finding under `page-template.md`) covering T-RC1 to T-RC6. Present but missing any of how RC is connected, the protocols enabled by default, or the wiring limits is `partial`. RC wiring can't be predicted from the design, so without this a reader can't connect a receiver with confidence. | `bug` |
 | **Block diagram or schematic** (T-P8) | An image or linked document showing the main components (sensors, power supply) | `bug` |
 | **Flight logs** | At least one `logs.px4.io` link in the PR description (`gh pr view --json body`), for the vehicle type the board is aimed at | `bug`, reported on the PR rather than a file |
+| **Bootloader flashing** (T-BL1 to T-BL3) | Only for a board that ships with a non-PX4 bootloader (`page-template.md`, "PX4 Bootloader Update"): the section, the bootloader binary link, and the flashing instructions. Present but missing the binary or the instructions is `partial`. Without it a reader can't install PX4 on a new board. | `bug` |
 | **Build target documented** (T-F2) | Building Firmware section with the `make` command | `style` |
 | **Where to buy** (T-B1) | A purchase or product link | `style` |
 | **PX4 version badge** (T-O2) | `<Badge>` below the H1 | `style` |
