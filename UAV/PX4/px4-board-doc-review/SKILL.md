@@ -187,6 +187,7 @@ When the user asks for an existing board page to be brought onto the template, r
 1. **Branch** from the upstream default branch.
 2. **Move only.** Reorder the sections into skeleton order, and rename headings and add anchors (T-P1, T-P9), changing no other text. Fix only the in-page links a renamed anchor breaks (T-P10).
    Before editing, put to the user every section with no skeleton slot and every place the page would depart from the template, and apply their decisions.
+   Remove a `## Supported Platforms / Airframes` section here (T-P12): it's the one deletion this commit makes.
    Check that no text was lost by diffing the sorted non-heading lines of the old and new page.
 3. **Review** the whole page as a new board (all three lenses, plus `px4-doc-review`'s lenses for prose), and present the findings grouped by the commits below. List as decisions for the user each place where the template and the closest comparator disagree.
 4. **Apply** in this order, one commit each:

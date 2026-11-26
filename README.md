@@ -7,6 +7,7 @@ Claude Code skills for my work, organized by domain.
 - `UAV/` — skills related to uncrewed aerial vehicles.
   - `PX4/` — skills for the PX4-Autopilot project.
   - `MAVLink/` — skills for the MAVLink protocol.
+- `MDN/` — skills for MDN Web Docs.
 
 ## Current skills
 
@@ -20,3 +21,4 @@ Claude Code skills for my work, organized by domain.
 - [`UAV/MAVLink/mavlink-command-review`](UAV/MAVLink/mavlink-command-review) — editorial review of mavlink-devguide pages documenting individual MAV_CMD commands or message fields.
 - [`UAV/MAVLink/mavlink-xml-review`](UAV/MAVLink/mavlink-xml-review) — review of MAVLink XML message definition changes for wire compatibility, placement and lifecycle, definition quality, message design and downstream impact.
 - [`UAV/MAVLink/mavlink-toolchain-review`](UAV/MAVLink/mavlink-toolchain-review) — execution-first review of mavlink/mavlink toolchain changes (check scripts, doc generator, workflows, build, pymavlink bumps), proving each fix against base and head.
+- [`MDN/mdn-evaluate-firefox-issue`](MDN/mdn-evaluate-firefox-issue) — evaluates an MDN Firefox release issue: what its Gecko bugs deliver, prefs and channels, BCD, related issues, docs, experimental features and a suggested release note.

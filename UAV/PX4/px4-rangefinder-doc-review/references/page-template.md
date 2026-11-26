@@ -43,7 +43,7 @@ The [<Manufacturer> <Model>](<product url>) is a <technology> [rangefinder](../s
 It connects to the flight controller using <connection>.
 <What PX4 uses it for, or what sets it apart>.
 
-![<Model>](../../assets/hardware/sensors/<page-stem>/<image>.jpg)
+![<Model>](../../assets/hardware/sensors/<page-stem>/<image>.webp)
 
 ::: info
 The driver is not included in the firmware for most boards.

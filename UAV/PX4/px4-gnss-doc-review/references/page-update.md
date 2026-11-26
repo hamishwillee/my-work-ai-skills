@@ -66,6 +66,7 @@ A reviewer can also choose to leave one for the author; record it as a question 
 
 **Images.**
 Compress new or changed images with the project's own tool if the reviewer has one (ask, or use what their notes name), not an ad hoc converter.
+Convert a JPG or PNG photo to WebP with it, once it's cropped (`px4-doc-review` `references/style-guide.md`, "Images").
 When two pages use byte-identical image files, propose one shared file, check with `grep -rl <name> <clone>/docs --include=*.md` that only these pages use the old names, and remind the reviewer that the new file has to be added to git.
 
 ## Diagrams

@@ -24,7 +24,7 @@ Contact the [manufacturer](<manufacturer url>) for hardware support or complianc
 The [<Product>](<product url>) is <what it is>, manufactured by <Manufacturer>.
 It is based on the [<reference design>](<standard url>) <if any>, and <what distinguishes it>.
 
-![<Product>](../../assets/flight_controller/<page-stem>/<image>.jpg)
+![<Product>](../../assets/flight_controller/<page-stem>/<image>.webp)
 
 <support-category note: see sibling-comparison.md, "Category-specific content">
 
@@ -72,6 +72,8 @@ It is based on the [<reference design>](<standard url>) <if any>, and <what dist
 
 ### OSD {#osd}                            (if present)
 
+## PX4 Bootloader Update {#bootloader}       (if present)
+
 ## Building Firmware {#building_firmware}
 
 ## Debug Port {#debug_port}
@@ -84,6 +86,8 @@ It is based on the [<reference design>](<standard url>) <if any>, and <what dist
 These aren't in the skeleton, but a page that has them isn't reported for it, and their headings need no anchor:
 
 - `## Secure Boot`, after Building Firmware, for a board with `secureboot.px4board` and `bootloader_secureboot.px4board`. It names both build targets and links [Bootloader Secure Boot](../advanced_config/bootloader_secure_boot.md).
+- `## Block Diagram {#block_diagram}`, after Pinouts, holding the block diagram or schematic that meets T-P8 when it isn't in another section.
+- `## PX4 Configuration`, after Assembly, for settings a user must change on this board but not on others (a table of linked parameters and what to set). A setting every user of the board needs belongs in `rc.board_defaults` instead, so ask whether the firmware can set it before accepting the row. A setting tied to one peripheral goes in that peripheral's Assembly sub-section (`SYS_HAS_MAG` for an external compass goes in GPS & Compass).
 - `## Peripherals`, before Further Information, listing the manufacturer's own add-on hardware. A link to another manufacturer's store in it is `minor` (`sibling-comparison.md`, "Shared-design facts").
 
 ## Page-wide checks
@@ -101,6 +105,7 @@ These aren't in the skeleton, but a page that has them isn't reported for it, an
 | T-P9 | Every skeleton heading on the page has its explicit anchor, as "Anchors" below gives it. A heading that isn't in the skeleton needs no anchor, so don't report one for lacking it. | `style` |
 | T-P10 | Adding or changing an anchor on an existing page doesn't break links to it: every link to the old slug (`<page>.md#<old-slug>` elsewhere in `docs/en/`, and `#<old-slug>` on the page itself) is updated in the same PR. | `bug` per link left broken |
 | T-P11 | A claim that a variant build changes (`board-sources.md`, "Variant builds") is scoped to the default build ("The default firmware is built with PX4IO support ..."), and a feature whose driver PX4 has but this board doesn't build is "not supported by the default firmware", not "not supported". | `style` |
+| T-P12 | No `## Supported Platforms / Airframes` section (or a similar list of the vehicle types the board supports). PX4 runs every frame type in the [Airframe Reference](../airframes/airframe_reference.md) on any flight controller with enough outputs, so the section says nothing about this board: suggest removing it. A real limit the board has (too few outputs for a frame type) belongs in the section it affects, such as PWM Outputs. | `minor` |
 
 ### Stubs for missing sections
 
@@ -142,6 +147,7 @@ Re-check them occasionally: pages get rewritten.
 | GPS & Compass | `ark_v6x.md#gps_compass`, `ark_v6xrt.md#gps_compass`, `amovlab_flycore.md#gps_compass` |
 | Telemetry Radios | `ark_v6x.md#telemetry`, `amovlab_flycore.md#telemetry` |
 | CAN | `ark_v6x.md#can` |
+| PX4 Bootloader Update | `agam_megh7.md#bootloader` (once PX4-Autopilot#28757 merges) |
 | Building Firmware | `ark_v6x.md#building_firmware` |
 | Debug Port | `agam_v6xrt.md#debug_port`, `ark_v6xrt.md#debug_port`, `ark_v6x.md#debug_port`, `cuav_pixhawk_v6x.md#debug_port` |
 
@@ -150,7 +156,7 @@ Re-check them occasionally: pages get rewritten.
 Skeleton headings carry an explicit anchor, so links to the sections every board page shares survive rewording and translation.
 
 - **Skeleton headings** use the anchor shown in the skeleton, exactly.
-  Several are established short forms that differ from the heading text (`{#store}`, `{#telemetry}`, `{#gps_compass}`) and must not be "corrected".
+  Several are established short forms that differ from the heading text (`{#store}`, `{#telemetry}`, `{#gps_compass}`, `{#bootloader}`) and must not be "corrected".
 - **Any other heading** (an extra section such as `## Peripherals` or `### GPS2 Port`, or a per-connector pinout heading) doesn't need an anchor, and a missing one is not a finding.
   An anchor the author does give it is made from its text: lower case, words joined by underscores, `&` and punctuation dropped, parenthetical qualifiers such as `(Optional)` dropped.
 - **Separate anchor tags**: an `<a id="..."></a>` on its own line just before a heading, on any heading, skeleton or not, is `style`.
@@ -170,7 +176,7 @@ The old slug of a heading with no explicit anchor is its text, lower case, with 
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| T-O1 | One H1, `# <Manufacturer> <Product>`, with the same text as the `SUMMARY.md` entry and the category-page link. | `style` |
+| T-O1 | One H1, `# <Manufacturer> <Product>`, with the product's full name. The `SUMMARY.md` and `_sidebar.md` entries may shorten it (`Allocortech Atlas` for `# Allocortech Atlas Flight Computer`); every other link to the page (the category page, release notes, other pages) uses the full H1 text. Don't report a shorter SUMMARY entry: SUMMARY drives the sidebar, which is short of space, and search indexes the H1 as well, so the full name is still found. | `style` |
 | T-O2 | `<Badge type="tip" text="..." />` directly under the H1, naming the first PX4 release with the board. For a board added on `main`, use the form the newest `main` pages use (`grep -rho '<Badge type="tip" text="[^"]*"' docs/en/flight_controller/`). | `style` |
 | T-O3 | The manufacturer warning, word for word as in the skeleton, linking the manufacturer's own site. | `style`; a link to someone other than the manufacturer is `bug` |
 | T-O4 | The support-category note for the category the board is listed in (`sibling-comparison.md`), placed at the end of the opening section: after the description and hero image, before the first `##` heading (the order used on 35 of the 45 manufacturer-supported pages in September 2026). | `bug` if it names another category, `style` if missing |
@@ -186,7 +192,7 @@ The old slug of a heading with no explicit anchor is its text, lower case, with 
 | T-S3 | `### Interfaces {#interfaces}`, in this order, each the board has: **PWM outputs:** (FMU count, plus IO count); **Serial ports:** (count, then the port labels in backticks); **I2C buses:** (count, which are internal); **SPI buses:** (count, and any external bus with its chip selects and data-ready lines); **CAN buses:** (count enabled, and any pinned out but unused); **Ethernet:** (speed); **USB:**; **RC input:**; **Parameter storage:** (FRAM, EEPROM or flash, with part); **SD card:** (slot type, or none). | `bug` if a count is wrong, `style` if missing |
 | T-S4 | `### Electrical Data {#electrical_data}`: **Input voltage:**, **Current draw:** (with the heater's share when there's a heater), **Power monitoring:** (number of inputs, analog or digital, and which monitor is on by default). | `bug` if wrong, `style` if missing |
 | T-S5 | `### Mechanical Data {#mechanical_data}`: **Dimensions:**, **Weight:**, and **Form factor:** when the board follows a standard (for example [Pixhawk Autopilot Bus](https://github.com/pixhawk/Pixhawk-Standards/blob/master/DS-010%20Pixhawk%20Autopilot%20Bus%20Standard.pdf)), linked. **Mounting hole spacing:** when the manufacturer gives it (FPV stack boards: `30.5 × 30.5mm`, `20 × 20mm`), with the screw size if given (`30.5 × 30.5mm, M4`); use this label, not "Mounting:", so the hole pattern isn't read as a second, conflicting board size. Operating temperature when the manufacturer gives it. | `style` if missing |
-| T-S6 | **Form**: each item is one list entry, `- **Label:** value`, with the colon inside the bold and labels in sentence case as above. PX4 prefers no space between a value and its unit symbol (`3V`, not `3 V`; `480MHz`, `2MB`); a unit written as a word keeps its space (`115200 baud`). All the cases in a file are one finding (`SKILL.md`, "Report"). Dimensions give the unit once, at the end (`36 x 42 x 8.63mm`), not on every value. Sub-headings use First Letter Capitalisation, as the PX4 docs style guide requires for all headings (`Electrical Data`, not `Electrical data`). | `style` |
+| T-S6 | **Form**: each item is one list entry, `- **Label:** value`, with the colon inside the bold and labels in sentence case as above. PX4 prefers no space between a value and its unit symbol (`3V`, not `3 V`; `480MHz`, `2MB`); a unit written as a word keeps its space (`115200 baud`). All the cases in a file are one finding (`SKILL.md`, "Report"). Dimensions give the unit once, at the end (`36 x 42 x 8.63mm`), not on every value. Battery cell counts use an upper-case `S` (`6S`, `2-6S`), never `6s` (`px4-doc-review` `grammar-style.md`, "Battery cell counts"). Sub-headings use First Letter Capitalisation, as the PX4 docs style guide requires for all headings (`Electrical Data`, not `Electrical data`). | `style` |
 | T-S7 | Each hardware variant (a version sold separately with different parts, such as an extended-range IMU) whose parts need a later PX4 release than the badge says which release it needs ("The Extended Range needs PX4 v1.14 or later"). `board-sources.md`, "First PX4 release with a driver", says how to find it. | `bug` if missing: the badge reads as covering every variant |
 
 A board page can add an item the list doesn't have (**OSD:**, **Airspeed:**); it goes in the sub-section it belongs to, in the same form.
@@ -318,11 +324,23 @@ Under Assembly, as `###`. Many existing pages have it as a `##` section before S
 | T-U2 | Every row matches board source, including the debug console and the PX4IO link (`source-consistency.md`, "Serial port mapping"). | `bug` |
 | T-U3 | An info note after the table names the UART the bootloader enables and its port label, as the only port `px4_uploader.py` can flash over (`board-sources.md`, "Bootloader UART"). Model: `ark_v6x.md#serial_port_mapping`. | `minor` |
 
+### PX4 Bootloader Update {#bootloader} (if present)
+
+Needed on a board that ships with a bootloader PX4 can't use, typically an FPV-style board sold with Betaflight, INAV or ArduPilot.
+Every board has `extras/<vendor>_<board>_bootloader.bin`, so board source doesn't settle whether the section is needed: take it from the manufacturer, the PR or the page.
+Existing pages have the heading with no anchor or with `{#bootloader}`; report a missing anchor (T-P9), but not the section's position on an existing page.
+
+| ID | Check | Severity |
+| --- | --- | --- |
+| T-BL1 | Present when the board ships with a non-PX4 bootloader, absent otherwise. Says the board ships with other firmware (naming it when known) and that the PX4 bootloader must be flashed before PX4 can be installed. | `bug` if missing (a reader can't install PX4 on a new board) or if present on a board that ships with the PX4 bootloader |
+| T-BL2 | Links the board's PX4 bootloader binary, preferably `https://github.com/PX4/PX4-Autopilot/raw/main/boards/<vendor>/<board>/extras/<vendor>_<board>_bootloader.bin` (older pages link a `.hex` under `docs/assets/`, which is fine while it exists), and the linked file exists in the PR or the repository. | `bug` if the file doesn't exist, `style` if not linked |
+| T-BL3 | Links the flashing instructions, [PX4 Bootloader Flashing onto Betaflight Systems](../advanced_config/bootloader_update_from_betaflight.md) for a Betaflight or INAV board, with the page title as the link text ("this page" is `style`). | `style` |
+
 ### Building Firmware {#building_firmware}
 
 | ID | Check | Severity |
 | --- | --- | --- |
-| T-F1 | The tip: "Most users will not need to build this firmware! It is pre-built and automatically installed by _QGroundControl_ when appropriate hardware is connected." When the badge is `main (PX4 vX.Y)` (a board not yet in a release), the tip starts "From PX4 vX.Y, most users will not need to build this firmware!", using the same version as the badge, so it stays true without an edit after the release. Either form is fine once the board is in a release. | `style` |
+| T-F1 | The tip: "Most users will not need to build this firmware! It is pre-built and automatically installed by _QGroundControl_ when appropriate hardware is connected." When the badge is `main (PX4 vX.Y)` (a board not yet in a release), the plain tip is false until that release ships: the first line must be "Most users will not need to build this firmware (from PX4 vX.Y).", using the same version as the badge, so it stays true without an edit after the release (see `siyi-unifc-6-pico.md`, `cuav_x25-super.md`). Report the unversioned form on such a page as `style`, with a suggestion. Either form is fine once the board is in a release. | `style` |
 | T-F2 | "To [build PX4](../dev_setup/building_px4.md) for this target:" followed by a ` ```sh ` block with `make <vendor>_<board>_default`, and the other targets for any variant `.px4board` files. | `bug` if the target doesn't exist, `style` if missing |
 
 ### Debug Port {#debug_port}

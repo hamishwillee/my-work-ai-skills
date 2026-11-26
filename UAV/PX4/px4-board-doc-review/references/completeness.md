@@ -2,7 +2,7 @@
 
 Does the PR contain everything the docs need for a board to be accepted, and is the page finished?
 
-This lens applies `page-template.md` in full for *presence and form*: every page-wide check (T-P1 to T-P10, including anchors) and every section check's "missing" case.
+This lens applies `page-template.md` in full for *presence and form*: every page-wide check (T-P1 to T-P10 and T-P12, including anchors) and every section check's "missing" case.
 Whether present content is *correct* is `source-consistency.md`'s job; where a check has both halves, raise only the missing or malformed half here.
 Cite the check ID in each finding's evidence.
 
@@ -29,6 +29,7 @@ A `no` or `partial` also becomes a finding, at the severity given.
 | **Radio Control section** (T-RC0 to T-RC6) | A `### Radio Control {#radio_control}` section (a differently named or levelled RC section counts as present; its heading is a `style` finding under `page-template.md`) covering T-RC1 to T-RC6. Present but missing any of how RC is connected, the protocols enabled by default, or the wiring limits is `partial`. RC wiring can't be predicted from the design, so without this a reader can't connect a receiver with confidence. | `bug` |
 | **Block diagram or schematic** (T-P8) | An image or linked document showing the main components (sensors, power supply) | `bug` |
 | **Flight logs** | At least one `logs.px4.io` link in the PR description (`gh pr view --json body`), for the vehicle type the board is aimed at | `bug`, reported on the PR rather than a file |
+| **Bootloader flashing** (T-BL1 to T-BL3) | Only for a board that ships with a non-PX4 bootloader (`page-template.md`, "PX4 Bootloader Update"): the section, the bootloader binary link, and the flashing instructions. Present but missing the binary or the instructions is `partial`. Without it a reader can't install PX4 on a new board. | `bug` |
 | **Build target documented** (T-F2) | Building Firmware section with the `make` command | `style` |
 | **Where to buy** (T-B1) | A purchase or product link | `style` |
 | **PX4 version badge** (T-O2) | `<Badge>` below the H1 | `style` |
